@@ -145,7 +145,7 @@ class Plugin_Admin {
 
 		}
 
-		$field_error_class = 'hide';
+		$field_error_class = 'is-hidden';
 		$row_error_class   = '';
 
 		require_once \dapre_cft\PLUGIN_DIR_PATH . 'templates/tabbed-admin.php';
@@ -173,7 +173,7 @@ class Plugin_Admin {
 		foreach ( $tabs as $tab => $name ) {
 			$tab_ind += 1;
 			$class   = ( $tab == $current ) ? ' nav-tab-active' : '';
-			echo "<a id='tab_$tab_ind' class='nav-tab$class' data-tab='$tab_ind' href='?page=dapre_cft&tab=$tab'>$name</a>";
+			echo "<a class='js-tab_$tab_ind c-tab_$tab_ind nav-tab$class' data-tab='$tab_ind' href='?page=dapre_cft&tab=$tab'>$name</a>";
 
 		}
 		echo '</h1>';

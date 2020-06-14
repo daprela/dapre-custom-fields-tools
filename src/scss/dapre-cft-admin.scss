@@ -1,0 +1,489 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+.dapre-cft .form-table .user-id,
+.dapre-cft .form-table .post-id{
+	max-width: 5%;
+  	min-width: 5%;
+}
+
+.dapre-cft .form-table .field-name,
+.dapre-cft .form-table .post-field-name,
+.dapre-cft .form-table .option-field-name {
+	max-width: 15%;
+  	min-width: 15%;
+}
+
+.dapre-cft .form-table .user-actions,
+.dapre-cft .form-table .post-actions,
+.dapre-cft .form-table .option-actions{
+	min-width: 6%;
+}
+
+.dapre-cft .form-table .user-value-options,
+.dapre-cft .form-table .post-value-options,
+.dapre-cft .form-table .option-value-options {
+	max-width: 10%;
+	min-width: 10%;
+}
+
+.dapre-cft .form-table .value-to-add,
+.dapre-cft .form-table .post-value-to-add,
+.dapre-cft .form-table .option-value-to-add{
+	max-width: 20%;
+  	min-width: 20%;
+}
+
+.dapre-cft .form-table .user-value-add,
+.dapre-cft .form-table .post-value-add,
+.dapre-cft .form-table .option-value-add{
+  	min-width: 10%;
+}
+
+.dapre-cft .form-table .user-value-add table,
+.dapre-cft .form-table .post-value-add table,
+.dapre-cft .form-table .option-value-add table {
+  	width: 100%;
+}
+
+.dapre-cft .form-table .previous-value,
+.dapre-cft .form-table .post-previous-value,
+.dapre-cft .form-table .option-previous-value {
+  	max-width: 14%;
+  	min-width: 14%;
+}
+
+.dapre-cft .form-table .current-value,
+.dapre-cft .form-table .post-current-value {
+  	max-width: 15%;
+  	min-width: 15%;
+}
+
+.dapre-cft .form-table .option-current-value {
+  	max-width: 20%;
+  	min-width: 20%;
+}
+
+.dapre-cft .form-table .td {
+  padding: 1% 1.5% 1% 0%;
+}
+
+.dapre-cft .form-table .td textarea,
+.dapre-cft .form-table .td input {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+.dapre-cft .hide {
+  display: none;
+}
+
+.dapre-cft .show {
+  display: unset;
+}
+
+.dapre-cft .row_error {
+  border: 2px dashed #e43972;
+}
+
+.dapre-cft .write {
+  background-color: rgb(255, 255, 255);;
+}
+
+.dapre-cft .write {
+  background-color: rgb(131, 215, 255);
+}
+
+.dapre-cft .delete {
+  background-color: rgb(255, 213, 151);
+}
+
+/* SPINNER */
+	
+.half-circle-spinner, .half-circle-spinner * {
+  box-sizing: border-box;
+}
+
+.half-circle-spinner {
+	/* added block */
+	position: fixed;
+	margin-left: -50px;
+	margin-top: -100px;
+	top: 50%;
+	left: 50%;
+	z-index: 10;
+	/* end of added block */
+	width: 60px;
+	height: 60px;
+	border-radius: 100%;
+}
+
+.half-circle-spinner .circle {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	border: calc(60px / 10) solid transparent;
+}
+
+.half-circle-spinner .circle.circle-1 {
+	border-top-color: #ff1d5e;
+	animation: half-circle-spinner-animation 1s infinite;
+}
+
+.half-circle-spinner .circle.circle-2 {
+	border-bottom-color: #ff1d5e;
+	animation: half-circle-spinner-animation 1s infinite alternate;
+}
+
+@keyframes half-circle-spinner-animation {
+	0% {
+	  transform: rotate(0deg);
+
+	}
+	100%{
+	  transform: rotate(360deg);
+	}
+}
+
+/* ERROR MESSAGES */
+.o-messageBox ,
+.o-messageBox  *{
+	box-sizing: border-box;
+}
+
+.o-messageBox  {
+	position: fixed;
+	margin-top: -100px;
+	top: 50%;
+	z-index: 10;
+	width: 100%;
+}
+
+.o-messageBox  .fade-out {
+	font-size: 4em;
+	text-align: center;
+}
+
+.c-messageOK.is-hidden,
+.c-messageError.is-hidden {
+	display: none;
+}
+
+.c-messageOK__fadeOut {
+	color: gray;
+}
+
+.c-messageError__fadeOut {
+	color: #e43971;
+}
+
+/* new BEM CSS */
+
+.o-meta {
+	display:grid;
+	grid-template-rows: 100px 100px;
+	grid-auto-rows: 100px;
+}
+
+.c-optionField {
+	font-size: 14px;
+}
+
+.c-optionsForm,
+.c-userFieldsForm,
+.c-postFieldsForm {
+	&.is-hidden {
+		display: none;
+	}
+}
+
+.c-optionsMetaHeaders,
+.c-optionField {
+	display: grid;
+	grid-template-columns: 20% 6% 30% 14% 10% 20%;
+}
+
+.c-optionField__field--errorMessage {
+  margin-top: 4px;
+  margin-bottom: 0;
+
+  &.is-visible {
+    display: block;
+  }
+
+  &.is-hidden {
+    display:none;
+  }
+}
+
+.c-optionField__field--fieldName {
+	padding: 0 5px
+}
+
+.c-optionsMetaHeaders > * {
+	font-size: 14px;
+	font-weight: 600;
+	text-align: left;
+	padding: 20px 10px 20px 5px;
+}
+
+.c-optionField {
+	border-top: 1px solid lightgrey;
+	> * {
+		padding: 0 5px;
+	}
+	&.is-error {
+		border: 2px dashed #e43972;
+	}
+}
+
+.c-optionRename__newOption {
+	&.is-error {
+		border: 2px dashed #e43972;
+	}
+}
+
+.c-optionField__field--errorContainer {
+	height: 22px;
+}
+
+.c-optionField__field--input {
+	width: 100%;
+}
+
+.c-optionField__field--valueOptions {
+	display:flex;
+	justify-content: space-around;
+}
+
+.c-optionField__field--valueOptionLabel {
+	display:flex;
+	flex-direction: row;
+	align-items: center;
+	p {
+		margin: 0.5em 0;
+	}
+}
+
+.c-optionField__field--valueToAdd {
+	display:grid;
+	align-items: center;
+}
+
+.c-optionField__field--prevValue {
+	display: flex;
+	align-items: center;
+}
+
+.c-optionField__field--curValueOption {
+	&.is-hidden {
+		display: none;
+	}
+}
+
+.c-optionField__field--curValue {
+	display: flex;
+	align-items: center;
+}
+
+.c-options__title {
+	padding-left: 5px;
+}
+
+.c-optionRename {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	align-items: center;
+	grid-template-areas:
+		"header old-name"
+		"new-name new-name"
+}
+
+.c-optionRename__header {
+	font-size: 14px;
+	padding: 20px 10px 20px 0;
+	line-height: 1.3;
+	font-weight: 600;
+}
+
+.c-optionRename__field {
+	font-size: 14px;
+	margin-bottom: 9px;
+	padding: 15px 10px;
+	line-height: 1.3;
+	vertical-align: middle;
+}
+
+.c-optionRename__errorMessage,
+.c-CopyOptionErrorMessage {
+	&.is-hidden {
+		display: none;
+	}
+}
+
+.c-optionRename__header--currentOption {
+	grid-area: header;
+}
+
+.c-optionRename__field--currentOption {
+	grid-area: old-name;
+}
+
+.c-optionRename__newOption {
+	grid-area: new-name;
+	display:grid;
+	grid-template-columns: 200px 1fr;
+}
+
+.c-copyOptionToOption,
+.c-copyOptionToUserField,
+.c-copyOptionToPostField {
+	&.is-hidden {
+		display: none;
+	}
+}
+
+.c-copyContainer {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	align-items: center;
+	grid-template-areas:
+		"title title"
+		"header option-name"
+		"space options"
+}
+
+.c-copyFromTitle {
+	grid-area: title;
+	justify-content: left;
+}
+
+.c-copyContainer__currentNameHeader {
+	grid-area: header;
+}
+
+.c-copyContainer__currentNameHeader,
+.c-copyOptionToOption__newOptionNameHeader {
+	font-size: 14px;
+	padding: 20px 10px 20px 0;
+	line-height: 1.3;
+	font-weight: 600;
+	line-height: 1.3;
+	vertical-align: middle;
+}
+
+.c-copyContainer__currentNameField {
+	grid-area: option-name;
+}
+
+.c-copyContainer__currentNameField,
+.c-copyOptionToOption__newOptionName {
+	margin-bottom: 9px;
+	padding: 15px 10px;
+	line-height: 1.3;
+	vertical-align: middle;
+}
+
+.c-copyContainer__currentNameSpace {
+	grid-area: space;
+}
+
+.c-copyContainer__currentNameOptions {
+	grid-area: options;
+	margin-bottom: 9px;
+	padding: 15px 10px;
+	line-height: 1.3;
+	vertical-align: middle;
+	font-size: 14px;
+}
+
+.js-copyOptionToOption {
+	display: grid;
+	grid-template-columns: 1fr;
+	align-items: center;
+}
+
+.c-copyToDestinationOption,
+.c-copyOptionToUserField {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	align-items: center;
+}
+
+/* Copy option to user field */
+/* Copy option to post field */
+
+.c-copyToDestinationUser,
+.c-copyToDestinationPost {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	align-items: center;
+}
+
+.c-copyOptionToUser__userFieldHeader,
+.c-copyOptionToPost__postFieldHeader {
+	font-size: 14px;
+	padding: 20px 10px 20px 0;
+	line-height: 1.3;
+	font-weight: 600;
+	line-height: 1.3;
+	vertical-align: middle;
+}
+
+.c-copyOptionToUser__newUserField,
+.c-copyOptionToPost__newPostField {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	align-items: center;
+	margin-bottom: 9px;
+	padding: 15px 10px;
+	line-height: 1.3;
+	vertical-align: middle;
+	font-size: 14px;
+	grid-template-areas:
+		"error error"
+		"field-id field-name"
+		"options options"
+}
+
+.c-CopyOptionToUserErrorMessage,
+.c-CopyOptionToPostErrorMessage {
+	grid-area: error;
+}
+
+.c-copyOptionToUserID,
+.c-copyOptionToPostID {
+	grid-area: field-id;
+	margin: 5px 0;
+}
+
+.c-copyOptionToUserName,
+.c-copyOptionToPostName {
+	grid-area: field-name;
+	margin: 5px 0;
+}
+
+.c-copyOptionToUserOption,
+.c-copyOptionToPostOption {
+	grid-area: options;
+	margin: 5px 0 9px 0;
+	padding: 15px 10px;
+	line-height: 1.3;
+	vertical-align: middle;
+	font-size: 14px;
+}
+
+.c-CopyOptionToUserErrorMessage,
+.c-CopyOptionToPostErrorMessage {
+	&.is-hidden {
+		display: none;
+	}
+}

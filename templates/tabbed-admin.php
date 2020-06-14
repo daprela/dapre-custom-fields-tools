@@ -27,12 +27,12 @@
 		</div>
 	</form>
 	
-	<form id="form-options" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
-		<div id="options">
+	<form class="js-optionsForm c-optionsForm" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
+		<div class="c-options">
 			<div class ="postbox">
-				<h3 class="hndle" style="padding-left: 5px"><?php esc_html_e("Options","dapre-cft") ?></h3>
+				<h3 class="c-options__title hndle"><?php esc_html_e("Options","dapre-cft") ?></h3>
 				<div class ="inside">
-					<div id="options-section">
+					<div class="js-optionsMetaSection o-meta">
 				<?php
 
 				/**
@@ -42,11 +42,11 @@
 
 				?>
 					</div>
-				<input id="submit-options" class="button button-primary" type="submit" name="submit_options" value="Read/Write Values">
+				<input class="js-submitOptions button button-primary" type="submit" name="submit_options" value="Read/Write Values">
 				</div>
 			</div>
 
-			<div id="rename-option" class ="postbox">
+			<div class ="js-renameOption postbox">
 				<?php
 
 				/**
@@ -57,7 +57,7 @@
 				?>
 			</div>
 
-			<div id="copy-option" class ="postbox">
+			<div class ="js-copyOption postbox">
 				<?php
 
 				/**
@@ -70,19 +70,19 @@
 		</div>
 	</form>
 	
-	<form id="form-user-fields" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
-		<div id="user-fields" class="hide">
+	<form class="js-userFieldsForm c-userFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
+		<div class="c-userFields">
 			<div class ="postbox">
 				<h3 class="hndle" style="padding-left: 5px"><?php esc_html_e("User Fields","dapre-cft") ?></h3>
 				<div class ="inside">
-					<div id="user-fields-section">
+					<div class="js-userFieldsSection o-meta">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-user-fields-meta.php');
 
 				?>
 					</div>
-				<input id="submit-user-fields" class="button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
+				<input id="submit-user-fields" class="js-submitUserFields button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
 				</div>
 			</div>
 			<div id="rename-user-field" class ="postbox">
@@ -103,19 +103,19 @@
 		</div>
 	</form>
 	
-	<form id="form-post-fields" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
-		<div id="post-fields" class="hide">
+	<form class="js-postFieldsForm c-postFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
+		<div class="c-postFields">
 			<div class ="postbox">
 				<h3 class="hndle" style="padding-left: 5px"><?php esc_html_e("Post Fields","dapre-cft") ?></h3>
 				<div class ="inside">
-					<div id="post-fields-section">
+					<div class="js-postFieldsSection o-meta">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-post-fields-meta.php');
 
 				?>
 					</div>
-				<input id="submit-post-fields" class="button button-primary" type="submit" name="submit_post_fields" value="Read/Write Values">
+				<input class="js-submitPostFields button button-primary" type="submit" name="submit_post_fields" value="Read/Write Values">
 				</div>
 			</div>
 			<div id="rename-post-field" class ="postbox">

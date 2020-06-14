@@ -1,103 +1,99 @@
-<h3 class="hndle" style="padding-left: 5px"><?php esc_html_e('Copy Option','dapre-cft') ?></h3>
+<h3 class="c-options__title hndle"><?php esc_html_e('Copy Option','dapre-cft') ?></h3>
 <div class ="inside">
-	<h4><?php esc_html_e('Copy from option...', 'dapre-cft') ?></h4>
-	<table class="form-table">
-		<tbody>
-			<tr>
-				<th scope="row">
-					<?php esc_html_e('Current Option Name','dapre-cft') ?>
-				</th>
-				<td>
-					<p class="<?php echo $field_error_class ?>"><?php esc_html_e('This field does not exist','dapre-cft') ?></p>
-					<input id="current_option_name" class="regular-text" type="text" name="current_option_name" />
-				</td>
-			</tr>
-			<tr>
-				<th scope="row"></th>
-				<td>
-					<label for="copy_option_to_option"><?php esc_html_e('...to option', 'dapre-cft') ?> </label>
-					<input id="copy_option_to_option" type="radio" name="copy_option_to" value="option to option" />
+	<div class="c-copyContainer">
+		<h4 class="c-copyFromTitle"><?php esc_html_e('Copy from option...', 'dapre-cft') ?></h4>
+		<div class="c-copyContainer__currentNameHeader">
+			<?php esc_html_e('Current Option Name','dapre-cft') ?>
+		</div>
+		<div class="c-copyContainer__currentNameField">
+			<p class="c-CopyOptionErrorMessage <?php echo $field_error_class ?>"><?php esc_html_e('This field does not exist','dapre-cft') ?></p>
+			<input id="current_option_name" class="js-currentOptionName c-copyInput__currentNameField regular-text" type="text" name="current_option_name" />
+		</div>
+		<div class="c-copyContainer__currentNameSpace"></div>
+		<div class="c-copyContainer__currentNameOptions">
+			<label>
+				<?php esc_html_e('...to option', 'dapre-cft') ?>
+				<input class="js-copyOptionTo js-inputCopyOptionToOption" type="radio" name="copy_option_to" value="option to option" />
+			</label>
 
-					<label for="copy_option_to_user_field"><?php esc_html_e('...to user field','dapre-cft') ?> </label>
-					<input id="copy_option_to_user_field" type="radio" name="copy_option_to" value="option to user field" />
+			<label>
+				<?php esc_html_e('...to user field','dapre-cft') ?>
+				<input class="js-copyOptionTo js-inputCopyOptionToUserField" type="radio" name="copy_option_to" value="option to user field" />
+			</label>
 
-					<label for="copy_option_to_post_field"><?php esc_html_e('...to post field','dapre-cft') ?></label>
-					<input id="copy_option_to_post_field" type="radio" name="copy_option_to" value="option to post field" />
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<div id="copy-option-to-option" class='hide'>
-		<h4><?php esc_html_e('...to option','dapre-cft') ?></h4>
-		<table class="form-table">
-			<tbody>
-				<tr id="" class="user-data-row <?php echo $row_error_class ?>">
-					<th scope="row">
-						<?php esc_html_e('New Option Name','dapre-cft') ?>
-					</th>
-					<td>
-						<input id="opt_to_option_name" class="regular-text" type="text" name="opt_to_option_name" /><br>
-						<label for="opt_to_option_create">
-							<input id="opt_to_option_create" class="regular-text" type="checkbox" name="opt_to_option_create" />
-						<?php esc_html_e("Create field if it doesn't exist","dapre-cft") ?></label>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+			<label>
+				<?php esc_html_e('...to post field','dapre-cft') ?>
+				<input class="js-copyOptionTo js-inputCopyOptionToPostField" type="radio" name="copy_option_to" value="option to post field" />
+			</label>
+		</div>
 	</div>
-	<div id="copy-option-to-user-field" class='hide'>
-		<h4><?php esc_html_e("...to user field","dapre-cft") ?></h4>
-		<table class="form-table">
-			<tbody>
-				<tr id="" class="user-data-row <?php echo $row_error_class ?>">
-					<th scope="row">
-						<?php esc_html_e("User Field","dapre-cft") ?>
-					</th>
-					<td>
-						<fieldset>
-							<p class="<?php echo $field_error_class ?>"><?php esc_html_e("This field does not exist","dapre-cft") ?></p>
-							<label for="opt_to_user_field_id"><?php esc_html_e("User ID","dapre-cft") ?></label>
-							<input id="opt_to_user_field_id" class="small-text" type="number" name="opt_to_user_field_id" />
-							<label for="opt_to_user_field_name"><?php esc_html_e("Field Name","dapre-cft") ?></label>
-							<input id="opt_to_user_field_name" class="regular-text" type="text" name="opt_to_user_field_name" /><br>
-							<label for="opt_to_user_field_create">
-								<input id="opt_to_user_field_create" class="regular-text" type="checkbox" name="opt_to_user_field_create" />
-							<?php esc_html_e("Create field if it doesn't exist","dapre-cft") ?></label>
-						</fieldset>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class='js-copyOptionToOption c-copyOptionToOption is-hidden'>
+		<h4 class="c-copyToTitle"><?php esc_html_e('...to option','dapre-cft') ?></h4>
+		<div class="c-copyToDestinationOption <?php echo $row_error_class ?>">
+			<div class="c-copyOptionToOption__newOptionNameHeader">
+				<?php esc_html_e('New Option Name','dapre-cft') ?>
+			</div>
+			<div class="c-copyOptionToOption__newOptionName">
+				<input class="js-copyOptionToOptionName c-copyOptionToOption_newOptionName regular-text" type="text" name="opt_to_option_name" /><br>
+				<label>
+					<input class="js-copyOptionToOptionCreate c-copyOptionToOption_createOption regular-text" type="checkbox" name="opt_to_option_create" />
+					<?php esc_html_e("Create field if it doesn't exist","dapre-cft") ?>
+				</label>
+			</div>
+		</div>
 	</div>
-	<div id="copy-option-to-post-field" class='hide'>
-		<h4><?php esc_html_e("...to post field","dapre-cft") ?></h4>
-		<table class="form-table">
-			<tbody>
-				<tr id="" class="user-data-row <?php echo $row_error_class ?>">
-					<th scope="row">
-						<?php esc_html_e("Post Field","dapre-cft") ?>
-					</th>
-					<td>
-						<fieldset>
-							<p class="<?php echo $field_error_class ?>"><?php esc_html_e("This field does not exists","dapre-cft") ?></p>
-							<label for="opt_to_post_field_id"><?php esc_html_e("Post ID","dapre-cft") ?></label>
-							<input id="opt_to_post_field_id" class="small-text" type="number" name="opt_to_post_field_id" />
-							<label for="opt_to_post_field_name"><?php esc_html_e("Field Name","dapre-cft") ?></label>
-							<input id="opt_to_post_field_name" class="regular-text" type="text" name="opt_to_post_field_name" /><br>
-							<label for="opt_to_post_field_create">
-								<input id="opt_to_post_field_create" class="regular-text" type="checkbox" name="opt_to_post_field_create" />
-							<?php esc_html_e("Create field if it doesn't exist","dapre-cft") ?></label>
-						</fieldset>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+
+	<div class='js-copyOptionToUserField c-copyOptionToUserField is-hidden'>
+		<h4 class="c-copyToUserTitle"><?php esc_html_e("...to user field","dapre-cft") ?></h4>
+		<div class="c-copyToDestinationUser <?php echo $row_error_class ?>">
+			<div class="c-copyOptionToUser__userFieldHeader">
+				<?php esc_html_e("User Field","dapre-cft") ?>
+			</div>
+			<div class="c-copyOptionToUser__newUserField">
+				<p class="c-CopyOptionToUserErrorMessage <?php echo $field_error_class ?>"><?php esc_html_e("This field does not exist","dapre-cft") ?></p>
+				<label >
+					<?php esc_html_e("User ID","dapre-cft") ?>
+					<input class="js-optToUserFieldID c-copyOptionToUserID small-text" type="number" name="opt_to_user_field_id" />
+				</label>
+				<label >
+					<?php esc_html_e("Field Name","dapre-cft") ?>
+					<input class="js-optToUserFieldName c-copyOptionToUserName regular-text" type="text" name="opt_to_user_field_name" />
+				</label>
+				<label>
+					<input class="js-optToUserFieldCreate c-copyOptionToUserOption regular-text" type="checkbox" name="opt_to_user_field_create" />
+					<?php esc_html_e("Create field if it doesn't exist","dapre-cft") ?>
+				</label>
+			</div>
+		</div>
 	</div>
-	<div><input id="copy-option-btn" class="button button-primary" type="submit" name="copy_option" value="Copy"></div>
+	<div class='js-copyOptionToPostField c-copyOptionToPostField is-hidden'>
+		<h4 class="c-copyToPostTitle"><?php esc_html_e("...to post field","dapre-cft") ?></h4>
+		<div class="c-copyToDestinationPost <?php echo $row_error_class ?>">
+			<div class="c-copyOptionToPost__postFieldHeader">
+				<?php esc_html_e("Post Field","dapre-cft") ?>
+			</div>
+			<div class="c-copyOptionToPost__newPostField">
+				<p class="c-CopyOptionToPostErrorMessage <?php echo $field_error_class ?>"><?php esc_html_e("This field does not exist","dapre-cft") ?></p>
+				<label>
+					<?php esc_html_e("Post ID","dapre-cft") ?>
+					<input class="js-optToPostFieldID c-copyOptionToPostID small-text" type="number" name="opt_to_post_field_id" />
+				</label>
+				<label >
+					<?php esc_html_e("Field Name","dapre-cft") ?>
+					<input class="js-optToPostFieldName c-copyOptionToPostName regular-text" type="text" name="opt_to_post_field_name" />
+				</label>
+				<label>
+					<input class="js-optToPostFieldCreate c-copyOptionToPostOption regular-text" type="checkbox" name="opt_to_post_field_create" />
+					<?php esc_html_e("Create field if it doesn't exist","dapre-cft") ?>
+				</label>
+			</div>
+		</div>
+	</div>
+	<div><input class="js-submitCopyOption button button-primary" type="submit" name="copy_option" value="Copy"></div>
 </div>
-<div class="message-box message-ok option-copy-ok hide">
-	<div class="fade-out"><?php esc_html_e("Option copied","dapre-cft") ?></div>
+<div class="js-optionCopyOK o-messageBox c-messageOK is-hidden">
+	<div class="c-messageOK__fadeOut"><?php esc_html_e("Option copied","dapre-cft") ?></div>
 </div>
-<div class="message-box message-error option-copy-error hide">
-	<div class="fade-out"><?php esc_html_e("There was an error. Option not copied","dapre-cft") ?></div>
+<div class="js-optionCopyError o-messageBox c-messageError is-hidden">
+	<div class="c-messageError__fadeOut"><?php esc_html_e("There was an error. Option not copied","dapre-cft") ?></div>
 </div>
