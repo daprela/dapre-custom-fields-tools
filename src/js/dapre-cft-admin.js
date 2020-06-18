@@ -56,7 +56,6 @@
       /* Send data to the server, get the response and change the HTML */
       // eslint-disable-next-line no-undef
       $.post(DapreCftAjax.ajax_url, data, (response) => {
-        console.log(response);
         if (response.success) {
           if (response.data.renamed) {
             $('.js-optionRenameOK').show();
@@ -180,6 +179,7 @@
 
       // eslint-disable-next-line no-undef
       $.post(DapreCftAjax.ajax_url, data, (response) => {
+        console.log(response);
         if (response.success) {
           $('.js-userFieldsSection').empty();
           $('.js-userFieldsSection').append(response.data.html);
@@ -680,13 +680,13 @@ function toggleOptionAction(element) {
 // manage the toggle action radio buttons
 function toggleUserAction(element) {
   const { index } = element.dataset;
-  const row = document.querySelector(`.js-user_field_data_row_${index}`);
-  const content = document.querySelector(`.js-user_field_input_value_${index}`);
-  const toggleDateCheckbox = document.querySelector(`.js-user_date_string_${index}`);
-  const arrayCheckbox = document.querySelector(`.js-user_empty_array_${index}`);
+  const row = document.querySelector(`.js-userFieldsFieldDataRow_${index}`);
+  const content = document.querySelector(`.js-userFieldInputValue_${index}`);
+  const toggleDateCheckbox = document.querySelector(`.js-userDateString_${index}`);
+  const arrayCheckbox = document.querySelector(`.js-userEmptyArray_${index}`);
 
   if (element.type === 'checkbox') {
-    if (element.id === `user_empty_array_${index}`) {
+    if (element.classList.contains(`js-userEmptyArray_${index}`)) {
       // if the user checked the empty array checkbox then disable the toggle date and return
       if (element.checked === true) {
         toggleDateCheckbox.checked = false;
@@ -697,12 +697,12 @@ function toggleUserAction(element) {
     }
 
     /* toggle between date string and timestamp representation of the input field content */
-    if (element.id === `user_date_string_${index}`) {
+    if (element.classList.contains(`js-userDateString_${index}`)) {
       content.disabled = false;
       arrayCheckbox.checked = false;
       // get the elements used to backup the values
-      const dateTimestampBackup = document.querySelector(`.js-user_field_input_timestamp_backup_${index}`);
-      const dateStringBackup = document.querySelector(`.js-user_field_input_string_backup_${index}`);
+      const dateTimestampBackup = document.querySelector(`.js-userFieldInputTimestampBackup_${index}`);
+      const dateStringBackup = document.querySelector(`.js-userFieldInputStringBackup_${index}`);
 
       // if it is a number interpret as a timestamp
       if (isNumber(content.value)) {
@@ -740,12 +740,12 @@ function toggleUserAction(element) {
     }
 
     /* toggle between date string and timestamp representation of the field content */
-    if (element.id === `user_date_string_show_${index}`) {
-      const fieldContent = document.querySelector(`#user_field_value_${index}`);
+    if (element.classList.contains(`js-userDateStringCurValue_${index}`)) {
+      const fieldContent = document.querySelector(`.js-userFieldValue_${index}`);
 
       // get the elements used to backup the values
-      const dateTimestampBackup = document.querySelector(`#user_field_value_timestamp_backup_${index}`);
-      const dateStringBackup = document.querySelector(`#user_field_value_string_backup_${index}`);
+      const dateTimestampBackup = document.querySelector(`.js-userFieldValueTimestampBackup_${index}`);
+      const dateStringBackup = document.querySelector(`.js-userFieldValueStringBackup_${index}`);
 
       // if it is a number interpret as a timestamp
       if (isNumber(fieldContent.innerText)) {
@@ -979,10 +979,10 @@ const checkEvents = function (e) {
   const optionSection = document.querySelector('.js-optionsMetaSection');
   optionSection.addEventListener('change', checkOptionEvent, false);
 
-  const userSection = document.querySelector('js-userFieldsSection');
+  const userSection = document.querySelector('.js-userFieldsSection');
   userSection.addEventListener('change', checkUserEvent, false);
 
-  const postSection = document.querySelector('js-postFieldsSection');
+  const postSection = document.querySelector('.js-postFieldsSection');
   postSection.addEventListener('change', checkPostEvent, false);
 
   const dateToggle = document.querySelector('.js-optionsMetaSection');

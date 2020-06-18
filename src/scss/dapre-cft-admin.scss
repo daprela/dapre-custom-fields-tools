@@ -7,6 +7,10 @@
 	box-sizing: border-box;
 }
 
+.c-dapreCustomFields {
+	font-size: 14px;
+}
+
 .dapre-cft .form-table .user-id,
 .dapre-cft .form-table .post-id{
 	max-width: 5%;
@@ -185,7 +189,8 @@
 	color: #e43971;
 }
 
-/* new BEM CSS */
+/* NEW BEM CSS */
+
 
 .o-meta {
 	display:grid;
@@ -205,13 +210,19 @@
 	}
 }
 
+/*************************/
+/* OPTION FIELDS SECTION */
+/*************************/
+
 .c-optionsMetaHeaders,
 .c-optionField {
 	display: grid;
 	grid-template-columns: 20% 6% 30% 14% 10% 20%;
 }
 
-.c-optionField__field--errorMessage {
+.c-optionField__fieldErrorMessage,
+.c-userField__fieldErrorMessage,
+.c-postField__fieldErrorMessage {
   margin-top: 4px;
   margin-bottom: 0;
 
@@ -224,17 +235,25 @@
   }
 }
 
-.c-optionField__field--fieldName {
+.c-optionField__fieldName,
+.c-userField__fieldID,
+.c-userField__fieldName,
+.c-postField__fieldID,
+.c-postField__fieldName {
 	padding: 0 5px
 }
 
-.c-optionsMetaHeaders > * {
+.c-optionsMetaHeaders > *,
+.c-userFieldsMetaHeaders > *,
+.c-postFieldsMetaHeaders > * {
 	font-size: 14px;
 	font-weight: 600;
 	text-align: left;
 	padding: 20px 10px 20px 5px;
 }
 
+.c-optionField,
+.c-userField,
 .c-optionField {
 	border-top: 1px solid lightgrey;
 	> * {
@@ -251,20 +270,54 @@
 	}
 }
 
-.c-optionField__field--errorContainer {
+.c-optionField__fieldName,
+.c-userField__fieldID,
+.c-userField__fieldName,
+.c-postField__fieldID,
+.c-postField__fieldName {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.c-optionField__fieldName,
+.c-userField__fieldName,
+.c-postField__fieldName {
+	margin-bottom: 22px;
+}
+
+.c-optionField__fieldErrorContainer,
+.c-userField__fieldErrorContainer,
+.c-postField__fieldErrorContainer {
 	height: 22px;
 }
 
-.c-optionField__field--input {
+.c-optionField__fieldInput,
+.c-userField__fieldInput,
+.c-postField__fieldInput,
+.c-userField__fieldIDInput,
+.c-postField__fieldIDInput {
 	width: 100%;
 }
 
-.c-optionField__field--valueOptions {
+.c-optionField__fieldActions,
+.c-userField__fieldActions,
+.c-postField__fieldActions {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.c-optionField__fieldValueOptions,
+.c-userField__fieldValueOptions,
+.c-postField__fieldValueOptions {
 	display:flex;
 	justify-content: space-around;
 }
 
-.c-optionField__field--valueOptionLabel {
+.c-optionField__fieldValueOptionLabel,
+.c-userField__fieldValueOptionLabel,
+.c-postField__fieldValueOptionLabel {
 	display:flex;
 	flex-direction: row;
 	align-items: center;
@@ -273,28 +326,38 @@
 	}
 }
 
-.c-optionField__field--valueToAdd {
+.c-optionField__fieldValueToAdd,
+.c-userField__fieldValueToAdd,
+.c-postField__fieldValueToAdd {
 	display:grid;
 	align-items: center;
 }
 
-.c-optionField__field--prevValue {
+.c-optionField__fieldPrevValue,
+.c-userField__fieldPrevValue,
+.c-postField__fieldPrevValue {
 	display: flex;
 	align-items: center;
 }
 
-.c-optionField__field--curValueOption {
+.c-optionField__fieldCurValueOption,
+.c-userField__fieldCurValueOption,
+.c-postField__fieldCurValueOption {
 	&.is-hidden {
 		display: none;
 	}
 }
 
-.c-optionField__field--curValue {
+.c-optionField__fieldCurValue,
+.c-userField__fieldCurValue,
+.c-postField__fieldCurValue {
 	display: flex;
 	align-items: center;
 }
 
-.c-options__title {
+.c-options__title,
+.c-userFields__title,
+.c-postFields__title {
 	padding-left: 5px;
 }
 
@@ -487,3 +550,49 @@
 		display: none;
 	}
 }
+
+/***********************/
+/* USER FIELDS SECTION */
+/***********************/
+
+.c-userFieldsMetaHeaders,
+.c-postFieldsMetaHeaders,
+.c-userField,
+.c-postField {
+	display: grid;
+	grid-template-columns: 8% 18% 6% 28% 14% 10% 18%;
+}
+//
+//.c-userField__field--errorMessage {
+//	margin-top: 4px;
+//	margin-bottom: 0;
+//
+//	&.is-visible {
+//		display: block;
+//	}
+//
+//	&.is-hidden {
+//		display:none;
+//	}
+//}
+//
+//.c-userField__field--fieldName {
+//	padding: 0 5px
+//}
+//
+//.c-userFieldsMetaHeaders > * {
+//	font-size: 14px;
+//	font-weight: 600;
+//	text-align: left;
+//	padding: 20px 10px 20px 5px;
+//}
+//
+//.c-userField {
+//	border-top: 1px solid lightgrey;
+//	> * {
+//		padding: 0 5px;
+//	}
+//	&.is-error {
+//		border: 2px dashed #e43972;
+//	}
+//}

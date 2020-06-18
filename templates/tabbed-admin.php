@@ -13,7 +13,7 @@
  */
 ?>
 
-<div class="wrap dapre-cft">
+<div class="wrap dapre-cft c-dapreCustomFields">
 	<h1><?php esc_html_e("Custom Fields Tools","dapre-cft") ?></h1>
 	<form method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<?php wp_nonce_field( 'dapre_cft_options', 'dapre_cft_options_verify' ); ?>
@@ -82,7 +82,7 @@
 
 				?>
 					</div>
-				<input id="submit-user-fields" class="js-submitUserFields button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
+				<input class="js-submitUserFields button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
 				</div>
 			</div>
 			<div id="rename-user-field" class ="postbox">
