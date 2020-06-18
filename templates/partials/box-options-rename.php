@@ -1,18 +1,18 @@
 <h3 class="c-options__title hndle"><?php esc_html_e("Rename Option","dapre-cft") ?></h3>
 <div class ="inside">
 	<div class="c-optionRename">
-		<div class="c-optionRename__header c-optionRename__header--currentOption">
+		<div class="c-optionRename__header c-optionRename__headerCurrentOption">
 			<?php esc_html_e("Current Option Name","dapre-cft") ?>
 		</div>
-		<div class="c-optionRename__field c-optionRename__field--currentOption">
+		<div class="c-optionRename__field c-optionRename__fieldCurrentOption">
 			<p class="c-optionRename__errorMessage <?php echo $field_error_class ?>"><?php esc_html_e("This field does not exists","dapre-cft") ?></p>
 			<input class="js-oldOptionName regular-text" type="text" name="old_option_name" />
 		</div>
 		<div class="c-optionRename__newOption <?php echo $row_error_class ?>">
-			<div class="c-optionRename__header c-optionRename__header--newOption">
+			<div class="c-optionRename__header">
 				<?php esc_html_e("New Option Name","dapre-cft") ?>
 			</div>
-			<div class="c-optionRename__field c-optionRename__field--newOption">
+			<div class="c-optionRename__field">
 				<input class="js-newOptionName regular-text" type="text" name="new_option_name" />
 			</div>
 		</div>

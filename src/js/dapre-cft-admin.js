@@ -190,9 +190,9 @@
       });
     });
 
-    $('#rename-user-field-btn').on('click', (e) => {
+    $('.js-submitRenameUserField').on('click', (e) => {
       /* Disable the button and show the spinner */
-      $('#rename-user-field-btn').attr('disabled', 'disabled');
+      $('.js-submitRenameUserField').attr('disabled', 'disabled');
       $('.half-circle-spinner').show();
 
       e.preventDefault();
@@ -212,12 +212,12 @@
           if (response.data.renamed) {
             $('.user-fields-message-ok').show();
             $('.user-fields-message-ok').fadeOut(2000);
-            const oldOpt = document.querySelector('#old-user-field-name');
+            const oldOpt = document.querySelector('.js-userFieldRenameFieldName');
             oldOpt.value = '';
-            const oldID = document.querySelector('#old-user-field-id');
+            const oldID = document.querySelector('.js-userFieldRenameUserID');
             oldID.value = 0;
 
-            const newOpt = document.querySelector('#new-user-field-name');
+            const newOpt = document.querySelector('.js-newUserFieldName');
             newOpt.value = '';
           } else {
             $.colorbox({
@@ -228,7 +228,7 @@
         }
 
         /* Re-enable the button and hide the spinner */
-        $('#rename-user-field-btn').attr('disabled', false);
+        $('.js-submitRenameUserField').attr('disabled', false);
         $('.half-circle-spinner').hide();
       });
     });

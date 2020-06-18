@@ -51,11 +51,11 @@
 			</div>
 			<div class="c-copyOptionToUser__newUserField">
 				<p class="c-CopyOptionToUserErrorMessage <?php echo $field_error_class ?>"><?php esc_html_e("This field does not exist","dapre-cft") ?></p>
-				<label >
+				<label>
 					<?php esc_html_e("User ID","dapre-cft") ?>
 					<input class="js-optToUserFieldID c-copyOptionToUserID small-text" type="number" name="opt_to_user_field_id" />
 				</label>
-				<label >
+				<label>
 					<?php esc_html_e("Field Name","dapre-cft") ?>
 					<input class="js-optToUserFieldName c-copyOptionToUserName regular-text" type="text" name="opt_to_user_field_name" />
 				</label>

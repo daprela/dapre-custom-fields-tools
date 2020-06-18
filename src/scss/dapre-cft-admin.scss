@@ -264,7 +264,9 @@
 	}
 }
 
-.c-optionRename__newOption {
+.c-optionRename__newOption,
+.c-userFieldRename__newFieldName,
+.c-postFieldRename__newFieldName {
 	&.is-error {
 		border: 2px dashed #e43972;
 	}
@@ -356,12 +358,14 @@
 }
 
 .c-options__title,
-.c-userFields__title,
-.c-postFields__title {
+.c-userField__title,
+.c-postField__title {
 	padding-left: 5px;
 }
 
-.c-optionRename {
+.c-optionRename,
+.c-userFieldRename,
+.c-postFieldRename, {
 	display: grid;
 	grid-template-columns: 200px 1fr;
 	align-items: center;
@@ -370,14 +374,18 @@
 		"new-name new-name"
 }
 
-.c-optionRename__header {
+.c-optionRename__header,
+.c-userFieldRename__header,
+.c-postFieldRename__header {
 	font-size: 14px;
 	padding: 20px 10px 20px 0;
 	line-height: 1.3;
 	font-weight: 600;
 }
 
-.c-optionRename__field {
+.c-optionRename__field,
+.c-userFieldRename__field,
+.c-postFieldRename__field {
 	font-size: 14px;
 	margin-bottom: 9px;
 	padding: 15px 10px;
@@ -392,15 +400,21 @@
 	}
 }
 
-.c-optionRename__header--currentOption {
+.c-optionRename__headerCurrentOption,
+.c-userFieldRename__headerCurrentField,
+.c-postFieldRename__headerCurrentField {
 	grid-area: header;
 }
 
-.c-optionRename__field--currentOption {
+.c-optionRename__fieldCurrentOption,
+.c-userFieldRename__fieldCurrentField,
+.c-postFieldRename__fieldCurrentField {
 	grid-area: old-name;
 }
 
-.c-optionRename__newOption {
+.c-optionRename__newOption,
+.c-userFieldRename__newFieldName,
+.c-postFieldRename__newFieldName {
 	grid-area: new-name;
 	display:grid;
 	grid-template-columns: 200px 1fr;
@@ -482,7 +496,6 @@
 }
 
 /* Copy option to user field */
-/* Copy option to post field */
 
 .c-copyToDestinationUser,
 .c-copyToDestinationPost {
@@ -562,37 +575,38 @@
 	display: grid;
 	grid-template-columns: 8% 18% 6% 28% 14% 10% 18%;
 }
-//
-//.c-userField__field--errorMessage {
-//	margin-top: 4px;
-//	margin-bottom: 0;
-//
-//	&.is-visible {
-//		display: block;
-//	}
-//
-//	&.is-hidden {
-//		display:none;
-//	}
-//}
-//
-//.c-userField__field--fieldName {
-//	padding: 0 5px
-//}
-//
-//.c-userFieldsMetaHeaders > * {
-//	font-size: 14px;
-//	font-weight: 600;
-//	text-align: left;
-//	padding: 20px 10px 20px 5px;
-//}
-//
-//.c-userField {
-//	border-top: 1px solid lightgrey;
-//	> * {
-//		padding: 0 5px;
-//	}
-//	&.is-error {
-//		border: 2px dashed #e43972;
-//	}
-//}
+
+.c-userFieldRename__field,
+.c-postFieldRename__field {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	align-items: center;
+	margin-bottom: 9px;
+	padding: 15px 10px;
+	line-height: 1.3;
+	vertical-align: middle;
+	font-size: 14px;
+	grid-template-areas:
+		"error error"
+		"field-id field-name"
+}
+
+.c-userFieldRenameErrorMessage,
+.c-postFieldRenameErrorMessage {
+	grid-area: error;
+}
+
+.c-userFieldRenameUserID {
+	grid-area: field-id;
+}
+
+.c-userFieldRenameFieldName {
+	grid-area: field-name;
+}
+
+.c-userFieldRenameErrorMessage,
+.c-postFieldRenameErrorMessage {
+	&.is-hidden {
+		display: none;
+	}
+}
