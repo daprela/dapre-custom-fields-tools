@@ -1,25 +1,31 @@
-<h3 class="c-userField__title hndle"><?php esc_html_e("Rename User Field","dapre-cft") ?></h3>
+<h3 class="c-metaField__title hndle"><?php esc_html_e("Rename User Field","dapre-cft") ?></h3>
 <div class ="inside">
-	<div class="c-userFieldRename">
-		<div class="c-userFieldRename__header c-userFieldRename__headerCurrentField">
-			<?php esc_html_e("Current User Field","dapre-cft") ?>
+	<div class="c-renameContainer">
+		<div class="c-metaFieldIdName">
+			<div class="c-metaFieldIdName__header">
+				<?php esc_html_e("Current User Field","dapre-cft") ?>
+			</div>
+			<div class="c-metaFieldIdName__IdName has-errorField">
+				<div class="c-metaFieldIdName_errorContainer">
+					<p class="c-metaFieldErrorMessage <?php echo $field_error_class ?>"><?php esc_html_e("This field does not exist","dapre-cft") ?></p>
+				</div>
+				<div class="c-metaFieldIdName_fieldContainer">
+					<label class="c-metaFieldFieldID">
+						<?php esc_html_e("User ID","dapre-cft") ?>
+						<input class="js-userFieldRenameUserID small-text" type="number" name="old_user_field_id" />
+					</label>
+					<label class="c-metaFieldFieldName">
+						<?php esc_html_e("Field Name","dapre-cft") ?>
+						<input class="js-userFieldRenameFieldName regular-text" type="text" name="old_user_field_name" />
+					</label>
+				</div>
+			</div>
 		</div>
-		<div class="c-userFieldRename__field c-userFieldRename__fieldCurrentField">
-			<p class="c-userFieldRenameErrorMessage <?php echo $field_error_class ?>"><?php esc_html_e("This field does not exist","dapre-cft") ?></p>
-			<label >
-				<?php esc_html_e("User ID","dapre-cft") ?>
-				<input class="js-userFieldRenameUserID c-userFieldRenameUserID small-text" type="number" name="old_user_field_id" />
-			</label>
-			<label >
-				<?php esc_html_e("Field Name","dapre-cft") ?>
-				<input class="js-userFieldRenameFieldName c-userFieldRenameFieldName regular-text" type="text" name="old_user_field_name" />
-			</label>
-		</div>
-		<div class="c-userFieldRename__newFieldName <?php echo $row_error_class ?>">
-			<div class="c-userFieldRename__header c-userFieldRename__headerNewFieldName">
+		<div class="c-metaFieldName <?php echo $row_error_class ?>">
+			<div class="c-metaFieldName__header">
 				<?php esc_html_e("New Field Name","dapre-cft") ?>
 			</div>
-			<div class="c-userFieldRename__field c-userFieldRename__fieldNewFieldName">
+			<div class="c-metaFieldName__field">
 				<input class="js-newUserFieldName regular-text" type="text" name="new_user_field_name" />
 			</div>
 		</div>

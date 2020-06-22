@@ -234,29 +234,29 @@
     });
 
     /* Copy user field section */
-    $('input[name=\'copy_user_field_to\']').on('click', () => {
-      if ($(this).attr('id') === 'copy_user_field_to_user_field') {
-        $('#copy-user-field-to-option').slideUp('slow');
-        $('#copy-user-field-to-post-field').slideUp('slow');
-        $('#copy-user-field-to-user-field').slideDown('slow');
+    $('.js-copyUserFieldTo').on('click', () => {
+      if ($('input[type=radio][name=copy_user_field_to]:checked').val() === 'user field to option') {
+        $('.js-copyUserFieldToUserField').slideUp('slow');
+        $('.js-copyOptionToPostField').slideUp('slow');
+        $('.js-copyUserFieldToOption').slideDown('slow');
       }
 
-      if ($(this).attr('id') === 'copy_user_field_to_option') {
-        $('#copy-user-field-to-post-field').slideUp('slow');
-        $('#copy-user-field-to-user-field').slideUp('slow');
-        $('#copy-user-field-to-option').slideDown('slow');
+      if ($('input[type=radio][name=copy_user_field_to]:checked').val() === 'user field to user field') {
+        $('.js-copyUserFieldToOption').slideUp('slow');
+        $('.js-copyOptionToPostField').slideUp('slow');
+        $('.js-copyUserFieldToUserField').slideDown('slow');
       }
 
-      if ($(this).attr('id') === 'copy_user_field_to_post_field') {
-        $('#copy-user-field-to-user-field').slideUp('slow');
-        $('#copy-user-field-to-option').slideUp('slow');
-        $('#copy-user-field-to-post-field').slideDown('slow');
+      if ($('input[type=radio][name=copy_user_field_to]:checked').val() === 'user field to post field') {
+        $('.js-copyUserFieldToUserField').slideUp('slow');
+        $('.js-copyUserFieldToOption').slideUp('slow');
+        $('.js-copyOptionToPostField').slideDown('slow');
       }
     });
 
-    $('#copy-user-field-btn').on('click', (e) => {
+    $('.js-submitCopyUserField').on('click', (e) => {
       /* Disable the button and show the spinner */
-      $('#copy-user-field-btn').attr('disabled', 'disabled');
+      $('.js-submitCopyUserField').attr('disabled', 'disabled');
       $('.half-circle-spinner').show();
 
       e.preventDefault();
@@ -276,31 +276,31 @@
           if (response.data.copied) {
             $('.user-field-copy-ok').show();
             $('.user-field-copy-ok').fadeOut(2000);
-            const oldUserFieldID = document.querySelector('#current_user_field_id');
+            const oldUserFieldID = document.querySelector('.js-userFieldCopyUserID');
             oldUserFieldID.value = '';
-            const oldUserFieldName = document.querySelector('#current_user_field_name');
+            const oldUserFieldName = document.querySelector('.js-userFieldCopyFieldName');
             oldUserFieldName.value = '';
 
             /* Block copy user field to option */
-            const newOpt = document.querySelector('#userfield_to_option_name');
+            const newOpt = document.querySelector('.js-userFieldToOptionName');
             newOpt.value = '';
-            const createOption = document.querySelector('#userfield_to_option_create');
+            const createOption = document.querySelector('.js-userFieldToOptionCreate');
             createOption.checked = false;
 
             /* Block copy user field to user field */
-            const userFieldToUserFieldID = document.querySelector('#userfield_to_user_field_id');
+            const userFieldToUserFieldID = document.querySelector('.js-userFieldToUserFieldID');
             userFieldToUserFieldID.value = '';
-            const userFieldToUserFieldName = document.querySelector('#userfield_to_user_field_name');
+            const userFieldToUserFieldName = document.querySelector('.js-userFieldToUserFieldName');
             userFieldToUserFieldName.value = '';
-            const userFieldToUserFieldCreate = document.querySelector('#userfield_to_user_field_create');
+            const userFieldToUserFieldCreate = document.querySelector('.js-userFieldToUserFieldCreate');
             userFieldToUserFieldCreate.checked = false;
 
             /* Block copy user field to post field */
-            const userFieldToPostFieldID = document.querySelector('#userfield_to_post_field_id');
+            const userFieldToPostFieldID = document.querySelector('.js-userFieldToPostFieldID');
             userFieldToPostFieldID.value = '';
-            const userFieldToPostFieldName = document.querySelector('#userfield_to_post_field_name');
+            const userFieldToPostFieldName = document.querySelector('.js-userFieldToPostFieldName');
             userFieldToPostFieldName.value = '';
-            const userFieldToPostFieldCreate = document.querySelector('#userfield_to_post_field_create');
+            const userFieldToPostFieldCreate = document.querySelector('.js-userFieldToPostFieldCreate');
             userFieldToPostFieldCreate.checked = false;
           } else {
             $.colorbox({
@@ -311,7 +311,7 @@
         }
 
         /* Re-enable the button and hide the spinner */
-        $('#copy-user-field-btn').attr('disabled', false);
+        $('.js-submitCopyUserField').attr('disabled', false);
         $('.half-circle-spinner').hide();
       });
     });

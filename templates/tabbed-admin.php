@@ -46,7 +46,7 @@
 				</div>
 			</div>
 
-			<div class ="js-renameOption postbox">
+			<div class ="postbox">
 				<?php
 
 				/**
@@ -57,7 +57,7 @@
 				?>
 			</div>
 
-			<div class ="js-copyOption postbox">
+			<div class ="postbox">
 				<?php
 
 				/**
@@ -70,8 +70,8 @@
 		</div>
 	</form>
 	
-	<form class="js-userFieldsForm c-userFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
-		<div class="c-userFields">
+	<form class="js-userFieldsForm c-metaFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
+		<div class="c-metaFields">
 			<div class ="postbox">
 				<h3 class="hndle" style="padding-left: 5px"><?php esc_html_e("User Fields","dapre-cft") ?></h3>
 				<div class ="inside">
@@ -85,7 +85,7 @@
 				<input class="js-submitUserFields button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
 				</div>
 			</div>
-			<div id="rename-user-field" class ="postbox">
+			<div class ="postbox">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-user-fields-rename.php');
@@ -93,7 +93,7 @@
 				?>
 			</div>
 
-			<div id="copy-user-field" class ="postbox">
+			<div class ="postbox">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-user-fields-copy.php');
@@ -103,8 +103,8 @@
 		</div>
 	</form>
 	
-	<form class="js-postFieldsForm c-postFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
-		<div class="c-postFields">
+	<form class="js-postFieldsForm c-metaFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
+		<div class="c-metaFields">
 			<div class ="postbox">
 				<h3 class="hndle" style="padding-left: 5px"><?php esc_html_e("Post Fields","dapre-cft") ?></h3>
 				<div class ="inside">
@@ -118,7 +118,7 @@
 				<input class="js-submitPostFields button button-primary" type="submit" name="submit_post_fields" value="Read/Write Values">
 				</div>
 			</div>
-			<div id="rename-post-field" class ="postbox">
+			<div class ="postbox">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-post-fields-rename.php');
@@ -126,7 +126,7 @@
 				?>
 			</div>
 
-			<div id="copy-post-field" class ="postbox">
+			<div class ="postbox">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-post-fields-copy.php');
