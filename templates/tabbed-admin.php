@@ -13,7 +13,7 @@
  */
 ?>
 
-<div class="wrap dapre-cft c-dapreCustomFields">
+<div class="wrap o-customFields">
 	<h1><?php esc_html_e("Custom Fields Tools","dapre-cft") ?></h1>
 	<form method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<?php wp_nonce_field( 'dapre_cft_options', 'dapre_cft_options_verify' ); ?>
@@ -135,7 +135,7 @@
 			</div>
 		</div>
 	</form>
-	<div class="half-circle-spinner hide">
+	<div class="o-customFields__halfCircleSpinner half-circle-spinner is-hidden">
 		<div class="circle circle-1"></div>
 		<div class="circle circle-2"></div>
 	</div>

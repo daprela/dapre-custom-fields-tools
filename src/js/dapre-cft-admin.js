@@ -345,9 +345,9 @@
       });
     });
 
-    $('#rename-post-field-btn').on('click', (e) => {
+    $('.js-submitRenamePostField').on('click', (e) => {
       /* Disable the button and show the spinner */
-      $('#rename-post-field-btn').attr('disabled', 'disabled');
+      $('.js-submitRenamePostField').attr('disabled', 'disabled');
       $('.half-circle-spinner').show();
 
       e.preventDefault();
@@ -367,12 +367,12 @@
           if (response.data.renamed) {
             $('.post-fields-message-ok').show();
             $('.post-fields-message-ok').fadeOut(2000);
-            const oldOpt = document.querySelector('#old-post-field-name');
+            const oldOpt = document.querySelector('.js-postFieldRenameFieldName');
             oldOpt.value = '';
-            const oldID = document.querySelector('#old-post-field-id');
+            const oldID = document.querySelector('.js-postFieldRenamePostID');
             oldID.value = 0;
 
-            const newOpt = document.querySelector('#new-post-field-name');
+            const newOpt = document.querySelector('.js-newPostFieldName');
             newOpt.value = '';
           } else {
             $.colorbox({
@@ -383,35 +383,35 @@
         }
 
         /* Re-enable the button and hide the spinner */
-        $('#rename-post-field-btn').attr('disabled', false);
+        $('.js-submitRenamePostField').attr('disabled', false);
         $('.half-circle-spinner').hide();
       });
     });
 
     /* Copy post field section */
-    $('input[name=\'copy_post_field_to\']').on('click', () => {
-      if ($(this).attr('id') === 'copy_post_field_to_user_field') {
-        $('#copy-post-field-to-option').slideUp('slow');
-        $('#copy-post-field-to-post-field').slideUp('slow');
-        $('#copy-post-field-to-user-field').slideDown('slow');
+    $('.js-copyPostFieldTo').on('click', () => {
+      if ($('input[type=radio][name=copy_post_field_to]:checked').val() === 'post field to user field') {
+        $('.js-copyPostFieldToOption').slideUp('slow');
+        $('.js-copyOptionToPostField').slideUp('slow');
+        $('.js-copyPostFieldToUserField').slideDown('slow');
       }
 
-      if ($(this).attr('id') === 'copy_post_field_to_option') {
-        $('#copy-post-field-to-post-field').slideUp('slow');
-        $('#copy-post-field-to-user-field').slideUp('slow');
-        $('#copy-post-field-to-option').slideDown('slow');
+      if ($('input[type=radio][name=copy_post_field_to]:checked').val() === 'post field to option') {
+        $('.js-copyOptionToPostField').slideUp('slow');
+        $('.js-copyPostFieldToUserField').slideUp('slow');
+        $('.js-copyPostFieldToOption').slideDown('slow');
       }
 
-      if ($(this).attr('id') === 'copy_post_field_to_post_field') {
-        $('#copy-post-field-to-user-field').slideUp('slow');
-        $('#copy-post-field-to-option').slideUp('slow');
-        $('#copy-post-field-to-post-field').slideDown('slow');
+      if ($('input[type=radio][name=copy_post_field_to]:checked').val() === 'post field to post field') {
+        $('.js-copyPostFieldToUserField').slideUp('slow');
+        $('.js-copyPostFieldToOption').slideUp('slow');
+        $('.js-copyOptionToPostField').slideDown('slow');
       }
     });
 
-    $('#copy-post-field-btn').on('click', (e) => {
+    $('.js-submitCopyPostField').on('click', (e) => {
       /* Disable the button and show the spinner */
-      $('#copy-post-field-btn').attr('disabled', 'disabled');
+      $('.js-submitCopyPostField').attr('disabled', 'disabled');
       $('.half-circle-spinner').show();
 
       e.preventDefault();
@@ -431,31 +431,31 @@
           if (response.data.copied) {
             $('.post-field-copy-ok').show();
             $('.post-field-copy-ok').fadeOut(2000);
-            const oldPostFieldID = document.querySelector('#current_post_field_id');
+            const oldPostFieldID = document.querySelector('.js-postFieldCopyPostID');
             oldPostFieldID.value = '';
-            const oldPostFieldName = document.querySelector('#current_post_field_name');
+            const oldPostFieldName = document.querySelector('.js-postFieldCopyFieldName');
             oldPostFieldName.value = '';
 
             /* Block copy post field to option */
-            const newOpt = document.querySelector('#postfield_to_option_name');
+            const newOpt = document.querySelector('.js-postFieldToOptionName');
             newOpt.value = '';
-            const createOption = document.querySelector('#postfield_to_option_create');
+            const createOption = document.querySelector('.js-postFieldToOptionCreate');
             createOption.checked = false;
 
             /* Block copy post field to user field */
-            const postFieldToUserFieldID = document.querySelector('#postfield_to_user_field_id');
+            const postFieldToUserFieldID = document.querySelector('.js-postFieldToUserFieldID');
             postFieldToUserFieldID.value = '';
-            const postFieldToUserFieldName = document.querySelector('#postfield_to_user_field_name');
+            const postFieldToUserFieldName = document.querySelector('.js-postFieldToUserFieldName');
             postFieldToUserFieldName.value = '';
-            const postFieldToUserFieldCreate = document.querySelector('#postfield_to_user_field_create');
+            const postFieldToUserFieldCreate = document.querySelector('.js-postFieldToUserFieldCreate');
             postFieldToUserFieldCreate.checked = false;
 
             /* Block copy post field to post field */
-            const postFieldToPostFieldID = document.querySelector('#postfield_to_post_field_id');
+            const postFieldToPostFieldID = document.querySelector('.js-postFieldToPostFieldID');
             postFieldToPostFieldID.value = '';
-            const postFieldToPostFieldName = document.querySelector('#postfield_to_post_field_name');
+            const postFieldToPostFieldName = document.querySelector('.js-postFieldToPostFieldName');
             postFieldToPostFieldName.value = '';
-            const postFieldToPostFieldCreate = document.querySelector('#postfield_to_post_field_create');
+            const postFieldToPostFieldCreate = document.querySelector('.js-postFieldToPostFieldCreate');
             postFieldToPostFieldCreate.checked = false;
           } else {
             $.colorbox({
@@ -466,7 +466,7 @@
         }
 
         /* Re-enable the button and hide the spinner */
-        $('#copy-post-field-btn').attr('disabled', false);
+        $('.js-submitCopyPostField').attr('disabled', false);
         $('.half-circle-spinner').hide();
       });
     });
@@ -649,27 +649,27 @@ function toggleOptionAction(element) {
 
   if (element.type === 'radio') {
     if (element.value === 'read') {
-      row.classList.add('read');
-      row.classList.remove('write');
-      row.classList.remove('delete');
+      row.classList.add('-color-white');
+      row.classList.remove('-color-blue');
+      row.classList.remove('-color-orange');
       content.disabled = true;
       toggleDateCheckbox.disabled = true;
       arrayCheckbox.disabled = true;
     }
 
     if (element.value === 'write') {
-      row.classList.add('write');
-      row.classList.remove('read');
-      row.classList.remove('delete');
+      row.classList.add('-color-blue');
+      row.classList.remove('-color-white');
+      row.classList.remove('-color-orange');
       content.disabled = false;
       toggleDateCheckbox.disabled = false;
       arrayCheckbox.disabled = false;
     }
 
     if (element.value === 'delete') {
-      row.classList.add('delete');
-      row.classList.remove('write');
-      row.classList.remove('read');
+      row.classList.add('-color-orange');
+      row.classList.remove('-color-blue');
+      row.classList.remove('-color-white');
       content.disabled = true;
       toggleDateCheckbox.disabled = true;
       arrayCheckbox.disabled = true;
@@ -783,27 +783,27 @@ function toggleUserAction(element) {
 
   if (element.type === 'radio') {
     if (element.value === 'read') {
-      row.classList.add('read');
-      row.classList.remove('write');
-      row.classList.remove('delete');
+      row.classList.add('-color-white');
+      row.classList.remove('-color-blue');
+      row.classList.remove('-color-orange');
       content.disabled = true;
       toggleDateCheckbox.disabled = true;
       arrayCheckbox.disabled = true;
     }
 
     if (element.value === 'write') {
-      row.classList.add('write');
-      row.classList.remove('read');
-      row.classList.remove('delete');
+      row.classList.add('-color-blue');
+      row.classList.remove('-color-white');
+      row.classList.remove('-color-orange');
       content.disabled = false;
       toggleDateCheckbox.disabled = false;
       arrayCheckbox.disabled = false;
     }
 
     if (element.value === 'delete') {
-      row.classList.add('delete');
-      row.classList.remove('write');
-      row.classList.remove('read');
+      row.classList.add('-color-orange');
+      row.classList.remove('-color-blue');
+      row.classList.remove('-color-white');
       content.disabled = true;
       toggleDateCheckbox.disabled = true;
       arrayCheckbox.disabled = true;
@@ -814,13 +814,13 @@ function toggleUserAction(element) {
 // manage the toggle action radio buttons
 function togglePostAction(element) {
   const { index } = element.dataset;
-  const row = document.querySelector(`#post_field_data_row_${index}`);
-  const content = document.querySelector(`#post_field_input_value_${index}`);
-  const toggleDateCheckbox = document.querySelector(`#post_date_string_${index}`);
-  const arrayCheckbox = document.querySelector(`#post_empty_array_${index}`);
+  const row = document.querySelector(`.js-postFieldsFieldDataRow_${index}`);
+  const content = document.querySelector(`.js-postFieldInputValue_${index}`);
+  const toggleDateCheckbox = document.querySelector(`.js-postDateString_${index}`);
+  const arrayCheckbox = document.querySelector(`.js-postEmptyArray_${index}`);
 
   if (element.type === 'checkbox') {
-    if (element.id === `post_empty_array_${index}`) {
+    if (element.classList.contains(`js-postEmptyArray_${index}`)) {
       // if the user checked the empty array checkbox then disable the toggle date and return
       if (element.checked === true) {
         toggleDateCheckbox.checked = false;
@@ -831,12 +831,12 @@ function togglePostAction(element) {
     }
 
     /* toggle between date string and timestamp representation of the input field content */
-    if (element.id === `post_date_string_${index}`) {
+    if (element.classList.contains(`js-postDateString_${index}`)) {
       content.disabled = false;
       arrayCheckbox.checked = false;
       // get the elements used to backup the values
-      const dateTimestampBackup = document.querySelector(`#post_field_input_timestamp_backup_${index}`);
-      const dateStringBackup = document.querySelector(`#post_field_input_string_backup_${index}`);
+      const dateTimestampBackup = document.querySelector(`.js-postFieldInputTimestampBackup_${index}`);
+      const dateStringBackup = document.querySelector(`.js-postFieldInputStringBackup_${index}`);
 
       // if it is a number interpret as a timestamp
       if (isNumber(content.value)) {
@@ -874,12 +874,12 @@ function togglePostAction(element) {
     }
 
     /* toggle between date string and timestamp representation of the field content */
-    if (element.id === `post_date_string_show_${index}`) {
-      const fieldContent = document.querySelector(`#post_field_value_${index}`);
+    if (element.classList.contains(`js-postDateStringCurValue_${index}`)) {
+      const fieldContent = document.querySelector(`.js-postFieldValue_${index}`);
 
       // get the elements used to backup the values
-      const dateTimestampBackup = document.querySelector(`#post_field_value_timestamp_backup_${index}`);
-      const dateStringBackup = document.querySelector(`#post_field_value_string_backup_${index}`);
+      const dateTimestampBackup = document.querySelector(`.js-postFieldValueTimestampBackup_${index}`);
+      const dateStringBackup = document.querySelector(`.js-postFieldValueStringBackup_${index}`);
 
       // if it is a number interpret as a timestamp
       if (isNumber(fieldContent.innerText)) {
@@ -917,27 +917,27 @@ function togglePostAction(element) {
 
   if (element.type === 'radio') {
     if (element.value === 'read') {
-      row.classList.add('read');
-      row.classList.remove('write');
-      row.classList.remove('delete');
+      row.classList.add('-color-white');
+      row.classList.remove('-color-blue');
+      row.classList.remove('-color-orange');
       content.disabled = true;
       toggleDateCheckbox.disabled = true;
       arrayCheckbox.disabled = true;
     }
 
     if (element.value === 'write') {
-      row.classList.add('write');
-      row.classList.remove('read');
-      row.classList.remove('delete');
+      row.classList.add('-color-blue');
+      row.classList.remove('-color-white');
+      row.classList.remove('-color-orange');
       content.disabled = false;
       toggleDateCheckbox.disabled = false;
       arrayCheckbox.disabled = false;
     }
 
     if (element.value === 'delete') {
-      row.classList.add('delete');
-      row.classList.remove('write');
-      row.classList.remove('read');
+      row.classList.add('-color-orange');
+      row.classList.remove('-color-blue');
+      row.classList.remove('-color-white');
       content.disabled = true;
       toggleDateCheckbox.disabled = true;
       arrayCheckbox.disabled = true;

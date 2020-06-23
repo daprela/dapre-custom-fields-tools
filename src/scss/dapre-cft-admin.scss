@@ -3,109 +3,20 @@
  * included in this file.
  */
 
+$white: rgb(255, 255, 255);
+$blue: rgb(131, 215, 255);
+$orange: rgb(255, 213, 151);
+
 *, *::before, *::after {
 	box-sizing: border-box;
 }
 
-.c-dapreCustomFields {
+.o-customFields > * {
 	font-size: 14px;
 }
 
-.dapre-cft .form-table .user-id,
-.dapre-cft .form-table .post-id{
-	max-width: 5%;
-  	min-width: 5%;
-}
-
-.dapre-cft .form-table .field-name,
-.dapre-cft .form-table .post-field-name,
-.dapre-cft .form-table .option-field-name {
-	max-width: 15%;
-  	min-width: 15%;
-}
-
-.dapre-cft .form-table .user-actions,
-.dapre-cft .form-table .post-actions,
-.dapre-cft .form-table .option-actions{
-	min-width: 6%;
-}
-
-.dapre-cft .form-table .user-value-options,
-.dapre-cft .form-table .post-value-options,
-.dapre-cft .form-table .option-value-options {
-	max-width: 10%;
-	min-width: 10%;
-}
-
-.dapre-cft .form-table .value-to-add,
-.dapre-cft .form-table .post-value-to-add,
-.dapre-cft .form-table .option-value-to-add{
-	max-width: 20%;
-  	min-width: 20%;
-}
-
-.dapre-cft .form-table .user-value-add,
-.dapre-cft .form-table .post-value-add,
-.dapre-cft .form-table .option-value-add{
-  	min-width: 10%;
-}
-
-.dapre-cft .form-table .user-value-add table,
-.dapre-cft .form-table .post-value-add table,
-.dapre-cft .form-table .option-value-add table {
-  	width: 100%;
-}
-
-.dapre-cft .form-table .previous-value,
-.dapre-cft .form-table .post-previous-value,
-.dapre-cft .form-table .option-previous-value {
-  	max-width: 14%;
-  	min-width: 14%;
-}
-
-.dapre-cft .form-table .current-value,
-.dapre-cft .form-table .post-current-value {
-  	max-width: 15%;
-  	min-width: 15%;
-}
-
-.dapre-cft .form-table .option-current-value {
-  	max-width: 20%;
-  	min-width: 20%;
-}
-
-.dapre-cft .form-table .td {
-  padding: 1% 1.5% 1% 0%;
-}
-
-.dapre-cft .form-table .td textarea,
-.dapre-cft .form-table .td input {
-  max-width: 100%;
-  min-width: 100%;
-}
-
-.dapre-cft .hide {
-  display: none;
-}
-
-.dapre-cft .show {
-  display: unset;
-}
-
-.dapre-cft .row_error {
-  border: 2px dashed #e43972;
-}
-
-.dapre-cft .write {
-  background-color: rgb(255, 255, 255);;
-}
-
-.dapre-cft .write {
-  background-color: rgb(131, 215, 255);
-}
-
-.dapre-cft .delete {
-  background-color: rgb(255, 213, 151);
+.o-customFields__halfCircleSpinner.is-hidden {
+	display: none;
 }
 
 /* SPINNER */
@@ -159,7 +70,7 @@
 
 /* ERROR MESSAGES */
 .o-messageBox ,
-.o-messageBox  *{
+.o-messageBox > * {
 	box-sizing: border-box;
 }
 
@@ -191,6 +102,26 @@
 
 /* NEW BEM CSS */
 
+.c-optionField,
+.c-metaField {
+	&.-color-white {
+		background-color: $white;
+	}
+}
+
+.c-optionField,
+.c-metaField {
+	&.-color-blue {
+		background-color: $blue;
+	}
+}
+
+.c-optionField,
+.c-metaField {
+	&.-color-orange {
+		background-color: $orange;
+	}
+}
 
 .o-meta {
 	display:grid;

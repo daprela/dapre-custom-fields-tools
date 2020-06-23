@@ -1,4 +1,4 @@
-<h3 class="c-metaField__title hndle" style="padding-left: 5px"><?php esc_html_e("Copy User Field","dapre-cft") ?></h3>
+<h3 class="c-metaField__title hndle"><?php esc_html_e("Copy User Field","dapre-cft") ?></h3>
 <div class ="inside">
 	<div class="c-copyContainer">
 		<h4 class="c-copyFromTitle"><?php esc_html_e("Copy from user field...","dapre-cft") ?></h4>
@@ -27,22 +27,21 @@
 			<div>
 				<label>
 					<?php esc_html_e('...to option', 'dapre-cft') ?>
-					<input class="js-copyUserFieldTo js-inputCopyUserFieldToOption" type="radio" name="copy_user_field_to" value="user field to option" />
+					<input class="js-copyUserFieldTo" type="radio" name="copy_user_field_to" value="user field to option" />
 				</label>
 
 				<label>
 					<?php esc_html_e('...to user field','dapre-cft') ?>
-					<input class="js-copyUserFieldTo js-inputCopyUserFieldToUserField" type="radio" name="copy_user_field_to" value="user field to user field" />
+					<input class="js-copyUserFieldTo" type="radio" name="copy_user_field_to" value="user field to user field" />
 				</label>
 
 				<label>
 					<?php esc_html_e('...to post field','dapre-cft') ?>
-					<input class="js-copyUserFieldTo js-inputCopyUserFieldToPostField" type="radio" name="copy_user_field_to" value="user field to post field" />
+					<input class="js-copyUserFieldTo" type="radio" name="copy_user_field_to" value="user field to post field" />
 				</label>
 			</div>
 		</div>
 	</div>
-
 	<div class='js-copyUserFieldToUserField c-copyToOption is-hidden'>
 		<h4 class="c-copyToUserTitle"><?php esc_html_e("...to user field","dapre-cft") ?></h4>
 		<div class="c-metaFieldIdName" <?php echo $row_error_class ?>>

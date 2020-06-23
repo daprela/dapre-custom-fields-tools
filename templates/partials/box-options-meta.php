@@ -1,20 +1,20 @@
 <div class="c-optionsMetaHeaders">
-	<div class="c-optionsMetaHeaders__title c-optionsMetaHeaders__name">
+	<div>
 		<?php esc_html_e("Option Name","dapre-cft") ?>
 	</div>
-	<div class="c-optionsMetaHeaders__title c-optionsMetaHeaders__actions">
+	<div>
 		<?php esc_html_e("Actions","dapre-cft") ?>
 	</div>
-	<div class="c-optionsMetaHeaders__title c-optionsMetaHeaders__valueToAdd">
+	<div>
 		<?php esc_html_e("Value to Add","dapre-cft") ?>
 	</div>
-	<div class="c-optionsMetaHeaders__title c-optionsMetaHeaders__prevValue">
+	<div>
 		<?php esc_html_e("Previous Value","dapre-cft") ?>
 	</div>
-	<div class="c-optionsMetaHeaders__title c-optionsMetaHeaders__curValueOptions">
+	<div>
 		<?php esc_html_e("Current Value Options","dapre-cft") ?>
 	</div>
-	<div class="c-optionsMetaHeaders__title c-optionsMetaHeaders__curValue">
+	<div>
 		<?php esc_html_e("Current Value","dapre-cft") ?>
 	</div>
 </div>

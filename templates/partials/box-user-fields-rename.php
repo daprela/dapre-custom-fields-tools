@@ -5,10 +5,7 @@
 			<div class="c-metaFieldIdName__header">
 				<?php esc_html_e("Current User Field","dapre-cft") ?>
 			</div>
-			<div class="c-metaFieldIdName__IdName has-errorField">
-				<div class="c-metaFieldIdName_errorContainer">
-					<p class="c-metaFieldErrorMessage <?php echo $field_error_class ?>"><?php esc_html_e("This field does not exist","dapre-cft") ?></p>
-				</div>
+			<div class="c-metaFieldIdName__IdName">
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("User ID","dapre-cft") ?>
