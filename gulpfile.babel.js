@@ -20,7 +20,6 @@ PLUGIN/assets/css/*.scss   ->   PLUGIN/assets/css/*.min.css
 PLUGIN/assets/js/*.js   ->   PLUGIN/assets/js/*.min.js
 PLUGIN/src/images/*.{jpg,jpeg,png,svg,gif}   ->   PLUGIN/assets/images/*.{jpg,jpeg,png,svg,gif}
 
-
 -------------------------------------------------
 Running Gulp will do the following things for us:
 -------------------------------------------------

@@ -28,6 +28,10 @@ In the following months I realized how useful the plugin was and couldn't work a
 
 == Changelog ==
 
+= 4.6.1 =
+* Updated npm packages versions
+* Built distributable file
+
 = 4.6.0 =
 * Refactored CSS to use grid and flexbox instead of tables
 * Refactored CSS to use BEVM coding principles
