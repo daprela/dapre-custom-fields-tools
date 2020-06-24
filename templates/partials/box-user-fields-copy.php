@@ -119,9 +119,3 @@
 	</div>
 	<div><input class="js-submitCopyUserField button button-primary" type="submit" name="copy_user_field" value="Copy"></div>
 </div>
-<div class="message-box message-ok user-field-copy-ok hide">
-	<div class="fade-out"><?php esc_html_e("User field copied","dapre-cft") ?></div>
-</div>
-<div class="message-box message-error user-field-copy-error hide">
-	<div class="fade-out"><?php esc_html_e("There was an error. User field not copied","dapre-cft") ?></div>
-</div>

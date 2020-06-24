@@ -2,7 +2,7 @@
   $(() => {
     $(document).ready(() => {
 
-      /* $('.half-circle-spinner').hide(); */
+      /* $('.js-halfCircleSpinner').hide(); */
 
     });
 
@@ -12,7 +12,7 @@
     $('.js-submitOptions').on('click', (e) => {
       /* Disable the button and show the spinner */
       $('.js-submitOptions').attr('disabled', 'disabled');
-      $('.half-circle-spinner').show();
+      $('.js-halfCircleSpinner').show();
 
       e.preventDefault();
 
@@ -34,14 +34,14 @@
 
         /* Re-enable the button and hide the spinner */
         $('.js-submitOptions').attr('disabled', false);
-        $('.half-circle-spinner').hide();
+        $('.js-halfCircleSpinner').hide();
       });
     });
 
     $('.js-submitRenameOption').on('click', (e) => {
       /* Disable the button and show the spinner */
       $('.js-submitRenameOption').attr('disabled', 'disabled');
-      $('.half-circle-spinner').show();
+      $('.js-halfCircleSpinner').show();
 
       e.preventDefault();
 
@@ -75,7 +75,7 @@
 
         /* Re-enable the button and hide the spinner */
         $('.js-submitRenameOption').attr('disabled', false);
-        $('.half-circle-spinner').hide();
+        $('.js-halfCircleSpinner').hide();
       });
     });
 
@@ -104,7 +104,7 @@
     $('.js-submitCopyOption').on('click', (e) => {
       /* Disable the button and show the spinner */
       $('.js-submitCopyOption').attr('disabled', 'disabled');
-      $('.half-circle-spinner').show();
+      $('.js-halfCircleSpinner').show();
 
       e.preventDefault();
 
@@ -157,7 +157,7 @@
 
         /* Re-enable the button and hide the spinner */
         $('.js-submitCopyOption').attr('disabled', false);
-        $('.half-circle-spinner').hide();
+        $('.js-halfCircleSpinner').hide();
       });
     });
 
@@ -166,7 +166,7 @@
     /* AJAX functionality for user fields section */
     $('.js-submitUserFields').on('click', (e) => {
       $('.js-submitUserFields').attr('disabled', 'disabled');
-      $('.half-circle-spinner').show();
+      $('.js-halfCircleSpinner').show();
 
       e.preventDefault();
 
@@ -186,14 +186,14 @@
         }
 
         $('.js-submitUserFields').attr('disabled', false);
-        $('.half-circle-spinner').hide();
+        $('.js-halfCircleSpinner').hide();
       });
     });
 
     $('.js-submitRenameUserField').on('click', (e) => {
       /* Disable the button and show the spinner */
       $('.js-submitRenameUserField').attr('disabled', 'disabled');
-      $('.half-circle-spinner').show();
+      $('.js-halfCircleSpinner').show();
 
       e.preventDefault();
 
@@ -229,7 +229,7 @@
 
         /* Re-enable the button and hide the spinner */
         $('.js-submitRenameUserField').attr('disabled', false);
-        $('.half-circle-spinner').hide();
+        $('.js-halfCircleSpinner').hide();
       });
     });
 
@@ -257,7 +257,7 @@
     $('.js-submitCopyUserField').on('click', (e) => {
       /* Disable the button and show the spinner */
       $('.js-submitCopyUserField').attr('disabled', 'disabled');
-      $('.half-circle-spinner').show();
+      $('.js-halfCircleSpinner').show();
 
       e.preventDefault();
 
@@ -312,7 +312,7 @@
 
         /* Re-enable the button and hide the spinner */
         $('.js-submitCopyUserField').attr('disabled', false);
-        $('.half-circle-spinner').hide();
+        $('.js-halfCircleSpinner').hide();
       });
     });
     /* End of AJAX for user field section */
@@ -322,7 +322,7 @@
     /* AJAX functionality for post fields section */
     $('.js-submitPostFields').on('click', (e) => {
       $('.js-submitPostFields').attr('disabled', 'disabled');
-      $('.half-circle-spinner').show();
+      $('.js-halfCircleSpinner').show();
 
       e.preventDefault();
 
@@ -341,14 +341,14 @@
         }
 
         $('.js-submitPostFields').attr('disabled', false);
-        $('.half-circle-spinner').hide();
+        $('.js-halfCircleSpinner').hide();
       });
     });
 
     $('.js-submitRenamePostField').on('click', (e) => {
       /* Disable the button and show the spinner */
       $('.js-submitRenamePostField').attr('disabled', 'disabled');
-      $('.half-circle-spinner').show();
+      $('.js-halfCircleSpinner').show();
 
       e.preventDefault();
 
@@ -384,7 +384,7 @@
 
         /* Re-enable the button and hide the spinner */
         $('.js-submitRenamePostField').attr('disabled', false);
-        $('.half-circle-spinner').hide();
+        $('.js-halfCircleSpinner').hide();
       });
     });
 
@@ -412,7 +412,7 @@
     $('.js-submitCopyPostField').on('click', (e) => {
       /* Disable the button and show the spinner */
       $('.js-submitCopyPostField').attr('disabled', 'disabled');
-      $('.half-circle-spinner').show();
+      $('.js-halfCircleSpinner').show();
 
       e.preventDefault();
 
@@ -467,7 +467,7 @@
 
         /* Re-enable the button and hide the spinner */
         $('.js-submitCopyPostField').attr('disabled', false);
-        $('.half-circle-spinner').hide();
+        $('.js-halfCircleSpinner').hide();
       });
     });
     /* End of AJAX for post field section */

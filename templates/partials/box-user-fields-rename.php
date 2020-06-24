@@ -29,9 +29,3 @@
 	</div>
 	<div><input class="js-submitRenameUserField button button-primary" type="submit" name="rename_user_field" value="Rename"></div>
 </div>
-<div class="message-box message-ok user-fields-message-ok hide">
-	<div class="fade-out"><?php esc_html_e("User field renamed","dapre-cft") ?></div>
-</div>
-<div class="message-box message-error user-fields-message-error hide">
-	<div class="fade-out"><?php esc_html_e("There was an error. Post field not renamed","dapre-cft") ?></div>
-</div>

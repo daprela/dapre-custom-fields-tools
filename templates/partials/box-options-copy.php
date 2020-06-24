@@ -110,9 +110,3 @@
 	</div>
 	<div><input class="js-submitCopyOption button button-primary" type="submit" name="copy_option" value="Copy"></div>
 </div>
-<div class="js-optionCopyOK o-messageBox c-messageOK is-hidden">
-	<div class="c-messageOK__fadeOut"><?php esc_html_e("Option copied","dapre-cft") ?></div>
-</div>
-<div class="js-optionCopyError o-messageBox c-messageError is-hidden">
-	<div class="c-messageError__fadeOut"><?php esc_html_e("There was an error. Option not copied","dapre-cft") ?></div>
-</div>

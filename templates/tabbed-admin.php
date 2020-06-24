@@ -135,7 +135,7 @@
 			</div>
 		</div>
 	</form>
-	<div class="o-customFields__halfCircleSpinner half-circle-spinner is-hidden">
+	<div class="js-halfCircleSpinner o-customFields__halfCircleSpinner half-circle-spinner is-hidden">
 		<div class="circle circle-1"></div>
 		<div class="circle circle-2"></div>
 	</div>

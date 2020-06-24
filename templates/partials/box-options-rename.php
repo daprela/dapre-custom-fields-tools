@@ -23,9 +23,3 @@
 	</div>
 	<div><input class="js-submitRenameOption button button-primary" type="submit" name="rename_option" value="Rename"></div>
 </div>
-<div class="js-optionRenameOK o-messageBox c-messageOK is-hidden">
-	<div class="c-messageOK__fadeOut"><?php esc_html_e("Option renamed","dapre-cft") ?></div>
-</div>
-<div class="js-optionRenameError o-messageBox c-messageError is-hidden">
-	<div class="c-messageError__fadeOut"><?php esc_html_e("There was an error. Option not renamed","dapre-cft") ?></div>
-</div>

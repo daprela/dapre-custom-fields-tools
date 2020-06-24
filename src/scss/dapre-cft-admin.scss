@@ -147,7 +147,7 @@ $orange: rgb(255, 213, 151);
 .c-optionsMetaHeaders,
 .c-optionField {
 	display: grid;
-	grid-template-columns: 20% 6% 30% 14% 10% 20%;
+	grid-template-columns: 20% 6% 30% 20% 10% 14%;
 }
 
 .c-optionField__fieldErrorMessage,
@@ -346,13 +346,13 @@ $orange: rgb(255, 213, 151);
 }
 
 /***********************/
-/* USER FIELDS SECTION */
+/* META FIELDS SECTION */
 /***********************/
 
 .c-metaFieldsHeaders,
 .c-metaField {
 	display: grid;
-	grid-template-columns: 8% 18% 6% 28% 14% 10% 18%;
+	grid-template-columns: 8% 18% 6% 28% 18% 10% 14%;
 }
 
 /****************************/
@@ -381,10 +381,7 @@ $orange: rgb(255, 213, 151);
 	grid-template-columns: 1fr;
 }
 
-.c-metaFieldIdName_errorContainer {
-	height: 22px;
-}
-
+.c-metaFieldIdName_errorContainer,
 .c-metaFieldIdName_optionContainer {
 	height: 22px;
 }

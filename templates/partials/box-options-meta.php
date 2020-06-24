@@ -9,13 +9,13 @@
 		<?php esc_html_e("Value to Add","dapre-cft") ?>
 	</div>
 	<div>
-		<?php esc_html_e("Previous Value","dapre-cft") ?>
+		<?php esc_html_e("Current Value","dapre-cft") ?>
 	</div>
 	<div>
 		<?php esc_html_e("Current Value Options","dapre-cft") ?>
 	</div>
 	<div>
-		<?php esc_html_e("Current Value","dapre-cft") ?>
+		<?php esc_html_e("Previous Value","dapre-cft") ?>
 	</div>
 </div>
 
@@ -61,21 +61,6 @@ $key = esc_attr($non_esc_key);
 		<input class="js-optionFieldInputTimestampBackup_<?php echo $key ?>" type="hidden" name="input-timestamp-backup-<?php echo $key ?>" value="" />
 		<input class="js-optionFieldInputStringBackup_<?php echo $key ?>" type="hidden" name="input-string-backup-<?php echo $key ?>" value="" />
 	</div>
-	<div class="c-optionField__fieldPrevValue">
-		<?php
-		if ( is_array($option->get_previous_value()) ) {
-			print_r($option->get_previous_value());
-		} else {
-			echo esc_html($option->get_previous_value());
-		}
-		?>
-	</div>
-	<div class="c-optionField__fieldCurValueOptions">
-		<label class="c-optionField__fieldCurValueOption <?php echo esc_attr($option->get_date_toggle()) ?>">
-			<p><?php esc_html_e("Toggle date string/timestamp","dapre-cft") ?></p>
-			<input class="js-optionDateStringCurValue_<?php echo $key ?>" type="checkbox" name="date_string_show[<?php echo $key ?>]" value="" data-index="<?php echo $key ?>" />
-		</label>
-	</div>
 	<div class="c-optionField__fieldCurValue">
 		<p class="js-optionFieldValue_<?php echo $key ?>">
 			<?php
@@ -88,6 +73,21 @@ $key = esc_attr($non_esc_key);
 		</p>
 		<input class="js-optionFieldValueTimestampBackup_<?php echo $key ?>" type="hidden" name="value-timestamp-backup-<?php echo $key ?>" value="" />
 		<input class="js-optionFieldValueStringBackup_<?php echo $key ?>" type="hidden" name="value-string-backup-<?php echo $key ?>" value="" />
+	</div>
+	<div class="c-optionField__fieldCurValueOptions">
+		<label class="c-optionField__fieldCurValueOption <?php echo esc_attr($option->get_date_toggle()) ?>">
+			<p><?php esc_html_e("Toggle date string/timestamp","dapre-cft") ?></p>
+			<input class="js-optionDateStringCurValue_<?php echo $key ?>" type="checkbox" name="date_string_show[<?php echo $key ?>]" value="" data-index="<?php echo $key ?>" />
+		</label>
+	</div>
+	<div class="c-optionField__fieldPrevValue">
+		<?php
+		if ( is_array($option->get_previous_value()) ) {
+			print_r($option->get_previous_value());
+		} else {
+			echo esc_html($option->get_previous_value());
+		}
+		?>
 	</div>
 </div>
 <?php } ?>
