@@ -1,39 +1,31 @@
-<h3 class="hndle" style="padding-left: 5px"><?php esc_html_e("Rename Post Field","dapre-cft") ?></h3>
+<h3 class="c-metaField__title hndle"><?php esc_html_e("Rename Post Field","dapre-cft") ?></h3>
 <div class ="inside">
-	<table class="form-table">
-		<tbody>
-			<tr>
-				<th scope="row">
-					<?php esc_html_e("Current Post Field","dapre-cft") ?>
-				</th>
-				<td>
-					<fieldset>
-						<p class="<?php echo $field_error_class ?>"><?php esc_html_e("This field does not exist","dapre-cft") ?></p>
-						<label for="old_post_field_id"><?php esc_html_e("Post ID","dapre-cft") ?></label>
-						<input id="old-post-field-id" class="small-text" type="number" name="old_post_field_id" />
-						<label for="old_post_field_name"><?php esc_html_e("Field Name","dapre-cft") ?></label>
-						<input id="old-post-field-name" class="regular-text" type="text" name="old_post_field_name" />
-					</fieldset>
-				</td>
-			</tr>
-			<tr id="" class="post-data-row <?php echo $row_error_class ?>">
-				<th scope="row">
-					<?php esc_html_e("New Post Field","dapre-cft") ?>
-				</th>
-				<td>
-					<fieldset>
-						<label for="new_post_field_name"><?php esc_html_e("New Field Name","dapre-cft") ?></label>
-						<input id="new-post-field-name" class="regular-text" type="text" name="new_post_field_name" />
-					</fieldset>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<div><input id="rename-post-field-btn" class="button button-primary" type="submit" name="rename_post_field" value="Rename"></div>
-</div>
-<div class="message-box message-ok post-fields-message-ok hide">
-	<div class="fade-out"><?php esc_html_e("Post field renamed","dapre-cft") ?></div>
-</div>
-<div class="message-box message-error post-fields-message-error hide">
-	<div class="fade-out"><?php esc_html_e("There was an error. Post field not renamed","dapre-cft") ?></div>
+	<div class="c-renameContainer">
+		<div class="c-metaFieldIdName">
+			<div class="c-metaFieldIdName__header">
+				<?php esc_html_e("Current Post Field","dapre-cft") ?>
+			</div>
+			<div class="c-metaFieldIdName__IdName">
+				<div class="c-metaFieldIdName_fieldContainer">
+					<label class="c-metaFieldFieldID">
+						<?php esc_html_e("Post ID","dapre-cft") ?>
+						<input class="js-postFieldRenamePostID small-text" type="number" name="old_post_field_id" />
+					</label>
+					<label class="c-metaFieldFieldName">
+						<?php esc_html_e("Field Name","dapre-cft") ?>
+						<input class="js-postFieldRenameFieldName regular-text" type="text" name="old_post_field_name" />
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="c-metaFieldName <?php echo $row_error_class ?>">
+			<div class="c-metaFieldName__header">
+				<?php esc_html_e("New Field Name","dapre-cft") ?>
+			</div>
+			<div class="c-metaFieldName__field">
+				<input class="js-newPostFieldName regular-text" type="text" name="new_post_field_name" />
+			</div>
+		</div>
+	</div>
+	<div><input class="js-submitRenamePostField button button-primary" type="submit" name="rename_post_field" value="Rename"></div>
 </div>
