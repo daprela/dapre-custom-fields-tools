@@ -123,13 +123,13 @@ abstract class Custom_Fields {
 	protected function set_date_toggle() {
 		
 		if ( empty($this->current_value) ) {
-			$this->date_toggle = 'hide';
+			$this->date_toggle = 'is-hidden';
 		}
 		
 		if ( !is_array($this->current_value) && (is_numeric($this->current_value) || false != strtotime($this->current_value)) ) {
-			$this->date_toggle = '';
+			$this->date_toggle = 'is-visible';
 		} else {
-			$this->date_toggle = 'hide';
+			$this->date_toggle = 'is-hidden';
 		}
 	}
 	
@@ -153,10 +153,10 @@ abstract class Custom_Fields {
 	 */
 	public function get_field_error_class() {
 		if ( $this->get_error() ) {
-			return 'show';
+			return 'is-visible';
 		}
 		
-		return 'hide';
+		return 'is-hidden';
 	}
 	
 	/**
@@ -168,7 +168,7 @@ abstract class Custom_Fields {
 	 */
 	public function get_row_error_class() {
 		if ( $this->get_error() ) {
-			return 'row_error';
+			return 'is-error';
 		}
 		
 		return '';
