@@ -28,6 +28,11 @@ In the following months I realized how useful the plugin was and couldn't work a
 
 == Changelog ==
 
+= 4.6.0 =
+* Refactored CSS to use grid and flexbox instead of tables
+* Refactored CSS to use BEVM coding principles
+* Refactored templates to comply with changes in CSS
+
 = 4.5.0 =
 * Added Gulp workflow
 * Refactored code and created new plugin structure to meet the new workflow needs
