@@ -34,8 +34,6 @@ class Plugin_Admin {
 			$version = get_asset_version( PLUGIN_DIR_PATH . 'assets/css/dapre-cft-admin.min.css' );
 			wp_enqueue_style( PLUGIN_NAME, PLUGIN_URL_PATH . 'assets/css/dapre-cft-admin.min.css', [], $version, 'all' );
 		}
-
-
 	}
 
 	/**
@@ -54,6 +52,7 @@ class Plugin_Admin {
 			$version = get_asset_version( PLUGIN_DIR_PATH . 'assets/js/dapre-cft-admin.min.js' );
 			wp_enqueue_script( PLUGIN_NAME, PLUGIN_URL_PATH . 'assets/js/dapre-cft-admin.min.js', [ 'jquery' ], $version, false );
 		}
+
 	}
 
 	/**

@@ -28,6 +28,9 @@ class Loader {
 	/** @var object $plugin_i18n The internationalization class */
 	public $plugin_i18n;
 
+	/** @var object $option_field_controller The class that manages the REST route for options */
+	public $option_field_controller;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -41,6 +44,7 @@ class Loader {
 
 		$this->admin         = new Plugin_Admin();
 		$this->plugin_i18n   = new i18n();
+		$this->option_field_controller = new Option_Field_Controller();
 
 	    $this->set_locale();
 	    $this->load_dependencies();
@@ -125,25 +129,29 @@ class Loader {
 	private function define_admin_hooks() {
 
 		add_action( 'admin_enqueue_scripts', [$this->admin, 'enqueue_styles'] );
-		add_action( 'admin_enqueue_scripts', [$this->admin, 'enqueue_scripts'], 10 );
+//		add_action( 'admin_enqueue_scripts', [$this->admin, 'enqueue_scripts'], 10 );
 		
 		//creates the tabbed settings page and manages option saving
 		add_action( 'admin_menu', [$this->admin,'add_admin_menu'] );
 		
 		/* Options */
-		add_action( 'wp_ajax_dapre_submit_options_fields', [$this->admin,'option_fields'] );
-		add_action( 'wp_ajax_dapre_rename_option', [$this->admin,'rename_option'] );
-		add_action( 'wp_ajax_dapre_copy_option', [$this->admin,'copy_option'] );
-		
-		/* User fields */
-		add_action( 'wp_ajax_dapre_submit_user_fields', [$this->admin,'user_fields'] );
-		add_action( 'wp_ajax_dapre_rename_user_field', [$this->admin,'rename_user_field'] );
-		add_action( 'wp_ajax_dapre_copy_user_field', [$this->admin,'copy_user_field'] );
-		
-		/* Post fields */
-		add_action( 'wp_ajax_dapre_submit_post_fields', [$this->admin,'post_fields'] );
-		add_action( 'wp_ajax_dapre_rename_post_field', [$this->admin,'rename_post_field'] );
-		add_action( 'wp_ajax_dapre_copy_post_field', [$this->admin,'copy_post_field'] );
+//		add_action( 'wp_ajax_dapre_submit_options_fields', [$this->admin,'option_fields'] );
+//		add_action( 'wp_ajax_dapre_rename_option', [$this->admin,'rename_option'] );
+//		add_action( 'wp_ajax_dapre_copy_option', [$this->admin,'copy_option'] );
+//
+//		/* User fields */
+//		add_action( 'wp_ajax_dapre_submit_user_fields', [$this->admin,'user_fields'] );
+//		add_action( 'wp_ajax_dapre_rename_user_field', [$this->admin,'rename_user_field'] );
+//		add_action( 'wp_ajax_dapre_copy_user_field', [$this->admin,'copy_user_field'] );
+//
+//		/* Post fields */
+//		add_action( 'wp_ajax_dapre_submit_post_fields', [$this->admin,'post_fields'] );
+//		add_action( 'wp_ajax_dapre_rename_post_field', [$this->admin,'rename_post_field'] );
+//		add_action( 'wp_ajax_dapre_copy_post_field', [$this->admin,'copy_post_field'] );
+
+		/* REST API */
+		add_action( 'admin_enqueue_scripts', [$this->option_field_controller, 'enqueue_scripts'], 10 );
+		add_action( 'rest_api_init', [$this->option_field_controller, 'register_routes']);
 	}
 	
 	/**
