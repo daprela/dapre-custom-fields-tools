@@ -15,25 +15,25 @@
 		</div>
 		<div class="c-copyContainer__currentNameOptions">
 			<div class="c-copyContainer__space"></div>
-			<div>
+			<div class="js-copyOptionTo">
 				<label>
 					<?php esc_html_e('...to option', 'dapre-cft') ?>
-					<input class="js-copyOptionTo js-inputCopyOptionToOption" type="radio" name="copy_option_to" value="option to option" />
+					<input class="js-inputCopyOptionToOption" type="radio" name="copy_option_to" value="option" />
 				</label>
 
 				<label>
 					<?php esc_html_e('...to user field','dapre-cft') ?>
-					<input class="js-copyOptionTo js-inputCopyOptionToUserField" type="radio" name="copy_option_to" value="option to user field" />
+					<input class="js-inputCopyOptionToUserField" type="radio" name="copy_option_to" value="user field" />
 				</label>
 
 				<label>
 					<?php esc_html_e('...to post field','dapre-cft') ?>
-					<input class="js-copyOptionTo js-inputCopyOptionToPostField" type="radio" name="copy_option_to" value="option to post field" />
+					<input class="js-inputCopyOptionToPostField" type="radio" name="copy_option_to" value="post field" />
 				</label>
 			</div>
 		</div>
 	</div>
-	<div class='js-copyOptionToOption c-copyToOption is-hidden'>
+	<div class='js-optionToOption c-copyToOption'>
 		<h4 class="c-copyToTitle"><?php esc_html_e('...to option','dapre-cft') ?></h4>
 		<div class="c-metaFieldName <?php echo $row_error_class ?>">
 			<div class="c-metaFieldName__header">
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 	</div>
-	<div class='js-copyOptionToUserField c-copyToUserField is-hidden'>
+	<div class='js-optionToUserField c-copyToUserField'>
 		<h4 class="c-copyToUserTitle"><?php esc_html_e("...to user field","dapre-cft") ?></h4>
 		<div class="c-metaFieldIdName" <?php echo $row_error_class ?>>
 			<div class="c-metaFieldIdName__header">
@@ -79,7 +79,7 @@
 			</div>
 		</div>
 	</div>
-	<div class='js-copyOptionToPostField c-copyToPostField is-hidden'>
+	<div class='js-optionToPostField c-copyToPostField'>
 		<h4 class="c-copyToPostTitle"><?php esc_html_e("...to post field","dapre-cft") ?></h4>
 		<div class="c-metaFieldIdName" <?php echo $row_error_class ?>>
 			<div class="c-metaFieldIdName__header">
