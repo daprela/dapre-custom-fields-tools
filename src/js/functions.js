@@ -11,3 +11,13 @@ export const isNumber = function (o) {
 export const isNormalInteger = function (str) {
   return /^([1-9]\d*)$/.test(str);
 };
+
+export const spinnerOn = function () {
+  const spinner = document.querySelector('.js-halfCircleSpinner');
+  spinner.classList.remove('is-hidden');
+};
+
+export const spinnerOff = function () {
+  const spinner = document.querySelector('.js-halfCircleSpinner');
+  spinner.classList.add('is-hidden');
+};

@@ -1,20 +1,16 @@
+// eslint-disable-next-line import/extensions
 import { isNumber } from './functions.js';
 
-const { apiFetch } = wp;
-
 const optionSection = document.querySelector('.js-optionsMetaSection');
-const optionMetaSubmit = document.querySelector('.js-submitOptions');
 const userMetaSection = document.querySelector('.js-userFieldsSection');
-const userMetaSubmit = document.querySelector('.js-submitUserFields');
 const postMetaSection = document.querySelector('.js-postFieldsSection');
-const postMetaSubmit = document.querySelector('.js-submitPostFields');
 
 // Change the color of the row field according to the option chosen
-const changeFieldColor = function(element) {
+const changeFieldColor = function (element) {
   const row = element.parentNode.parentNode.parentNode;
-  const content = row.querySelector(`.js-metaFieldInputValue`);
-  const toggleDateCheckbox = row.querySelector(`.js-emptyArray`);
-  const arrayCheckbox = row.querySelector(`.js-dateString`);
+  const content = row.querySelector('.js-metaFieldInputValue');
+  const toggleDateCheckbox = row.querySelector('.js-emptyArray');
+  const arrayCheckbox = row.querySelector('.js-dateString');
 
   if (element.value === 'read') {
     row.classList.add('-color-white');
@@ -42,15 +38,15 @@ const changeFieldColor = function(element) {
     toggleDateCheckbox.disabled = true;
     arrayCheckbox.disabled = true;
   }
-}
+};
 
-const newValueOptions = function(element) {
+const newValueOptions = function (element) {
   const inputBox = element.parentNode.parentNode.parentNode;
-  const toggleDateCheckbox = inputBox.querySelector(`.js-dateString`);
-  const arrayCheckbox = inputBox.querySelector(`.js-emptyArray`);
-  const content = inputBox.querySelector(`.js-metaFieldInputValue`);
+  const toggleDateCheckbox = inputBox.querySelector('.js-dateString');
+  const arrayCheckbox = inputBox.querySelector('.js-emptyArray');
+  const content = inputBox.querySelector('.js-metaFieldInputValue');
 
-  if( element.value === 'empty_array' ) {
+  if (element.value === 'empty_array') {
     // if the user checked the empty array checkbox then disable the toggle date and return
     if (element.checked === true) {
       toggleDateCheckbox.checked = false;
@@ -60,12 +56,12 @@ const newValueOptions = function(element) {
     }
   }
 
-  if( element.value === 'date_string' ) {
+  if (element.value === 'date_string') {
     content.disabled = false;
     arrayCheckbox.checked = false;
     // get the elements used to backup the values
-    const dateTimestampBackup = document.querySelector(`.js-metaFieldInputTimestampBackup`);
-    const dateStringBackup = document.querySelector(`.js-metaFieldInputStringBackup`);
+    const dateTimestampBackup = document.querySelector('.js-metaFieldInputTimestampBackup');
+    const dateStringBackup = document.querySelector('.js-metaFieldInputStringBackup');
 
     // if it is a number interpret as a timestamp
     if (isNumber(content.value)) {
@@ -101,17 +97,17 @@ const newValueOptions = function(element) {
       }
     }
   }
-}
+};
 
 /* Toggle between date string and timestamp representation of the current field content */
-const curValueDateString = function(element) {
+const curValueDateString = function (element) {
   const row = element.parentNode.parentNode.parentNode;
-  const fieldContent = row.querySelector(`.js-fieldCurrentValue`);
-  const toggleDateCheckbox = row.querySelector(`.js-fieldDateStringCurValue`);
+  const fieldContent = row.querySelector('.js-fieldCurrentValue');
+  const toggleDateCheckbox = row.querySelector('.js-fieldDateStringCurValue');
 
   // get the elements used to backup the values
-  const dateTimestampBackup = row.querySelector(`.js-fieldValueTimestampBackup`);
-  const dateStringBackup = row.querySelector(`.js-fieldValueStringBackup`);
+  const dateTimestampBackup = row.querySelector('.js-fieldValueTimestampBackup');
+  const dateStringBackup = row.querySelector('.js-fieldValueStringBackup');
 
   // if it is a number interpret as a timestamp
   if (isNumber(fieldContent.innerText)) {
@@ -144,54 +140,29 @@ const curValueDateString = function(element) {
       dateTimestampBackup.setAttribute('value', fieldContent.innerText);
     }
   }
-}
+};
 
-
-const checkEvent = function(e) {
+const checkEvent = function (e) {
   e.preventDefault();
 
   const element = e.target;
 
   /* Manage the action option */
-  if ( element.classList.contains('js-fieldAction') ) {
+  if (element.classList.contains('js-fieldAction')) {
     changeFieldColor(element);
   }
 
   /* Manage the checkboxes with the value options */
-  if ( element.classList.contains('js-fieldValueToAdd') ) {
+  if (element.classList.contains('js-fieldValueToAdd')) {
     newValueOptions(element);
   }
 
   /* Manage the current value checkbox */
-  if ( element.classList.contains('js-fieldDateStringCurValue') ) {
+  if (element.classList.contains('js-fieldDateStringCurValue')) {
     curValueDateString(element);
   }
-
-}
-
-const getOptions = function(e) {
-  e.preventDefault();
-
-}
-
-function fetchData() {
-  apiFetch({
-    path: 'dapre-cft/v1/options?name=daprela',
-    method: 'GET',
-  })
-    .then(
-      (response) => {
-        console.log(response);
-        return response;
-      },
-    )
-    .then((option) => console.log(option));
-}
+};
 
 optionSection.addEventListener('change', checkEvent, false);
 userMetaSection.addEventListener('change', checkEvent, false);
 postMetaSection.addEventListener('change', checkEvent, false);
-
-optionMetaSubmit.addEventListener('submit', getOptions, false);
-userMetaSubmit.addEventListener('submit', getOptions, false);
-postMetaSubmit.addEventListener('submit', getOptions, false);
