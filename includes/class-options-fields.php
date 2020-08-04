@@ -82,7 +82,6 @@ class Options_Fields extends Custom_Fields {
 	 */
 	public function delete() {
 		delete_option($this->field_name);
-		$this->field_name = '';
 		$this->start();
 	}
 

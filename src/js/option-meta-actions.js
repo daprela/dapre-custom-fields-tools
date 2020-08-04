@@ -1,15 +1,18 @@
 /* eslint-disable function-paren-newline */
+// eslint-disable import/extensions
 import { spinnerOn } from './functions.js';
 import { spinnerOff } from './functions.js';
+
+// eslint-disable-next-line no-undef
 const { apiFetch } = wp;
 
 const submitOptions = document.querySelector('.js-submitOptions');
-const read = {};
-const write = {};
-const del = {};
-const finishedWrite = false;
-const finishedRead = false;
-const finishedDel = false;
+let read = {};
+let write = {};
+let del = {};
+let finishedWrite = false;
+let finishedRead = false;
+let finishedDel = false;
 const path = 'dapre-cft/v1/options';
 
 function getWriteFields(row) {
@@ -46,9 +49,11 @@ function readFields(row) {
 function refreshPage(fields) {
   // eslint-disable-next-line no-restricted-syntax
   for (const index of Object.keys(fields)) {
-    let field = fields[index];
-    let row = document.querySelector(`.js-optionFieldDataRow[data-index="${index}"]`);
-    if (field.error === '' ) {
+    const field = fields[index];
+    console.log(field);
+    const row = document.querySelector(`.js-optionFieldDataRow[data-index="${index}"]`);
+    // add/remove the red-dotted border
+    if (field.error === '') {
       row.classList.remove('is-error');
     } else {
       row.classList.add('is-error');
@@ -56,30 +61,49 @@ function refreshPage(fields) {
 
     row.querySelector('.js-fieldAction[value="read"]').click();
 
-    let fieldErrorMessage = row.querySelector('.js-fieldErrorMessage');
-    if (field.fieldErrorClass === '' ) {
+    if (field.disableWrite === 'disabled') {
+      row.querySelector('.js-fieldAction[value="write"]').disabled = true;
+    } else {
+      row.querySelector('.js-fieldAction[value="write"]').disabled = false;
+    }
+
+    if (field.disableDelete === 'disabled') {
+      row.querySelector('.js-fieldAction[value="delete"]').disabled = true;
+    } else {
+      row.querySelector('.js-fieldAction[value="delete"]').disabled = false;
+    }
+
+    // manages the error message
+    const fieldErrorMessage = row.querySelector('.js-fieldErrorMessage');
+    if (field.fieldErrorClass === '') {
       fieldErrorMessage.classList.add('is-hidden');
     } else {
       fieldErrorMessage.classList.remove('is-hidden');
+      fieldErrorMessage.innerHTML = field.error;
     }
 
-    let emptyArrayCheckbox = row.querySelector('.js-emptyArray');
+    // manages the empty array checkbox
+    const emptyArrayCheckbox = row.querySelector('.js-emptyArray');
     emptyArrayCheckbox.checked = false;
     emptyArrayCheckbox.disabled = true;
 
-    let dateStringCheckbox = row.querySelector('.js-dateString');
+    // manages the date string checkbox
+    const dateStringCheckbox = row.querySelector('.js-dateString');
     dateStringCheckbox.checked = false;
     dateStringCheckbox.disabled = true;
 
-    let metaFieldInputValue = row.querySelector('.js-metaFieldInputValue');
+    // input value box
+    const metaFieldInputValue = row.querySelector('.js-metaFieldInputValue');
     metaFieldInputValue.value = '';
     metaFieldInputValue.disabled = true;
 
-    let fieldCurrentValue = row.querySelector('.js-fieldCurrentValue');
+    // Current value
+    const fieldCurrentValue = row.querySelector('.js-fieldCurrentValue');
     fieldCurrentValue.innerHTML = JSON.parse(field.currentValue);
 
-    let currentValueDateToggle = row.querySelector('.js-curValueDateToggle');
-    if (field.curValueDateToggle === 'is-visible' ) {
+    // Current value date-string option
+    const currentValueDateToggle = row.querySelector('.js-curValueDateToggle');
+    if (field.curValueDateToggle === 'is-visible') {
       currentValueDateToggle.classList.add('is-visible');
       currentValueDateToggle.classList.remove('is-hidden');
     } else {
@@ -87,62 +111,93 @@ function refreshPage(fields) {
       currentValueDateToggle.classList.add('is-hidden');
     }
 
-    let fieldPreviousValue = row.querySelector('.js-fieldPreviousValue');
+    // Previous value
+    const fieldPreviousValue = row.querySelector('.js-fieldPreviousValue');
     fieldPreviousValue.innerHTML = JSON.parse(field.previousValue);
   }
-  spinnerOff();
+
+  if (finishedWrite && finishedRead && finishedDel) {
+    spinnerOff();
+    finishedWrite = false;
+    finishedRead = false;
+    finishedDel = false;
+  }
 }
 
 function readData() {
+  if (Object.keys(read).length === 0) {
+    finishedRead = true;
+    return;
+  }
+
   const readJSON = JSON.stringify(read);
+  finishedRead = false;
 
   apiFetch({
     path: `${path}?names=${readJSON}`,
     method: 'GET',
     parse: false,
   })
-    .then( (response) => {
-      return response.json();
-    })
-    .then( (fields) => {
+    .then((response) => response.json())
+    .then((fields) => {
+      finishedRead = true;
       refreshPage(fields);
-    }
-  );
+    });
 }
 
 function writeData() {
+  if (Object.keys(write).length === 0) {
+    finishedWrite = true;
+    return;
+  }
+
   const writeJSON = JSON.stringify(write);
+  finishedWrite = false;
+
   apiFetch({
     path: 'dapre-cft/v1/options',
     method: 'POST',
     body: writeJSON,
     parse: false,
   })
-    .then(
-      (response) =>
-        // console.log(response);
-        response,
-    );
+    .then((response) => response.json())
+    .then((fields) => {
+      // console.log(fields);
+      finishedWrite = true;
+      refreshPage(fields);
+    });
 }
 
 function deleteData() {
+  if (Object.keys(del).length === 0) {
+    finishedDel = true;
+    return;
+  }
+
   const delJSON = JSON.stringify(del);
+  finishedDel = false;
+
   apiFetch({
     path: 'dapre-cft/v1/options',
     method: 'DELETE',
     body: delJSON,
     parse: false,
   })
-    .then(
-      (response) =>
-        // console.log(response);
-        response,
-    );
+    .then((response) => response.json())
+    .then((fields) => {
+      // console.log(fields);
+      finishedDel = true;
+      refreshPage(fields);
+    });
 }
 
 function getForm(e) {
   e.preventDefault();
   spinnerOn();
+
+  write = {};
+  read = {};
+  del = {};
 
   const rows = document.querySelectorAll('.js-optionFieldDataRow');
 
@@ -163,6 +218,8 @@ function getForm(e) {
     }
   }
   readData();
+  writeData();
+  deleteData();
 }
 
 submitOptions.addEventListener('click', getForm, false);
