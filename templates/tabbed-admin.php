@@ -42,7 +42,7 @@
 
 				?>
 					</div>
-				<input class="js-submitOptions button button-primary" type="submit" name="submit_options" value="Read/Write Values">
+					<input class="js-submitOptions c-metaSubmitButton button button-primary" type="submit" name="submit_options" value="Read/Write Values">
 				</div>
 			</div>
 
@@ -82,7 +82,7 @@
 
 				?>
 					</div>
-				<input class="js-submitUserFields button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
+				<input class="js-submitUserFields c-metaSubmitButton button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
 				</div>
 			</div>
 			<div class ="postbox">
@@ -115,7 +115,7 @@
 
 				?>
 					</div>
-				<input class="js-submitPostFields button button-primary" type="submit" name="submit_post_fields" value="Read/Write Values">
+				<input class="js-submitPostFields c-metaSubmitButton button button-primary" type="submit" name="submit_post_fields" value="Read/Write Values">
 				</div>
 			</div>
 			<div class ="postbox">

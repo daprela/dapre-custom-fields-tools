@@ -22,6 +22,7 @@ function getWriteFields(row) {
   const valueToWrite = row.querySelector('.js-metaFieldInputValue').value;
 
   write[index] = {
+    index,
     optionName,
     emptyArray,
     valueToWrite,
@@ -33,6 +34,7 @@ function getDeleteFields(row) {
   const optionName = row.querySelector(`input[name="field_name[${index}]"]`).value;
 
   del[index] = {
+    index,
     optionName,
   };
 }
@@ -42,6 +44,7 @@ function readFields(row) {
   const optionName = row.querySelector(`input[name="field_name[${index}]"]`).value;
 
   read[index] = {
+    index,
     optionName,
   };
 }
@@ -50,7 +53,7 @@ function refreshPage(fields) {
   // eslint-disable-next-line no-restricted-syntax
   for (const index of Object.keys(fields)) {
     const field = fields[index];
-    console.log(field);
+    // console.log(field);
     const row = document.querySelector(`.js-optionFieldDataRow[data-index="${index}"]`);
     // add/remove the red-dotted border
     if (field.error === '') {
@@ -117,6 +120,9 @@ function refreshPage(fields) {
   }
 
   if (finishedWrite && finishedRead && finishedDel) {
+    submitOptions.disabled = false;
+    submitOptions.blur();
+
     spinnerOff();
     finishedWrite = false;
     finishedRead = false;
@@ -134,7 +140,7 @@ function readData() {
   finishedRead = false;
 
   apiFetch({
-    path: `${path}?names=${readJSON}`,
+    path: `${path}?options=${readJSON}`,
     method: 'GET',
     parse: false,
   })
@@ -194,6 +200,7 @@ function deleteData() {
 function getForm(e) {
   e.preventDefault();
   spinnerOn();
+  submitOptions.disabled = true;
 
   write = {};
   read = {};

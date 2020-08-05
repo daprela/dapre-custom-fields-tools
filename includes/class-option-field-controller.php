@@ -47,7 +47,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 *
 	 * @return void
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts(): void {
 
 		// load the JS only in the right admin screen
 		if ( 'toplevel_page_dapre_cft' === get_current_screen()->id ) {
@@ -59,7 +59,6 @@ class Option_Field_Controller extends WP_REST_Controller {
 				$version,
 				true );
 		}
-
 	}
 
 	/**
@@ -78,21 +77,20 @@ class Option_Field_Controller extends WP_REST_Controller {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'get_item' ],
 					'permission_callback' => [ $this, 'get_items_permissions_check' ],
-					'args'                => [],
+					'args'                => $this->get_collection_params(),
 				],
 				[
-					'methods'             => WP_REST_Server::EDITABLE,
+					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => [ $this, 'update_item' ],
 					'permission_callback' => [ $this, 'update_item_permissions_check' ],
-					'args'                => [],
+					'args'                => $this->get_write_params(),
 				],
 				[
 					'methods'             => WP_REST_Server::DELETABLE,
 					'callback'            => [ $this, 'delete_item' ],
 					'permission_callback' => [ $this, 'delete_item_permissions_check' ],
-					'args'                => [],
+					'args'                => $this->get_delete_params(),
 				],
-				'schema' => array( $this, 'get_public_item_schema' ),
 			]
 		);
 	}
@@ -107,11 +105,15 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 *
 	 */
 	public function get_item( $request ) {
-		$fields_names   = $this->sanitize_array(json_decode($request->get_param( 'names' ) ?? '', true));
+		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
+		// This is still acceptable considering that this is a tool for developers.
+		$fields_names   = json_decode($request->get_param( 'names' ) ?? '', true);
 
 		$fields = [];
 
-		foreach ( $fields_names as $index => $option ) {
+		foreach ( $fields_names as $option ) {
+			$index = $option['index'];
+
 			if ( empty( $option['optionName'] ) ) {
 				$option                           = new Options_Fields( '' );
 				$this->previous_options[ $index ] = $option;
@@ -138,9 +140,20 @@ class Option_Field_Controller extends WP_REST_Controller {
 		return rest_ensure_response($fields);
 	}
 
-	public function get_items_permissions_check( $request ) {
-		// during the debug phase we always authorize
-		return true;
+	/**
+	 * Returns whether the user has the permission to execute the request.
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return bool True if the user can execute the request.
+	 * @since 5.0.0
+	 *
+	 */
+	public function get_items_permissions_check( $request ): boolean {
+		if ( current_user_can('manage_options') ) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -153,11 +166,15 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 *
 	 */
 	public function update_item( $request ) {
-		$fields_names   = $this->sanitize_array(json_decode($request->get_body() ?? '', true));
+		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
+		// This is still acceptable considering that this is a tool for developers.
+		$fields_names   = json_decode($request->get_body() ?? '', true);
 
 		$fields = [];
 
-		foreach ( $fields_names as $index => $option ) {
+		foreach ( $fields_names as $option ) {
+			$index = $option['index'];
+
 			// does the user want to write an empty array or a normal text field?
 			if ( $option['emptyArray'] ) {
 				$field_value = [];
@@ -181,9 +198,17 @@ class Option_Field_Controller extends WP_REST_Controller {
 		return rest_ensure_response($fields);
 	}
 
-	public function update_item_permissions_check( $request ) {
-		// during the debug phase we always authorize
-		return true;
+	/**
+	 * Returns whether the user has the permission to execute the request.
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return bool True if the user can execute the request.
+	 * @since 5.0.0
+	 *
+	 */
+	public function update_item_permissions_check( $request ): boolean {
+		return $this->get_items_permissions_check($request);
 	}
 
 	/**
@@ -196,11 +221,15 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 *
 	 */
 	public function delete_item( $request ) {
-		$fields_names   = $this->sanitize_array(json_decode($request->get_body() ?? '', true));
+		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
+		// This is still acceptable considering that this is a tool for developers.
+		$fields_names   = json_decode($request->get_body() ?? '', true);
 
 		$fields = [];
 
-		foreach ( $fields_names as $index => $option ) {
+		foreach ( $fields_names as $option ) {
+			$index = $option['index'];
+
 			$this->previous_options[ $index ]->delete();
 
 			$fields = $this->set_fields_content($fields, $index, $this->previous_options[ $index ]);
@@ -211,20 +240,17 @@ class Option_Field_Controller extends WP_REST_Controller {
 		return rest_ensure_response($fields);
 	}
 
-	public function delete_item_permissions_check( $request ) {
-		// during the debug phase we always authorize
-		return true;
-	}
-
 	/**
-	 * @return array
+	 * Returns whether the user has the permission to execute the request.
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return bool True if the user can execute the request.
+	 * @since 5.0.0
+	 *
 	 */
-	public function get_public_item_schema(): array {
-		return [];
-	}
-
-	protected function sanitize_array($array) {
-		return $array;
+	public function delete_item_permissions_check( $request ): boolean {
+		return $this->get_items_permissions_check($request);
 	}
 
 	/**
@@ -233,10 +259,8 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 3.0.0
 	 *
 	 * @return array Previous options.
-	 *
-	 * @return void
 	 */
-	public function get_previous_options() {
+	public function get_previous_options(): array {
 
 		/**
 		 * This array contains the previous options
@@ -262,7 +286,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 *
 	 * @return void
 	 */
-	public function set_previous_options( $previous_options ) {
+	public function set_previous_options( $previous_options ): void {
 		update_option( 'dapre_cft_previous_options', $previous_options );
 	}
 
@@ -287,5 +311,139 @@ class Option_Field_Controller extends WP_REST_Controller {
 		$fields[ $index ]['disableDelete']      = $option->get_disable_delete();
 
 		return $fields;
+	}
+
+	/**
+	 * Retrieves the query params for the options collection.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params(): array {
+		return [
+			'options' => [
+				'description' => __( 'Array of option names.' ),
+				'required'    => true,
+				'type'        => 'array',
+				'items'       => [
+					'type'        => 'array',
+					[
+						'index'      => [
+							'description'       => __( 'Order of this option in the options table.' ),
+							'type'              => 'integer',
+							'default'           => 0,
+							'required'          => true,
+							'sanitize_callback' => 'absint',
+							'validate_callback' => [$this, 'check_integer'],
+						],
+						'optionName' => [
+							'description' => __( 'Option name to read.' ),
+							'type'        => 'string',
+							'default'     => '',
+							'required'    => true,
+							'validate_callback' => [$this, 'check_string'],
+						],
+					],
+				]
+			],
+		];
+	}
+
+	/**
+	 * Retrieves the query params for the options update.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return array Write parameters.
+	 */
+	public function get_write_params(): array {
+		return [
+			'index'      => [
+				'description'       => __( 'Order of this option in the options table.' ),
+				'type'              => 'integer',
+				'default'           => 0,
+				'required'          => true,
+				'sanitize_callback' => 'absint',
+				'validate_callback' => [$this, 'check_integer'],
+			],
+			'optionName' => [
+				'description' => __( 'Option name to read.' ),
+				'type'        => 'string',
+				'default'     => '',
+				'required'    => true,
+				'validate_callback' => [$this, 'check_string'],
+			],
+			'emptyArray' => [
+				'description' => __( 'Whether the value to write must be an empty array.' ),
+				'type'        => 'boolean',
+				'default'     => false,
+				'required'    => true,
+			],
+			'valueToWrite' => [
+				'description' => __( 'The value to write.' ),
+				'type'        => 'string',
+				'default'     => '',
+				'required'    => true,
+				'validate_callback' => [$this, 'check_string'],
+			],
+		];
+	}
+
+	/**
+	 * Retrieves the query params for the options delete.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_delete_params(): array {
+		return [
+			'index'      => [
+				'description'       => __( 'Order of this option in the options table.' ),
+				'type'              => 'integer',
+				'default'           => 0,
+				'required'          => true,
+				'sanitize_callback' => 'absint',
+				'validate_callback' => [$this, 'check_integer'],
+			],
+			'optionName' => [
+				'description' => __( 'Option name to read.' ),
+				'type'        => 'string',
+				'default'     => '',
+				'required'    => true,
+				'validate_callback' => [$this, 'check_string'],
+			],
+		];
+	}
+
+	/**
+	 * Checks the validity of the value.
+	 *
+	 * @param integer         $param Value to check
+	 * @param WP_REST_Request $request
+	 * @param                 $key
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 *
+	 */
+	private function check_integer( $param, $request, $key ): boolean {
+		return is_int( $param );
+	}
+
+	/**
+	 * Checks the validity of the value.
+	 *
+	 * @param string         $param Value to check
+	 * @param WP_REST_Request $request
+	 * @param                 $key
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 *
+	 */
+	private function check_string($param, $request, $key): boolean {
+		return is_string($param);
 	}
 }
