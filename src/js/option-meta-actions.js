@@ -2,18 +2,23 @@
 // eslint-disable import/extensions
 import { spinnerOn } from './functions.js';
 import { spinnerOff } from './functions.js';
+import { nameSpace } from './functions.js';
 
 // eslint-disable-next-line no-undef
 const { apiFetch } = wp;
 
 const submitOptions = document.querySelector('.js-submitOptions');
+const renameOptions = document.querySelector('.js-submitRenameOption');
 let read = {};
 let write = {};
 let del = {};
 let finishedWrite = false;
 let finishedRead = false;
 let finishedDel = false;
-const path = 'dapre-cft/v1/options';
+const restBase = 'options';
+const renameBase = `${restBase}/rename`;
+const copyBase = `${restBase}/copy`;
+const path = `${nameSpace}/${restBase}`;
 
 function getWriteFields(row) {
   const { index } = row.dataset;
@@ -64,11 +69,9 @@ function refreshPage(fields) {
 
     row.querySelector('.js-fieldAction[value="read"]').click();
 
-    if (field.disableWrite === 'disabled') {
-      row.querySelector('.js-fieldAction[value="write"]').disabled = true;
-    } else {
-      row.querySelector('.js-fieldAction[value="write"]').disabled = false;
-    }
+    row.querySelector(
+      '.js-fieldAction[value="write"]').disabled = field.disableWrite
+      === 'disabled';
 
     if (field.disableDelete === 'disabled') {
       row.querySelector('.js-fieldAction[value="delete"]').disabled = true;
@@ -161,7 +164,7 @@ function writeData() {
   finishedWrite = false;
 
   apiFetch({
-    path: 'dapre-cft/v1/options',
+    path,
     method: 'POST',
     body: writeJSON,
     parse: false,
@@ -184,7 +187,7 @@ function deleteData() {
   finishedDel = false;
 
   apiFetch({
-    path: 'dapre-cft/v1/options',
+    path,
     method: 'DELETE',
     body: delJSON,
     parse: false,
@@ -197,7 +200,7 @@ function deleteData() {
     });
 }
 
-function getForm(e) {
+function getMetaForm(e) {
   e.preventDefault();
   spinnerOn();
   submitOptions.disabled = true;
@@ -229,4 +232,55 @@ function getForm(e) {
   deleteData();
 }
 
-submitOptions.addEventListener('click', getForm, false);
+function refreshRenamePage(fields) {
+  const lightbox = new Lightbox({
+    openAnimation: 'jelly',
+    closeAnimation: 'collapse',
+  });
+
+  console.log(lightbox);
+
+  if (!fields.renamed) {
+    lightbox.setTitle('ERROR');
+    lightbox.setContent(fields.error);
+  } else {
+    lightbox.setTitle('Done');
+    lightbox.setContent('The option ha been renamed');
+  }
+
+  lightbox.open();
+
+  console.log(fields);
+  spinnerOff();
+  renameOptions.disabled = false;
+}
+
+function getRenameForm(e) {
+  e.preventDefault();
+  spinnerOn();
+  renameOptions.disabled = true;
+
+  const oldOptionName = document.querySelector('.js-oldOptionName').value;
+  const newOptionName = document.querySelector('.js-newOptionName').value;
+
+  const rename = {
+    oldOptionName,
+    newOptionName,
+  };
+
+  const renameJSON = JSON.stringify(rename);
+
+  apiFetch({
+    path: `${nameSpace}/${renameBase}`,
+    method: 'POST',
+    body: renameJSON,
+    parse: false,
+  })
+    .then((response) => response.json())
+    .then((fields) => {
+      refreshRenamePage(fields);
+    });
+}
+
+submitOptions.addEventListener('click', getMetaForm, false);
+renameOptions.addEventListener('click', getRenameForm, false);

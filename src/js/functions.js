@@ -1,3 +1,5 @@
+export const nameSpace = 'dapre-cft/v1';
+
 /* eslint-disable no-param-reassign */
 export const isNumber = function (o) {
   // eslint-disable-next-line no-restricted-globals

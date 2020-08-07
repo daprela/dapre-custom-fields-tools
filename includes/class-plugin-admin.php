@@ -29,7 +29,7 @@ class Plugin_Admin {
 
 		// load the CSS only in the right admin screen
 		if ( 'toplevel_page_dapre_cft' === get_current_screen()->id ) {
-			wp_enqueue_style( 'jquery-colorbox', PLUGIN_URL_PATH . 'libs/jackmoore-colorbox/example4/colorbox.css', [], '1.5.14', 'all' );
+			wp_enqueue_style( 'lumensbox', PLUGIN_URL_PATH . 'libs/LumensBox/css/main.css', [], '0.1', 'all' );
 
 			$version = get_asset_version( PLUGIN_DIR_PATH . 'assets/css/dapre-cft-admin.min.css' );
 			wp_enqueue_style( PLUGIN_NAME, PLUGIN_URL_PATH . 'assets/css/dapre-cft-admin.min.css', [], $version, 'all' );
@@ -47,10 +47,10 @@ class Plugin_Admin {
 
 		// load the JS only in the right admin screen
 		if ( 'toplevel_page_dapre_cft' === get_current_screen()->id ) {
-			wp_enqueue_script( 'jquery-colorbox', PLUGIN_URL_PATH . 'libs/jackmoore-colorbox/jquery.colorbox-min.js', [ 'jquery' ], '1.5.14', false );
+
 
 			$version = get_asset_version( PLUGIN_DIR_PATH . 'assets/js/dapre-cft-admin.min.js' );
-			wp_enqueue_script( PLUGIN_NAME, PLUGIN_URL_PATH . 'assets/js/dapre-cft-admin.min.js', [ 'jquery' ], $version, false );
+			wp_enqueue_script( PLUGIN_NAME, PLUGIN_URL_PATH . 'assets/js/dapre-cft-admin.min.js', [ 'jquery' ], $version, true );
 		}
 
 	}

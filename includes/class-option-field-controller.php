@@ -27,6 +27,10 @@ class Option_Field_Controller extends WP_REST_Controller {
 
 	protected $rest_base;
 
+	protected $rest_rename;
+
+	protected $rest_copy;
+
 	protected $previous_options;
 
 	/**
@@ -37,6 +41,8 @@ class Option_Field_Controller extends WP_REST_Controller {
 	public function __construct() {
 		$this->namespace        = 'dapre-cft/v1';
 		$this->rest_base        = 'options';
+		$this->rest_rename      = 'rename';
+		$this->rest_copy        = 'copy';
 		$this->previous_options = $this->get_previous_options();
 	}
 
@@ -51,11 +57,13 @@ class Option_Field_Controller extends WP_REST_Controller {
 
 		// load the JS only in the right admin screen
 		if ( 'toplevel_page_dapre_cft' === get_current_screen()->id ) {
+			wp_enqueue_script( 'lumensbox', PLUGIN_URL_PATH . 'libs/LumensBox/js/app.min.js',[], '0.1', false );
+
 			$version = get_asset_version( PLUGIN_DIR_PATH . 'assets/js/controller.min.js' );
 			wp_enqueue_script(
 				'dapre-fetch',
 				PLUGIN_URL_PATH . 'assets/js/controller.min.js',
-				[ 'wp-i18n', 'wp-element', 'wp-api-fetch' ],
+				[ 'wp-i18n', 'wp-element', 'wp-api-fetch', 'lumensbox' ],
 				$version,
 				true );
 		}
@@ -90,6 +98,19 @@ class Option_Field_Controller extends WP_REST_Controller {
 					'callback'            => [ $this, 'delete_item' ],
 					'permission_callback' => [ $this, 'delete_item_permissions_check' ],
 					'args'                => $this->get_delete_params(),
+				],
+			]
+		);
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/rename',
+			[
+				[
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => [ $this, 'rename_item' ],
+					'permission_callback' => [ $this, 'rename_item_permissions_check' ],
+					'args'                => [],
 				],
 			]
 		);
@@ -149,7 +170,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function get_items_permissions_check( $request ): boolean {
+	public function get_items_permissions_check( $request ): bool {
 		if ( current_user_can('manage_options') ) {
 			return true;
 		}
@@ -207,7 +228,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function update_item_permissions_check( $request ): boolean {
+	public function update_item_permissions_check( $request ): bool {
 		return $this->get_items_permissions_check($request);
 	}
 
@@ -249,7 +270,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function delete_item_permissions_check( $request ): boolean {
+	public function delete_item_permissions_check( $request ): bool {
 		return $this->get_items_permissions_check($request);
 	}
 
@@ -260,7 +281,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Previous options.
 	 */
-	public function get_previous_options(): array {
+	protected function get_previous_options(): array {
 
 		/**
 		 * This array contains the previous options
@@ -286,7 +307,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 *
 	 * @return void
 	 */
-	public function set_previous_options( $previous_options ): void {
+	protected function set_previous_options( $previous_options ): void {
 		update_option( 'dapre_cft_previous_options', $previous_options );
 	}
 
@@ -418,6 +439,106 @@ class Option_Field_Controller extends WP_REST_Controller {
 	}
 
 	/**
+	 * Rename an option.
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return mixed|WP_Error|WP_HTTP_Response|WP_REST_Response
+	 * @since 1.0.0
+	 *
+	 */
+	public function rename_item($request) {
+		$fields_names   = json_decode($request->get_body() ?? '', true);
+
+		$old_option_name = sanitize_text_field( $fields_names['oldOptionName'] );
+		$new_option_name = sanitize_text_field( $fields_names['newOptionName'] );
+
+		/** @var object $old_option option field to rename */
+		$old_option = new Options_Fields( $old_option_name );
+
+		/** @var object $new_option the new name of the option field */
+		$new_option = new Options_Fields( $new_option_name );
+
+		if ( $old_option_name == $new_option_name ) {
+			$response = [
+				'renamed' => false,
+				'error'   => 'Old option and new option cannot have the same name',
+			];
+		} else if ( ! $old_option->option_exists() ) {
+			$response = [
+				'renamed' => false,
+				'error'   => 'The starting option does not exist',
+			];
+		} else if ( $new_option->option_exists() ) {
+			$response = [
+				'renamed' => false,
+				'error'   => 'The destination option already exists',
+			];
+
+		} else {
+			$error = false;
+
+			if ( ! empty( $old_option->get_error() ) ) {
+				$response = [
+					'renamed' => false,
+					'error'   => $old_option->get_error(),
+				];
+
+			} else {
+				$new_option->write( $old_option->get_current_value() );
+
+				// if the new option exists and the old content was moved correctly then delete the old option
+				if ( empty( $new_option->get_error() ) && ! $error ) {
+					$old_option->delete();
+					$response = [
+						'renamed' => true,
+						'error'   => '',
+					];
+				} else {
+					$response = [
+						'renamed' => false,
+						'error'   => '',
+					];
+				}
+			}
+		}
+
+		return rest_ensure_response($response);
+	}
+
+	/**
+	 * Returns whether the user has the permission to execute the request.
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return bool True if the user can execute the request.
+	 * @since 5.0.0
+	 *
+	 */
+	public function rename_item_permissions_check($request) {
+		return true;
+	}
+
+	protected function get_rename_params(): array {
+		return [
+			'oldOptionName' => [
+				'description' => __( 'Old option name.' ),
+				'type'        => 'string',
+				'default'     => '',
+				'required'    => true,
+				'validate_callback' => [$this, 'check_string'],
+			],
+			'newOptionName' => [
+				'description' => __( 'New option name.' ),
+				'type'        => 'string',
+				'default'     => '',
+				'required'    => true,
+				'validate_callback' => [$this, 'check_string'],
+			],
+		];
+	}
+
+	/**
 	 * Checks the validity of the value.
 	 *
 	 * @param integer         $param Value to check
@@ -428,7 +549,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 1.0.0
 	 *
 	 */
-	private function check_integer( $param, $request, $key ): boolean {
+	private function check_integer( $param, $request, $key ): bool {
 		return is_int( $param );
 	}
 
@@ -443,7 +564,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 1.0.0
 	 *
 	 */
-	private function check_string($param, $request, $key): boolean {
+	private function check_string($param, $request, $key): bool {
 		return is_string($param);
 	}
 }
