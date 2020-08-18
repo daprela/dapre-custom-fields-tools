@@ -110,7 +110,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 					'methods'             => WP_REST_Server::EDITABLE,
 					'callback'            => [ $this, 'rename_item' ],
 					'permission_callback' => [ $this, 'rename_item_permissions_check' ],
-					'args'                => [],
+					'args'                => $this->get_rename_params(),
 				],
 			]
 		);
@@ -128,7 +128,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	public function get_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
-		$fields_names   = json_decode($request->get_param( 'names' ) ?? '', true);
+		$fields_names   = json_decode($request->get_param( 'options' ), true);
 
 		$fields = [];
 
@@ -189,7 +189,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	public function update_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
-		$fields_names   = json_decode($request->get_body() ?? '', true);
+		$fields_names   = $request->get_json_params();
 
 		$fields = [];
 
@@ -244,7 +244,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	public function delete_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
-		$fields_names   = json_decode($request->get_body() ?? '', true);
+		$fields_names   = $request->get_json_params();
 
 		$fields = [];
 
@@ -346,7 +346,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 			'options' => [
 				'description' => __( 'Array of option names.' ),
 				'required'    => true,
-				'type'        => 'array',
+				'type'        => 'json',
 				'items'       => [
 					'type'        => 'array',
 					[
@@ -462,17 +462,17 @@ class Option_Field_Controller extends WP_REST_Controller {
 		if ( $old_option_name == $new_option_name ) {
 			$response = [
 				'renamed' => false,
-				'error'   => 'Old option and new option cannot have the same name',
+				'message' => 'Old option and new option cannot have the same name',
 			];
 		} else if ( ! $old_option->option_exists() ) {
 			$response = [
 				'renamed' => false,
-				'error'   => 'The starting option does not exist',
+				'message' => 'The starting option does not exist',
 			];
 		} else if ( $new_option->option_exists() ) {
 			$response = [
 				'renamed' => false,
-				'error'   => 'The destination option already exists',
+				'message' => 'The destination option already exists',
 			];
 
 		} else {
@@ -481,7 +481,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 			if ( ! empty( $old_option->get_error() ) ) {
 				$response = [
 					'renamed' => false,
-					'error'   => $old_option->get_error(),
+					'message' => $old_option->get_error(),
 				];
 
 			} else {
@@ -492,12 +492,12 @@ class Option_Field_Controller extends WP_REST_Controller {
 					$old_option->delete();
 					$response = [
 						'renamed' => true,
-						'error'   => '',
+						'message' => 'The option has been renamed',
 					];
 				} else {
 					$response = [
 						'renamed' => false,
-						'error'   => '',
+						'message' => 'Something went wrong. Please check that the old option name has been removed.',
 					];
 				}
 			}

@@ -168,6 +168,9 @@ function writeData() {
     method: 'POST',
     body: writeJSON,
     parse: false,
+    headers: {
+      'Content-type': 'application/json',
+    },
   })
     .then((response) => response.json())
     .then((fields) => {
@@ -191,6 +194,9 @@ function deleteData() {
     method: 'DELETE',
     body: delJSON,
     parse: false,
+    headers: {
+      'Content-type': 'application/json',
+    },
   })
     .then((response) => response.json())
     .then((fields) => {
@@ -232,25 +238,31 @@ function getMetaForm(e) {
   deleteData();
 }
 
-function refreshRenamePage(fields) {
-  const lightbox = new Lightbox({
-    openAnimation: 'jelly',
-    closeAnimation: 'collapse',
-  });
-
-  console.log(lightbox);
+function refreshRenamePage(fields, oldOption, newOption) {
+  let lightbox;
 
   if (!fields.renamed) {
+    lightbox = new Lightbox({
+      openAnimation: 'jelly',
+      closeAnimation: 'collapse',
+    });
     lightbox.setTitle('ERROR');
-    lightbox.setContent(fields.error);
   } else {
+    lightbox = new Lightbox({
+      openAnimation: 'fadein',
+      closeAnimation: 'shrink',
+    });
     lightbox.setTitle('Done');
-    lightbox.setContent('The option ha been renamed');
+    // eslint-disable-next-line no-param-reassign
+    oldOption.value = '';
+    // eslint-disable-next-line no-param-reassign
+    newOption.value = '';
   }
+
+  lightbox.setContent(fields.message);
 
   lightbox.open();
 
-  console.log(fields);
   spinnerOff();
   renameOptions.disabled = false;
 }
@@ -260,6 +272,8 @@ function getRenameForm(e) {
   spinnerOn();
   renameOptions.disabled = true;
 
+  const oldOption = document.querySelector('.js-oldOptionName');
+  const newOption = document.querySelector('.js-newOptionName');
   const oldOptionName = document.querySelector('.js-oldOptionName').value;
   const newOptionName = document.querySelector('.js-newOptionName').value;
 
@@ -278,7 +292,7 @@ function getRenameForm(e) {
   })
     .then((response) => response.json())
     .then((fields) => {
-      refreshRenamePage(fields);
+      refreshRenamePage(fields, oldOption, newOption);
     });
 }
 
