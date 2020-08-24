@@ -92,7 +92,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return void
 	 */
-	protected function set_error( $error = '' ) {
+	protected function set_error( $error = '' ): void {
 
 		if ( $error ) {
 			$this->error = $error;
@@ -121,7 +121,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return int The post ID
 	 */
-	public function get_post_id() {
+	public function get_post_id(): int {
 		return $this->post_id;
 	}
 
@@ -132,7 +132,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return    void
 	 */
-	protected function set_previous_value( $from = 'start' ) {
+	protected function set_previous_value( $from = 'start' ): void {
 
 		if ( empty( $this->field_name ) || empty( $this->post_id ) || ! $this->post_meta_exists() || 'start' == $from ) {
 			$this->previous_value = '';
@@ -159,7 +159,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return void
 	 */
-	public function delete() {
+	public function delete(): void {
 
 		if ( ! $this->can_delete() ) {
 			$this->set_error( "You cannot delete system fields" );
@@ -180,7 +180,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return void
 	 */
-	protected function set_current_value() {
+	protected function set_current_value(): void {
 		if ( $this->is_base_field() ) {
 			$post_data           = get_post( $this->post_id, $this->field_name );
 			$name                = $this->field_name;
@@ -207,7 +207,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return void
 	 */
-	public function write( $field_value ) {
+	public function write( $field_value ): void {
 
 		$this->write_error = false;
 
@@ -271,7 +271,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return bool True if the last write operation generated an error. False otherwise.
 	 */
-	public function get_write_error() {
+	public function get_write_error(): bool {
 		return $this->write_error;
 	}
 
@@ -284,7 +284,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return void
 	 */
-	public function set_write_error( bool $param ) {
+	public function set_write_error( bool $param ): void {
 		$this->write_error = $param;
 	}
 
@@ -295,7 +295,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return bool Whether we can write this post meta.
 	 */
-	public function can_write() {
+	public function can_write(): bool {
 		if ( $this->is_read_only() ) {
 			return false;
 		}
@@ -310,7 +310,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return bool True if this post meta cannot be overwritten.
 	 */
-	public function can_delete() {
+	public function can_delete(): bool {
 		if ( in_array( $this->field_name, $this->base_fields ) ) {
 			return false;
 		}
@@ -329,7 +329,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return bool True if this is a system field.
 	 */
-	private function is_base_field() {
+	private function is_base_field(): bool {
 		if ( in_array( $this->field_name, $this->base_fields ) ) {
 			return true;
 		}
@@ -344,7 +344,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return bool True if it is a read-only field.
 	 */
-	private function is_read_only() {
+	private function is_read_only(): bool {
 		if ( in_array( $this->field_name, $this->read_only ) ) {
 			return true;
 		}
@@ -359,7 +359,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return string The state of the write action
 	 */
-	public function get_disable_write() {
+	public function get_disable_write(): string {
 		if ( ! $this->field_name || ! $this->post_id ) {
 			return 'disabled';
 		}
@@ -378,7 +378,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return string The state of the delete action.
 	 */
-	public function get_disable_delete() {
+	public function get_disable_delete(): string {
 		if ( ! $this->field_name || ! $this->post_id || ! $this->post_meta_exists() ) {
 			return 'disabled';
 		}
@@ -397,7 +397,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return bool True if the user meta field exists.
 	 */
-	public function post_meta_exists() {
+	public function post_meta_exists(): bool {
 
 		// gets an array of all the meta fields of this post
 		$all_post_meta = (array) get_post_meta( $this->post_id );
@@ -418,7 +418,7 @@ class Post_Fields extends Custom_Fields {
 	 *
 	 * @return bool True if the post exists; otherwise, false.
 	 */
-	function post_exists() {
+	function post_exists(): bool {
 		return is_string( get_post_status( $this->post_id ) );
 	}
 }
