@@ -63,29 +63,6 @@ class Option_Field_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @return void
-	 * @since  1.0.0
-	 *
-	 */
-	public function enqueue_scripts(): void {
-
-		// load the JS only in the right admin screen
-		if ( 'toplevel_page_dapre_cft' === get_current_screen()->id ) {
-			wp_enqueue_script( 'lumensbox', PLUGIN_URL_PATH . 'libs/LumensBox/js/app.min.js', [], '0.1', false );
-
-			$version = get_asset_version( PLUGIN_DIR_PATH . 'assets/js/controller.min.js' );
-			wp_enqueue_script(
-				'dapre-fetch',
-				PLUGIN_URL_PATH . 'assets/js/controller.min.js',
-				[ 'wp-i18n', 'wp-element', 'wp-api-fetch', 'lumensbox' ],
-				$version,
-				true );
-		}
-	}
-
-	/**
 	 * Register the new Rest endpoints.
 	 *
 	 * @return void

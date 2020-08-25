@@ -129,7 +129,7 @@ class Loader {
 	private function define_admin_hooks() {
 
 		add_action( 'admin_enqueue_scripts', [$this->admin, 'enqueue_styles'] );
-//		add_action( 'admin_enqueue_scripts', [$this->admin, 'enqueue_scripts'], 10 );
+		add_action( 'admin_enqueue_scripts', [$this->admin, 'enqueue_scripts'], 10 );
 		
 		//creates the tabbed settings page and manages option saving
 		add_action( 'admin_menu', [$this->admin,'add_admin_menu'] );
@@ -150,7 +150,6 @@ class Loader {
 //		add_action( 'wp_ajax_dapre_copy_post_field', [$this->admin,'copy_post_field'] );
 
 		/* REST API */
-		add_action( 'admin_enqueue_scripts', [$this->option_field_controller, 'enqueue_scripts'], 10 );
 		add_action( 'rest_api_init', [$this->option_field_controller, 'register_routes']);
 	}
 	

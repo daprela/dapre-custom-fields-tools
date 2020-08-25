@@ -47,10 +47,15 @@ class Plugin_Admin {
 
 		// load the JS only in the right admin screen
 		if ( 'toplevel_page_dapre_cft' === get_current_screen()->id ) {
+			wp_enqueue_script( 'lumensbox', PLUGIN_URL_PATH . 'libs/LumensBox/js/app.min.js', [], '0.1', false );
 
-
-			$version = get_asset_version( PLUGIN_DIR_PATH . 'assets/js/dapre-cft-admin.min.js' );
-			wp_enqueue_script( PLUGIN_NAME, PLUGIN_URL_PATH . 'assets/js/dapre-cft-admin.min.js', [ 'jquery' ], $version, true );
+			$version = get_asset_version( PLUGIN_DIR_PATH . 'assets/js/controller.min.js' );
+			wp_enqueue_script(
+				'dapre-fetch',
+				PLUGIN_URL_PATH . 'assets/js/controller.min.js',
+				[ 'wp-i18n', 'wp-element', 'wp-api-fetch', 'lumensbox' ],
+				$version,
+				true );
 		}
 
 	}
