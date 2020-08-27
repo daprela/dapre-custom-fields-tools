@@ -116,7 +116,7 @@ class User_Field_Controller extends WP_REST_Controller {
 					'methods'             => WP_REST_Server::EDITABLE,
 					'callback'            => [ $this, 'copy_item' ],
 					'permission_callback' => [ $this, 'copy_item_permissions_check' ],
-					'args'                => [],
+					'args'                => $this->get_copy_params(),
 				],
 			]
 		);
@@ -655,7 +655,14 @@ class User_Field_Controller extends WP_REST_Controller {
 							'copied'  => false,
 							'message' => "Please provide both user ID and field name for the destination field.",
 						];
+						break;
+					}
 
+					if ( $fields_names['userID'] == $fields_names['currentUserID'] && $fields_names['userField'] == $fields_names['currentFieldName'] ) {
+						$response = [
+							'copied'  => false,
+							'message' => "Starting user field and destination user field cannot be the same..",
+						];
 						break;
 					}
 
@@ -769,8 +776,15 @@ class User_Field_Controller extends WP_REST_Controller {
 	 */
 	protected function get_copy_params(): array {
 		return [
-			'currentOption'  => [
-				'description' => __( 'Old option name.' ),
+			'currentUserID' => [
+				'description' => __( 'User ID that we want to rename.' ),
+				'type'        => 'integer',
+				'default'     => '',
+				'required'    => true,
+				'sanitize_callback' => 'absint',
+			],
+			'currentFieldName' => [
+				'description' => __( 'Old user field name.' ),
 				'type'        => 'string',
 				'default'     => '',
 				'required'    => true,
@@ -781,17 +795,17 @@ class User_Field_Controller extends WP_REST_Controller {
 				'default'     => '',
 				'required'    => true,
 			],
-			'newOption'      => [
-				'description' => __( 'The destination option.' ),
-				'type'        => 'string',
-				'default'     => '',
-				'required'    => false,
-			],
 			'checkboxCreate' => [
 				'description' => __( "Whether we must create a new field if it doesn't exist." ),
 				'type'        => 'boolean',
 				'default'     => 'false',
 				'required'    => true,
+			],
+			'newOption'      => [
+				'description' => __( 'The destination option.' ),
+				'type'        => 'string',
+				'default'     => '',
+				'required'    => false,
 			],
 			'userID'         => [
 				'description' => __( "The user ID." ),
