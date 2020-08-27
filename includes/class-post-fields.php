@@ -168,8 +168,6 @@ class Post_Fields extends Custom_Fields {
 		}
 
 		delete_post_meta( $this->post_id, $this->field_name );
-		$this->field_name = '';
-		$this->post_id    = '';
 		$this->start();
 	}
 

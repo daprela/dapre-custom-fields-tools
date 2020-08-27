@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) or die;
  * @link    https://giuliodaprela.com
  * @license GPL 2.0+
  */
-class Option_Field_Controller extends WP_REST_Controller {
+class User_Field_Controller extends WP_REST_Controller {
 
 	/**
 	 * @var string $namespace The basic namespace of our API
@@ -45,9 +45,9 @@ class Option_Field_Controller extends WP_REST_Controller {
 	protected $rest_copy;
 
 	/**
-	 * @var array $previous_options The array containing the previous options
+	 * @var array $previous_user_fields The array containing the previous options
 	 */
-	protected $previous_options;
+	protected $previous_user_fields;
 
 	/**
 	 * Constructor.
@@ -56,10 +56,10 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 */
 	public function __construct() {
 		$this->namespace        = 'dapre-cft/v1';
-		$this->rest_base        = 'options';
+		$this->rest_base        = 'user_fields';
 		$this->rest_rename      = 'rename';
 		$this->rest_copy        = 'copy';
-		$this->previous_options = $this->get_previous_options();
+		$this->previous_user_fields = $this->get_previous_user_fields();
 	}
 
 	/**
@@ -116,7 +116,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 					'methods'             => WP_REST_Server::EDITABLE,
 					'callback'            => [ $this, 'copy_item' ],
 					'permission_callback' => [ $this, 'copy_item_permissions_check' ],
-					'args'                => $this->get_copy_params(),
+					'args'                => [],
 				],
 			]
 		);
@@ -134,32 +134,32 @@ class Option_Field_Controller extends WP_REST_Controller {
 	public function get_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
-		$fields_names = json_decode( $request->get_param( 'options' ), true );
+		$fields_names = json_decode( $request->get_param( 'user_fields' ), true );
 
 		$fields = [];
 
-		foreach ( $fields_names as $option ) {
-			$index = $option['index'];
+		foreach ( $fields_names as $user_field ) {
+			$index = $user_field['index'];
 
-			if ( empty( $option['optionName'] ) ) {
-				$option                           = new Options_Fields( '' );
-				$this->previous_options[ $index ] = $option;
-				$fields                           = $this->set_fields_content( $fields, $index, $this->previous_options[ $index ] );
+			if ( empty( $user_field['userID'] ) || empty( $user_field['fieldName'] ) ) {
+				$user_field                           = new User_Fields( '', '' );
+				$this->previous_user_fields[ $index ] = $user_field;
+				$fields                           = $this->set_fields_content( $fields, $index, $this->previous_user_fields[ $index ] );
 				continue;
 			}
 
 			// if the option name changes then we can't keep the previous object
-			if ( $option['optionName'] != $this->previous_options[ $index ]->get_name() ) {
-				$option                           = new Options_Fields( $option['optionName'] );
-				$this->previous_options[ $index ] = $option;
+			if ( $user_field['userID'] != $this->previous_user_fields[ $index ]->get_user_id() || $user_field['fieldName'] != $this->previous_user_fields[ $index ]->get_field_name() ) {
+				$user_field_obj                           = new User_Fields( $user_field['userID'], $user_field['fieldName'] );
+				$this->previous_user_fields[ $index ] = $user_field_obj;
 			} else {
-				$this->previous_options[ $index ]->refresh( 'refresh' );
+				$this->previous_user_fields[ $index ]->refresh( 'refresh' );
 			}
 
-			$fields = $this->set_fields_content( $fields, $index, $this->previous_options[ $index ] );
+			$fields = $this->set_fields_content( $fields, $index, $this->previous_user_fields[ $index ] );
 		}
 
-		$this->set_previous_options( $this->previous_options );
+		$this->set_previous_user_fields( $this->previous_user_fields );
 
 //		$response = rest_ensure_response($fields);
 //		$response->header( 'X-WP-Total', 1 );
@@ -202,28 +202,29 @@ class Option_Field_Controller extends WP_REST_Controller {
 
 		$fields = [];
 
-		foreach ( $fields_names as $option ) {
-			$index = $option['index'];
+		foreach ( $fields_names as $user_field ) {
+			$index = $user_field['index'];
 
 			// does the user want to write an empty array or a normal text field?
-			if ( $option['emptyArray'] ) {
+			if ( $user_field['emptyArray'] ) {
 				$field_value = [];
 			} else {
 				// sanitize text area without losing html tags
-				$field_value = stripslashes( sanitize_textarea_field( htmlentities( $option['valueToWrite'] ) ) );
+				$field_value = stripslashes( sanitize_textarea_field( htmlentities( $user_field['valueToWrite'] ) ) );
 			}
 
-			// il the field name has changed delete the previous values as they are not relevant anymore
-			if ( $option['optionName'] != $this->previous_options[ $index ]->get_name() ) {
-				$this->previous_options[ $index ] = new Options_Fields( $index );
+			// if the option name changes then we can't keep the previous object
+			if ( $user_field['userID'] != $this->previous_user_fields[ $index ]->get_user_id() || $user_field['fieldName'] != $this->previous_user_fields[ $index ]->get_field_name() ) {
+				$user_field_obj = new User_Fields( $user_field['userID'], $user_field['fieldName'] );
+				$this->previous_user_fields[ $index ] = $user_field_obj;
 			} else {
-				$this->previous_options[ $index ]->write( $field_value );
+				$this->previous_user_fields[ $index ]->write( $field_value );
 			}
 
-			$fields = $this->set_fields_content( $fields, $index, $this->previous_options[ $index ] );
+			$fields = $this->set_fields_content( $fields, $index, $this->previous_user_fields[ $index ] );
 		}
 
-		$this->set_previous_options( $this->previous_options );
+		$this->set_previous_user_fields( $this->previous_user_fields );
 
 		return rest_ensure_response( $fields );
 	}
@@ -257,15 +258,15 @@ class Option_Field_Controller extends WP_REST_Controller {
 
 		$fields = [];
 
-		foreach ( $fields_names as $option ) {
-			$index = $option['index'];
+		foreach ( $fields_names as $user_field ) {
+			$index = $user_field['index'];
 
-			$this->previous_options[ $index ]->delete();
+			$this->previous_user_fields[ $index ]->delete();
 
-			$fields = $this->set_fields_content( $fields, $index, $this->previous_options[ $index ] );
+			$fields = $this->set_fields_content( $fields, $index, $this->previous_user_fields[ $index ] );
 		}
 
-		$this->set_previous_options( $this->previous_options );
+		$this->set_previous_user_fields( $this->previous_user_fields );
 
 		return rest_ensure_response( $fields );
 	}
@@ -290,12 +291,12 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 3.0.0
 	 *
 	 */
-	protected function get_previous_options(): array {
+	protected function get_previous_user_fields(): array {
 
 		/**
-		 * This array contains the previous options
+		 * This array contains the previous user fields
 		 *
-		 *    $previous_options = array (
+		 *    $previous_user_fields = array (
 		 *        'field_name'      => int,
 		 *        'previous_value'  => string,
 		 *        'field_value'     => string,
@@ -304,20 +305,20 @@ class Option_Field_Controller extends WP_REST_Controller {
 		 *    );
 		 *
 		 */
-		return get_option( 'dapre_cft_previous_options' );
+		return get_option( 'dapre_cft_previous_user_fields' );
 	}
 
 	/**
 	 * Updates the option array containing the previous options.
 	 *
-	 * @param array $previous_options The array containing the previous options.
+	 * @param array $previous_user_fields The array containing the previous options.
 	 *
 	 * @return void
 	 * @since 3.0.0
 	 *
 	 */
-	protected function set_previous_options( $previous_options ): void {
-		update_option( 'dapre_cft_previous_options', $previous_options );
+	protected function set_previous_user_fields( $previous_user_fields ): void {
+		update_option( 'dapre_cft_previous_user_fields', $previous_user_fields );
 	}
 
 	/**
@@ -325,26 +326,26 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 *
 	 * @param array          $fields The list of fields and their content.
 	 * @param int            $index  The index order in the admin page.
-	 * @param Options_Fields $option The option object to transfer to the fields array.
+	 * @param User_Fields $user_field The option object to transfer to the fields array.
 	 *
 	 * @return array The fields array updated
 	 */
-	private function set_fields_content( array $fields, int $index, Options_Fields $option ): array {
+	private function set_fields_content( array $fields, int $index, User_Fields $user_field ): array {
 
 		$fields[ $index ]['index']              = $index;
-		$fields[ $index ]['currentValue']       = json_encode( print_r( $option->get_current_value(), true ) );
-		$fields[ $index ]['previousValue']      = json_encode( print_r( $option->get_previous_value(), true ) );
-		$fields[ $index ]['error']              = $option->get_error();
-		$fields[ $index ]['fieldErrorClass']    = $option->get_field_error_class();
-		$fields[ $index ]['curValueDateToggle'] = $option->get_date_toggle();
-		$fields[ $index ]['disableWrite']       = $option->get_disable_write();
-		$fields[ $index ]['disableDelete']      = $option->get_disable_delete();
+		$fields[ $index ]['currentValue']       = json_encode( print_r( $user_field->get_current_value(), true ) );
+		$fields[ $index ]['previousValue']      = json_encode( print_r( $user_field->get_previous_value(), true ) );
+		$fields[ $index ]['error']              = $user_field->get_error();
+		$fields[ $index ]['fieldErrorClass']    = $user_field->get_field_error_class();
+		$fields[ $index ]['curValueDateToggle'] = $user_field->get_date_toggle();
+		$fields[ $index ]['disableWrite']       = $user_field->get_disable_write();
+		$fields[ $index ]['disableDelete']      = $user_field->get_disable_delete();
 
 		return $fields;
 	}
 
 	/**
-	 * Retrieves the query params for the options collection.
+	 * Retrieves the query params for the user fields collection.
 	 *
 	 * @return array Collection parameters.
 	 * @since 5.0.0
@@ -352,8 +353,8 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 */
 	public function get_collection_params(): array {
 		return [
-			'options' => [
-				'description' => __( 'Array of option names.' ),
+			'user_fields' => [
+				'description' => __( 'Array of user fields.' ),
 				'required'    => true,
 				'type'        => 'json',
 				'items'       => [
@@ -366,8 +367,15 @@ class Option_Field_Controller extends WP_REST_Controller {
 							'required'          => true,
 							'sanitize_callback' => 'absint',
 						],
-						'optionName' => [
-							'description' => __( 'Name of the option that we want to read.' ),
+						'userID' => [
+							'description' => __( 'User ID that we want to read.' ),
+							'type'        => 'integer',
+							'default'     => '',
+							'required'    => true,
+							'sanitize_callback' => 'absint',
+						],
+						'fieldName' => [
+							'description' => __( 'User field that we want to read.' ),
 							'type'        => 'string',
 							'default'     => '',
 							'required'    => true,
@@ -379,7 +387,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Retrieves the query params for the options update.
+	 * Retrieves the query params for the user fields update.
 	 *
 	 * @return array Write parameters.
 	 * @since 5.0.0
@@ -394,8 +402,15 @@ class Option_Field_Controller extends WP_REST_Controller {
 				'required'          => true,
 				'sanitize_callback' => 'absint',
 			],
-			'optionName'   => [
-				'description' => __( 'Option name to read.' ),
+			'userID' => [
+				'description' => __( 'User ID that we want to write.' ),
+				'type'        => 'integer',
+				'default'     => '',
+				'required'    => true,
+				'sanitize_callback' => 'absint',
+			],
+			'fieldName' => [
+				'description' => __( 'User field that we want to write.' ),
 				'type'        => 'string',
 				'default'     => '',
 				'required'    => true,
@@ -431,8 +446,15 @@ class Option_Field_Controller extends WP_REST_Controller {
 				'required'          => true,
 				'sanitize_callback' => 'absint',
 			],
-			'optionName' => [
-				'description' => __( 'Option name to delete.' ),
+			'userID' => [
+				'description' => __( 'User ID that we want to delete.' ),
+				'type'        => 'integer',
+				'default'     => '',
+				'required'    => true,
+				'sanitize_callback' => 'absint',
+			],
+			'fieldName' => [
+				'description' => __( 'User field that we want to delete.' ),
 				'type'        => 'string',
 				'default'     => '',
 				'required'    => true,
@@ -441,7 +463,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Rename an option.
+	 * Rename a user field.
 	 *
 	 * @param WP_REST_Request $request
 	 *
@@ -452,46 +474,43 @@ class Option_Field_Controller extends WP_REST_Controller {
 	public function rename_item( $request ) {
 		$fields_names = $request->get_json_params();
 
-		$old_option_name = sanitize_text_field( $fields_names['oldOptionName'] );
-		$new_option_name = sanitize_text_field( $fields_names['newOptionName'] );
+		/** @var object $old_user_field option field to rename */
+		$old_user_field = new User_Fields( $fields_names['userID'], $fields_names['oldFieldName'] );
 
-		/** @var object $old_option option field to rename */
-		$old_option = new Options_Fields( $old_option_name );
+		/** @var object $new_user_field the new name of the option field */
+		$new_user_field = new User_Fields( $fields_names['userID'], $fields_names['newFieldName'] );
 
-		/** @var object $new_option the new name of the option field */
-		$new_option = new Options_Fields( $new_option_name );
-
-		if ( $old_option_name == $new_option_name ) {
+		if ( $fields_names['oldFieldName'] == $fields_names['newFieldName'] ) {
 			$response = [
 				'renamed' => false,
-				'message' => 'Old option and new option cannot have the same name.',
+				'message' => 'Old field and new field cannot have the same name.',
 			];
-		} else if ( ! $old_option->option_exists() ) {
+		} else if ( ! $old_user_field->user_meta_exists() ) {
 			$response = [
 				'renamed' => false,
-				'message' => 'The starting option does not exist.',
+				'message' => 'The starting user field does not exist.',
 			];
-		} else if ( $new_option->option_exists() ) {
+		} else if ( $new_user_field->user_meta_exists() ) {
 			$response = [
 				'renamed' => false,
-				'message' => 'The destination option already exists.',
+				'message' => 'The destination user field already exists.',
 			];
 
 		} else {
 			$error = false;
 
-			if ( ! empty( $old_option->get_error() ) ) {
+			if ( ! empty( $old_user_field->get_error() ) ) {
 				$response = [
 					'renamed' => false,
-					'message' => $old_option->get_error(),
+					'message' => $old_user_field->get_error(),
 				];
 
 			} else {
-				$new_option->write( $old_option->get_current_value() );
+				$new_user_field->write( $old_user_field->get_current_value() );
 
 				// if the new option exists and the old content was moved correctly then delete the old option
-				if ( empty( $new_option->get_error() ) && ! $error ) {
-					$old_option->delete();
+				if ( empty( $new_user_field->get_error() ) && ! $error ) {
+					$old_user_field->delete();
 					$response = [
 						'renamed' => true,
 						'message' => 'The option has been renamed.',
@@ -530,14 +549,21 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 */
 	protected function get_rename_params(): array {
 		return [
-			'oldOptionName' => [
-				'description' => __( 'Old option name.' ),
+			'userID' => [
+				'description' => __( 'User ID that we want to rename.' ),
+				'type'        => 'integer',
+				'default'     => '',
+				'required'    => true,
+				'sanitize_callback' => 'absint',
+			],
+			'oldFieldName' => [
+				'description' => __( 'Old user field name.' ),
 				'type'        => 'string',
 				'default'     => '',
 				'required'    => true,
 			],
-			'newOptionName' => [
-				'description' => __( 'New option name.' ),
+			'newFieldName' => [
+				'description' => __( 'New user field name.' ),
 				'type'        => 'string',
 				'default'     => '',
 				'required'    => true,
@@ -559,18 +585,23 @@ class Option_Field_Controller extends WP_REST_Controller {
 
 		$response = [];
 
-		$current_option = new Options_Fields( $fields_names['currentOption'] );
+		$current_user_field = new User_Fields( $fields_names['currentUserID'], $fields_names['currentFieldName'] );
 
-		// Checks if the current option entered is valid
-		if ( '' == $current_option->get_name() ) {
+		if ( ! $current_user_field->user_exists() ) {
+			// if the starting user doesn't exists then fail
 			$response = [
 				'copied'  => false,
-				'message' => "Please provide the field name for the starting option.",
+				'message' => "The starting user doesn't exist.",
 			];
-		} else if ( ! $current_option->option_exists() ) {
+		} else if ( empty($current_user_field->get_name()) || empty( $current_user_field->get_user_id() ) ) {
 			$response = [
 				'copied'  => false,
-				'message' => "The starting option doesn't exist.",
+				'message' => "Please provide user ID and field name for the starting user field.",
+			];
+		} else if ( ! $current_user_field->user_meta_exists() ) {
+			$response = [
+				'copied'  => false,
+				'message' => "The starting user field doesn't exist.",
 			];
 		} else {
 			// If the starting option is valid, checks where we must copy it
@@ -583,37 +614,34 @@ class Option_Field_Controller extends WP_REST_Controller {
 					if ( empty( $new_option->get_name() ) ) {
 						$response = [
 							'copied'  => false,
-							'message' => "Please provide a field name for the destination field.",
+							'message' => "Please provide a field name for the destination option.",
 						];
 
 						break;
 					}
 
-					if ( $current_option->get_name() == $new_option->get_name() ) {
-						$response = [
-							'copied'  => false,
-							'message' => "Starting option and destination option cannot be the same.",
-						];
-					} else {
+					// check if the new option exists or we are asked to create it
+					if ( $new_option->option_exists() || $fields_names['checkboxCreate'] ) {
 
-						// check if the new option exists or we are asked to create it
-						if ( $new_option->option_exists() || $fields_names['checkboxCreate'] ) {
+						$new_option->write( $current_user_field->get_current_value() );
 
-							$new_option->write( $current_option->get_current_value() );
-
-							// if the new option exists and the old content was copied correctly then mark it copied
-							if ( $new_option->option_exists() && $current_option->get_current_value() == $new_option->get_current_value() ) {
-								$response = [
-									'copied'  => true,
-									'message' => 'Option copied',
-								];
-							}
+						// if the new option exists and the old content was copied correctly then mark it copied
+						if ( $new_option->option_exists() && $current_user_field->get_current_value() == $new_option->get_current_value() ) {
+							$response = [
+								'copied'  => true,
+								'message' => 'User field copied',
+							];
 						} else {
 							$response = [
 								'copied'  => false,
-								'message' => "The option could not be copied because the destination option doesn't exist.",
+								'message' => 'There was an error, the user field could not be copied.',
 							];
 						}
+					} else {
+						$response = [
+							'copied'  => false,
+							'message' => "The user field could not be copied because the destination option doesn't exist.",
+						];
 					}
 					break;
 
@@ -631,19 +659,18 @@ class Option_Field_Controller extends WP_REST_Controller {
 						break;
 					}
 
-					// Check if the post ID exists. We cannot copy to a non existent post.
+					// Check if the user ID exists. We cannot copy to a non existent user
 					if ( $new_user_field->user_exists() ) {
 
-						// check if the new user field exists or we are asked to create it
 						if ( $new_user_field->user_meta_exists() || $fields_names['checkboxCreate'] ) {
 
-							$new_user_field->write( $current_option->get_current_value() );
+							$new_user_field->write( $current_user_field->get_current_value() );
 
 							// if the new option exists and the old content was copied correctly then mark it copied
-							if ( $new_user_field->user_meta_exists() && $current_option->get_current_value() == $new_user_field->get_current_value() ) {
+							if ( $new_user_field->user_meta_exists() && $current_user_field->get_current_value() == $new_user_field->get_current_value() ) {
 								$response = [
 									'copied'  => true,
-									'message' => "Option copied.",
+									'message' => "User field copied.",
 								];
 							} else {
 								$response = [
@@ -654,7 +681,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 						} else {
 							$response = [
 								'copied'  => false,
-								'message' => "The option could not be copied because the destination field doesn't exist.",
+								'message' => "The user field could not be copied because the destination field doesn't exist.",
 							];
 						}
 					} else {
@@ -663,6 +690,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 							'message' => "The destination user doesn't exist.",
 						];
 					}
+
 					break;
 
 				case 'post field':
@@ -679,19 +707,18 @@ class Option_Field_Controller extends WP_REST_Controller {
 						break;
 					}
 
-					// Check if the post ID exists. We cannot copy to a non existent post.
+					// Check if the post ID exists. We cannot copy to a non existent post
 					if ( $new_post_field->post_exists() ) {
 
-						// check if the new option exists or we are asked to create it
 						if ( $new_post_field->post_meta_exists() || $fields_names['checkboxCreate'] ) {
 
-							$new_post_field->write( $current_option->get_current_value() );
+							$new_post_field->write( $current_user_field->get_current_value() );
 
 							// if the new option exists and the old content was copied correctly then mark it copied
-							if ( $new_post_field->post_meta_exists() && $current_option->get_current_value() == $new_post_field->get_current_value() ) {
+							if ( $new_post_field->post_meta_exists() && $current_user_field->get_current_value() == $new_post_field->get_current_value() ) {
 								$response = [
 									'copied'  => true,
-									'message' => "Option copied.",
+									'message' => "User field copied.",
 								];
 							} else {
 								$response = [
@@ -702,13 +729,13 @@ class Option_Field_Controller extends WP_REST_Controller {
 						} else {
 							$response = [
 								'copied'  => false,
-								'message' => "There was an error, the option could not be copied.",
+								'message' => "The user field could not be copied because the destination field doesn't exist.",
 							];
 						}
 					} else {
 						$response = [
 							'copied'  => false,
-							'message' => "The destination post does not exist.",
+							'message' => "The destination post doesn't exist.",
 						];
 					}
 					break;

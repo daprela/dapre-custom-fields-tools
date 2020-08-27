@@ -31,6 +31,9 @@ class Loader {
 	/** @var object $option_field_controller The class that manages the REST route for options */
 	public $option_field_controller;
 
+	/** @var object $user_field_controller The class that manages the REST route for user fields */
+	public $user_field_controller;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -45,6 +48,7 @@ class Loader {
 		$this->admin         = new Plugin_Admin();
 		$this->plugin_i18n   = new i18n();
 		$this->option_field_controller = new Option_Field_Controller();
+		$this->user_field_controller = new User_Field_Controller();
 
 	    $this->set_locale();
 	    $this->load_dependencies();
@@ -151,6 +155,7 @@ class Loader {
 
 		/* REST API */
 		add_action( 'rest_api_init', [$this->option_field_controller, 'register_routes']);
+		add_action( 'rest_api_init', [$this->user_field_controller, 'register_routes']);
 	}
 	
 	/**

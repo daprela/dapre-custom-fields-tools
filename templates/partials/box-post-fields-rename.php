@@ -9,7 +9,7 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("Post ID","dapre-cft") ?>
-						<input class="js-postFieldRenamePostID small-text" type="number" name="old_post_field_id" />
+						<input class="js-postFieldRenamePostID small-text" type="number" step="1" min="0" name="old_post_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>

@@ -34,15 +34,15 @@ $key = esc_attr($non_esc_key);
 	</div>
 	<div class="c-optionField__fieldActions">
 		<label>
-			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="read" data-index="<?php echo $key ?>" checked />
+			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="read"" checked />
 			<?php esc_html_e("Read","dapre-cft") ?>
 		</label>
 		<label >
-			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="write" data-index="<?php echo $key ?>" <?php echo esc_attr($option->get_disable_write()) ?> />
+			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="write"<?php echo esc_attr($option->get_disable_write()) ?> />
 			<?php esc_html_e("Write","dapre-cft") ?>
 		</label>
 		<label>
-			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="delete" data-index="<?php echo $key ?>" <?php echo esc_attr($option->get_disable_delete()) ?> />
+			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="delete" <?php echo esc_attr($option->get_disable_delete()) ?> />
 			<?php esc_html_e("Delete","dapre-cft") ?>
 		</label>
 	</div>

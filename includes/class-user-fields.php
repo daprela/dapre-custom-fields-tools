@@ -92,6 +92,17 @@ class User_Fields extends Custom_Fields {
 	public function get_user_id() {
 		return $this->user_id;
 	}
+
+	/**
+	 * Returns the field name the user meta.
+	 *
+	 * @since 4.0.0
+	 *
+	 * @return string The field name
+	 */
+	public function get_field_name() {
+		return $this->field_name;
+	}
 	
 	/**
 	 * Set the previous value of this user meta.
@@ -137,8 +148,6 @@ class User_Fields extends Custom_Fields {
 		}
 		
 		delete_user_meta($this->user_id, $this->field_name);
-		$this->field_name = '';
-		$this->user_id = '';
 		$this->start();
 	}
 	

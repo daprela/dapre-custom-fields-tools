@@ -63,7 +63,7 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("User ID","dapre-cft") ?>
-						<input class="js-optToUserFieldID c-copyToUserID small-text" type="number" name="opt_to_user_field_id" />
+						<input class="js-optToUserFieldID c-copyToUserID small-text" type="number" step="1" min="0" name="opt_to_user_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>
@@ -92,7 +92,7 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("Post ID","dapre-cft") ?>
-						<input class="js-optToPostFieldID c-copyToPostID small-text" type="number" name="opt_to_post_field_id" />
+						<input class="js-optToPostFieldID c-copyToPostID small-text" type="number" step="1" min="0" name="opt_to_post_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>

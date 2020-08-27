@@ -26,13 +26,13 @@ foreach ( $previous_post_fields as $non_esc_key=>$post_field ) {
 // escape the key for safe use in html attributes
 $key = esc_attr($non_esc_key);
 ?>
-<div class="js-postFieldsFieldDataRow_<?php echo $key ?> c-metaField <?php echo esc_attr($post_field->get_row_error_class()) ?>">
+<div class="js-postFieldsFieldDataRow c-metaField <?php echo esc_attr($post_field->get_row_error_class()) ?>" data-index="<?php echo $key ?>">
 	<div class="c-metaField__fieldID">
 		<input class="c-metaField__fieldIDInput" type="number" step="1" min="0" name="post_id[<?php echo $key ?>]" value="<?php echo esc_attr($post_field->get_post_id()) ?>">
 	</div>
 	<div class="c-metaField__fieldName">
 		<div class="c-metaField__fieldErrorContainer">
-			<p class="c-metaField__fieldErrorMessage <?php echo esc_attr($post_field->get_field_error_class()) ?>"><?php echo esc_html_e($post_field->get_error(), "dapre-cft") ?></p>
+			<p class="js-fieldErrorMessage c-metaField__fieldErrorMessage <?php echo esc_attr($post_field->get_field_error_class()) ?>"><?php echo esc_html_e($post_field->get_error(), "dapre-cft") ?></p>
 		</div>
 		<input class="c-metaField__fieldNameInput" type="text" name="field_name[<?php echo $key ?>]" value="<?php echo esc_attr($post_field->get_name()) ?>" />
 	</div>
@@ -79,12 +79,12 @@ $key = esc_attr($non_esc_key);
 		<input class="js-fieldValueStringBackup" type="hidden" name="value-string-backup-<?php echo $key ?>" value="" />
 	</div>
 	<div class="c-metaField__fieldCurValueOptions">
-		<label class="c-metaField__fieldCurValueOption <?php echo esc_attr($post_field->get_date_toggle()) ?>">
+		<label class="js-curValueDateToggle c-metaField__fieldCurValueOption <?php echo esc_attr($post_field->get_date_toggle()) ?>">
 			<p><?php esc_html_e("Toggle date string/timestamp","dapre-cft") ?></p>
 			<input class="js-fieldDateStringCurValue" type="checkbox" name="date_string_show[<?php echo $key ?>]" value="" data-index="<?php echo $key ?>" />
 		</label>
 	</div>
-	<div class="c-metaField__fieldPrevValue">
+	<div class="js-fieldPreviousValue c-metaField__fieldPrevValue">
 		<?php
 		if ( is_array($post_field->get_previous_value()) ) {
 			print_r($post_field->get_previous_value());

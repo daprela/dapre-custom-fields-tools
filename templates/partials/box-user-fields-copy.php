@@ -13,7 +13,7 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("User ID","dapre-cft") ?>
-						<input class="js-userFieldCopyUserID small-text" type="number" name="current_user_field_id" />
+						<input class="js-userFieldCopyUserID small-text" type="number" step="1" min="0" name="current_user_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>
@@ -55,7 +55,7 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("User ID","dapre-cft") ?>
-						<input class="js-userFieldToUserFieldID c-copyToUserID small-text" type="number" name="userfield_to_user_field_id" />
+						<input class="js-userFieldToUserFieldID c-copyToUserID small-text" type="number" step="1" min="0" name="userfield_to_user_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>
@@ -101,7 +101,7 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("Post ID","dapre-cft") ?>
-						<input class="js-userFieldToPostFieldID c-copyToPostID small-text" type="number" name="userfield_to_post_field_id" />
+						<input class="js-userFieldToPostFieldID c-copyToPostID small-text" type="number" step="1" min="0" name="userfield_to_post_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>
