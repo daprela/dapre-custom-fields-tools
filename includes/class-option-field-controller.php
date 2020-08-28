@@ -4,12 +4,8 @@ namespace dapre_cft\includes;
 
 use WP_Error;
 use WP_HTTP_Response;
-use WP_REST_Controller, WP_REST_Server;
 use WP_REST_Request;
 use WP_REST_Response;
-use function dapre_cft\get_asset_version;
-use const dapre_cft\PLUGIN_DIR_PATH;
-use const dapre_cft\PLUGIN_URL_PATH;
 
 defined( 'ABSPATH' ) or die;
 
@@ -22,30 +18,11 @@ defined( 'ABSPATH' ) or die;
  * @link    https://giuliodaprela.com
  * @license GPL 2.0+
  */
-class Option_Field_Controller extends WP_REST_Controller {
+class Option_Field_Controller extends Field_Controller {
+
 
 	/**
-	 * @var string $namespace The basic namespace of our API
-	 */
-	protected $namespace;
-
-	/**
-	 * @var string $rest_base The root namespace for the options
-	 */
-	protected $rest_base;
-
-	/**
-	 * @var string $rest_rename The namespace for the rename feature
-	 */
-	protected $rest_rename;
-
-	/**
-	 * @var string $rest_copy The namespace for the copy feature
-	 */
-	protected $rest_copy;
-
-	/**
-	 * @var array $previous_options The array containing the previous options
+	 * @var array $previous_user_fields The array containing the previous options
 	 */
 	protected $previous_options;
 
@@ -55,71 +32,9 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 5.0.0
 	 */
 	public function __construct() {
-		$this->namespace        = 'dapre-cft/v1';
+		parent::__construct();
 		$this->rest_base        = 'options';
-		$this->rest_rename      = 'rename';
-		$this->rest_copy        = 'copy';
 		$this->previous_options = $this->get_previous_options();
-	}
-
-	/**
-	 * Register the new Rest endpoints.
-	 *
-	 * @return void
-	 * @since 5.0.0
-	 *
-	 */
-	public function register_routes(): void {
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base,
-			[
-				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'get_item' ],
-					'permission_callback' => [ $this, 'get_items_permissions_check' ],
-					'args'                => $this->get_collection_params(),
-				],
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'update_item' ],
-					'permission_callback' => [ $this, 'update_item_permissions_check' ],
-					'args'                => $this->get_write_params(),
-				],
-				[
-					'methods'             => WP_REST_Server::DELETABLE,
-					'callback'            => [ $this, 'delete_item' ],
-					'permission_callback' => [ $this, 'delete_item_permissions_check' ],
-					'args'                => $this->get_delete_params(),
-				],
-			]
-		);
-
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base . '/rename',
-			[
-				[
-					'methods'             => WP_REST_Server::EDITABLE,
-					'callback'            => [ $this, 'rename_item' ],
-					'permission_callback' => [ $this, 'rename_item_permissions_check' ],
-					'args'                => $this->get_rename_params(),
-				],
-			]
-		);
-
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base . '/copy',
-			[
-				[
-					'methods'             => WP_REST_Server::EDITABLE,
-					'callback'            => [ $this, 'copy_item' ],
-					'permission_callback' => [ $this, 'copy_item_permissions_check' ],
-					'args'                => $this->get_copy_params(),
-				],
-			]
-		);
 	}
 
 	/**
@@ -131,7 +46,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function get_item( $request ) {
+	public function get_item( WP_REST_Request $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
 		$fields_names = json_decode( $request->get_param( 'options' ), true );
@@ -168,25 +83,6 @@ class Option_Field_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Returns whether the user has the permission to execute the request.
-	 *
-	 * @param WP_REST_Request $request
-	 *
-	 * @return bool True if the user can execute the request.
-	 * @since 5.0.0
-	 *
-	 */
-	public function get_items_permissions_check( $request ): bool {
-		if ( current_user_can( 'manage_options' ) ) {
-			return true;
-		}
-
-		return new WP_Error( 'rest_forbidden',
-			esc_html__( 'You do not have permissions to perform this action.', 'dapre-cft' ),
-			[ 'status' => 401 ] );
-	}
-
-	/**
 	 * Execute the request to write the meta.
 	 *
 	 * @param WP_REST_Request $request The list of meta to write.
@@ -195,7 +91,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function update_item( $request ) {
+	public function update_item( WP_REST_Request $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
 		$fields_names = $request->get_json_params();
@@ -229,19 +125,6 @@ class Option_Field_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Returns whether the user has the permission to execute the request.
-	 *
-	 * @param WP_REST_Request $request
-	 *
-	 * @return bool True if the user can execute the request.
-	 * @since 5.0.0
-	 *
-	 */
-	public function update_item_permissions_check( $request ): bool {
-		return $this->get_items_permissions_check( $request );
-	}
-
-	/**
 	 * Execute the request to delete the meta.
 	 *
 	 * @param WP_REST_Request $request The list of meta to delete.
@@ -250,7 +133,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function delete_item( $request ) {
+	public function delete_item( WP_REST_Request $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
 		$fields_names = $request->get_json_params();
@@ -268,19 +151,6 @@ class Option_Field_Controller extends WP_REST_Controller {
 		$this->set_previous_options( $this->previous_options );
 
 		return rest_ensure_response( $fields );
-	}
-
-	/**
-	 * Returns whether the user has the permission to execute the request.
-	 *
-	 * @param WP_REST_Request $request
-	 *
-	 * @return bool True if the user can execute the request.
-	 * @since 5.0.0
-	 *
-	 */
-	public function delete_item_permissions_check( $request ): bool {
-		return $this->get_items_permissions_check( $request );
 	}
 
 	/**
@@ -316,31 +186,8 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 3.0.0
 	 *
 	 */
-	protected function set_previous_options( $previous_options ): void {
+	protected function set_previous_options( array $previous_options ): void {
 		update_option( 'dapre_cft_previous_options', $previous_options );
-	}
-
-	/**
-	 * Prepare an array containing the fields to be updated in the admin page.
-	 *
-	 * @param array          $fields The list of fields and their content.
-	 * @param int            $index  The index order in the admin page.
-	 * @param Options_Fields $option The option object to transfer to the fields array.
-	 *
-	 * @return array The fields array updated
-	 */
-	private function set_fields_content( array $fields, int $index, Options_Fields $option ): array {
-
-		$fields[ $index ]['index']              = $index;
-		$fields[ $index ]['currentValue']       = json_encode( print_r( $option->get_current_value(), true ) );
-		$fields[ $index ]['previousValue']      = json_encode( print_r( $option->get_previous_value(), true ) );
-		$fields[ $index ]['error']              = $option->get_error();
-		$fields[ $index ]['fieldErrorClass']    = $option->get_field_error_class();
-		$fields[ $index ]['curValueDateToggle'] = $option->get_date_toggle();
-		$fields[ $index ]['disableWrite']       = $option->get_disable_write();
-		$fields[ $index ]['disableDelete']      = $option->get_disable_delete();
-
-		return $fields;
 	}
 
 	/**
@@ -449,7 +296,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 1.0.0
 	 *
 	 */
-	public function rename_item( $request ) {
+	public function rename_item( WP_REST_Request $request ) {
 		$fields_names = $request->get_json_params();
 
 		$old_option_name = sanitize_text_field( $fields_names['oldOptionName'] );
@@ -509,19 +356,6 @@ class Option_Field_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Returns whether the user has the permission to execute the request.
-	 *
-	 * @param WP_REST_Request $request
-	 *
-	 * @return bool True if the user can execute the request.
-	 * @since 5.0.0
-	 *
-	 */
-	public function rename_item_permissions_check( $request ) {
-		return $this->get_items_permissions_check( $request );
-	}
-
-	/**
 	 * Retrieves the query params for the options rename.
 	 *
 	 * @return array Collection parameters.
@@ -554,7 +388,7 @@ class Option_Field_Controller extends WP_REST_Controller {
 	 * @since 1.0.0
 	 *
 	 */
-	public function copy_item( $request ) {
+	public function copy_item( WP_REST_Request $request ) {
 		$fields_names = $request->get_json_params();
 
 		$response = [];
@@ -718,19 +552,6 @@ class Option_Field_Controller extends WP_REST_Controller {
 		}
 
 		return rest_ensure_response( $response );
-	}
-
-	/**
-	 * Returns whether the user has the permission to execute the request.
-	 *
-	 * @param WP_REST_Request $request
-	 *
-	 * @return bool True if the user can execute the request.
-	 * @since 5.0.0
-	 *
-	 */
-	public function copy_item_permissions_check( $request ) {
-		return $this->get_items_permissions_check( $request );
 	}
 
 	/**
