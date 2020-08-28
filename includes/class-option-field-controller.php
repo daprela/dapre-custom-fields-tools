@@ -46,7 +46,7 @@ class Option_Field_Controller extends Field_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function get_item( WP_REST_Request $request ) {
+	public function get_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
 		$fields_names = json_decode( $request->get_param( 'options' ), true );
@@ -91,7 +91,7 @@ class Option_Field_Controller extends Field_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function update_item( WP_REST_Request $request ) {
+	public function update_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
 		$fields_names = $request->get_json_params();
@@ -133,7 +133,7 @@ class Option_Field_Controller extends Field_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function delete_item( WP_REST_Request $request ) {
+	public function delete_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
 		$fields_names = $request->get_json_params();
@@ -160,7 +160,7 @@ class Option_Field_Controller extends Field_Controller {
 	 * @since 3.0.0
 	 *
 	 */
-	protected function get_previous_options(): array {
+	public function get_previous_options(): array {
 
 		/**
 		 * This array contains the previous options
@@ -296,7 +296,7 @@ class Option_Field_Controller extends Field_Controller {
 	 * @since 1.0.0
 	 *
 	 */
-	public function rename_item( WP_REST_Request $request ) {
+	public function rename_item( $request ) {
 		$fields_names = $request->get_json_params();
 
 		$old_option_name = sanitize_text_field( $fields_names['oldOptionName'] );
@@ -388,7 +388,7 @@ class Option_Field_Controller extends Field_Controller {
 	 * @since 1.0.0
 	 *
 	 */
-	public function copy_item( WP_REST_Request $request ) {
+	public function copy_item( $request ) {
 		$fields_names = $request->get_json_params();
 
 		$response = [];

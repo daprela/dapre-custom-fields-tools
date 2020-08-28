@@ -7,12 +7,13 @@ defined( 'ABSPATH' ) or die;
 /**
  * This is the class the manages all the operations on the post fields
  *
+ * @param      $post_id         Post ID
+ * @param      $post_field_name The post field name
+ *
  * @package    dapre_cft\includes
  *
  * @author     Giulio Daprela <giulio.daprela@gmail.com>
  *
- * @param      $post_id         Post ID
- * @param      $post_field_name The post field name
  */
 class Post_Fields extends Custom_Fields {
 
@@ -86,11 +87,11 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Set the error property that tells if the post or the field doesn't exist.
 	 *
-	 * @since 4.0.0
-	 *
 	 * @param string $error The error string
 	 *
 	 * @return void
+	 * @since 4.0.0
+	 *
 	 */
 	protected function set_error( $error = '' ) {
 
@@ -117,9 +118,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Returns the post ID the post meta.
 	 *
+	 * @return int The post ID
 	 * @since 4.0.0
 	 *
-	 * @return int The post ID
 	 */
 	public function get_post_id() {
 		return $this->post_id;
@@ -128,7 +129,7 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Set the previous value of this post meta.
 	 *
-	 * @param    string $from From where this method was called.
+	 * @param string $from From where this method was called.
 	 *
 	 * @return    void
 	 */
@@ -155,9 +156,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Delete the post meta.
 	 *
+	 * @return void
 	 * @since 4.0.0
 	 *
-	 * @return void
 	 */
 	public function delete() {
 
@@ -174,9 +175,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Read the post meta value and set the corresponding property object.
 	 *
+	 * @return void
 	 * @since 4.0.0
 	 *
-	 * @return void
 	 */
 	protected function set_current_value() {
 		if ( $this->is_base_field() ) {
@@ -199,11 +200,11 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Update the post meta in the database and updates the object properties.
 	 *
-	 * @since 4.0.0
-	 *
 	 * @param mixed $field_value The new value for the post meta.
 	 *
 	 * @return void
+	 * @since 4.0.0
+	 *
 	 */
 	public function write( $field_value ) {
 
@@ -265,9 +266,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Returns the status of the write error flag.
 	 *
+	 * @return bool True if the last write operation generated an error. False otherwise.
 	 * @since 4.0.0
 	 *
-	 * @return bool True if the last write operation generated an error. False otherwise.
 	 */
 	public function get_write_error() {
 		return $this->write_error;
@@ -276,11 +277,11 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Set the status of the write error flag.
 	 *
-	 * @since 4.0.0
-	 *
 	 * @param bool $param The status of the write error flag
 	 *
 	 * @return void
+	 * @since 4.0.0
+	 *
 	 */
 	public function set_write_error( bool $param ) {
 		$this->write_error = $param;
@@ -289,9 +290,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Determines if this post meta can be modified manually.
 	 *
+	 * @return bool Whether we can write this post meta.
 	 * @since 4.0.0
 	 *
-	 * @return bool Whether we can write this post meta.
 	 */
 	public function can_write() {
 		if ( $this->is_read_only() ) {
@@ -304,9 +305,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Determines if this post meta is read only.
 	 *
+	 * @return bool True if this post meta cannot be overwritten.
 	 * @since 4.0.0
 	 *
-	 * @return bool True if this post meta cannot be overwritten.
 	 */
 	public function can_delete() {
 		if ( in_array( $this->field_name, $this->base_fields ) ) {
@@ -323,9 +324,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Determines if this post meta is a system field and cannot be deleted.
 	 *
+	 * @return bool True if this is a system field.
 	 * @since 4.0.0
 	 *
-	 * @return bool True if this is a system field.
 	 */
 	private function is_base_field() {
 		if ( in_array( $this->field_name, $this->base_fields ) ) {
@@ -338,9 +339,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Determines if this post meta is a read-only field.
 	 *
+	 * @return bool True if it is a read-only field.
 	 * @since 4.0.0
 	 *
-	 * @return bool True if it is a read-only field.
 	 */
 	private function is_read_only() {
 		if ( in_array( $this->field_name, $this->read_only ) ) {
@@ -353,9 +354,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Determines what must be the state of the write action.
 	 *
+	 * @return string The state of the write action
 	 * @since 4.0.0
 	 *
-	 * @return string The state of the write action
 	 */
 	public function get_disable_write() {
 		if ( ! $this->field_name || ! $this->post_id ) {
@@ -372,9 +373,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Determines what must be the state of the delete action.
 	 *
+	 * @return string The state of the delete action.
 	 * @since 4.0.0
 	 *
-	 * @return string The state of the delete action.
 	 */
 	public function get_disable_delete() {
 		if ( ! $this->field_name || ! $this->post_id || ! $this->post_meta_exists() ) {
@@ -391,9 +392,9 @@ class Post_Fields extends Custom_Fields {
 	/**
 	 * Checks if a post meta exists for a post.
 	 *
+	 * @return bool True if the user meta field exists.
 	 * @since 4.0.0
 	 *
-	 * @return bool True if the user meta field exists.
 	 */
 	public function post_meta_exists() {
 
@@ -412,9 +413,9 @@ class Post_Fields extends Custom_Fields {
 	 * Determines if a post, identified by the specified ID, exist
 	 * within the WordPress database.
 	 *
+	 * @return bool True if the post exists; otherwise, false.
 	 * @since 4.0.0
 	 *
-	 * @return bool True if the post exists; otherwise, false.
 	 */
 	function post_exists() {
 		return is_string( get_post_status( $this->post_id ) );

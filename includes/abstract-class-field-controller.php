@@ -46,9 +46,9 @@ abstract class Field_Controller extends WP_REST_Controller {
 	 * @since 5.0.0
 	 */
 	public function __construct() {
-		$this->namespace        = 'dapre-cft/v1';
-		$this->rest_rename      = 'rename';
-		$this->rest_copy        = 'copy';
+		$this->namespace   = 'dapre-cft/v1';
+		$this->rest_rename = 'rename';
+		$this->rest_copy   = 'copy';
 	}
 
 	/**
@@ -120,7 +120,7 @@ abstract class Field_Controller extends WP_REST_Controller {
 	 * @since 5.0.0
 	 *
 	 */
-	public function items_permissions_check( WP_REST_Request $request ): bool {
+	public function items_permissions_check( $request ): bool {
 		if ( current_user_can( 'manage_options' ) ) {
 			return true;
 		}
@@ -133,9 +133,9 @@ abstract class Field_Controller extends WP_REST_Controller {
 	/**
 	 * Prepare an array containing the fields to be updated in the admin page.
 	 *
-	 * @param array          $fields The list of fields and their content.
-	 * @param int            $index  The index order in the admin page.
-	 * @param object         $meta_field The object to transfer to the fields array.
+	 * @param array  $fields     The list of fields and their content.
+	 * @param int    $index      The index order in the admin page.
+	 * @param object $meta_field The object to transfer to the fields array.
 	 *
 	 * @return array The fields array updated
 	 */

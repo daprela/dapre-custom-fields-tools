@@ -34,6 +34,9 @@ class Loader {
 	/** @var object $user_field_controller The class that manages the REST route for user fields */
 	public $user_field_controller;
 
+	/** @var object $post_field_controller The class that manages the REST route for post fields */
+	public $post_field_controller;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -42,22 +45,23 @@ class Loader {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		
-	    spl_autoload_register( [$this,'autoload'] );
 
-		$this->admin         = new Plugin_Admin();
-		$this->plugin_i18n   = new i18n();
+		spl_autoload_register( [ $this, 'autoload' ] );
+
+		$this->admin                   = new Plugin_Admin();
+		$this->plugin_i18n             = new i18n();
 		$this->option_field_controller = new Option_Field_Controller();
-		$this->user_field_controller = new User_Field_Controller();
+		$this->user_field_controller   = new User_Field_Controller();
+		$this->post_field_controller   = new Post_Field_Controller();
 
-	    $this->set_locale();
-	    $this->load_dependencies();
+		$this->set_locale();
+		$this->load_dependencies();
 
-	    if ( $this->is_php_version_ok() ) {
-		    $this->define_admin_hooks();
-	    } else {
-		    add_action( 'admin_notices', [$this, 'required_php_version_print_notice'] );
-	    }
+		if ( $this->is_php_version_ok() ) {
+			$this->define_admin_hooks();
+		} else {
+			add_action( 'admin_notices', [ $this, 'required_php_version_print_notice' ] );
+		}
 	}
 
 	/**
@@ -65,47 +69,48 @@ class Loader {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Functions. Defines all the utility functions that don't go in a class. 
+	 * - Functions. Defines all the utility functions that don't go in a class.
 	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
 	private function load_dependencies() {
-		
+
 		/**
 		 * General utility functions
 		 */
 		require_once PLUGIN_DIR_PATH . 'includes/functions.php';
 	}
-	
+
 	/**
 	 * Class autoloader method
-	 * 
-	 * @param	 string   $class   Class name which also includes the namespace
+	 *
+	 * @param string $class Class name which also includes the namespace
+	 *
 	 * @return   void
 	 */
-	private function autoload($class) {
+	private function autoload( $class ) {
 
 		/** @var string $class_path The path to the class */
-		$class_path = strtolower( str_replace("_","-",$class) );
+		$class_path = strtolower( str_replace( "_", "-", $class ) );
 
 		/** @var array $paths Array containing folder names in each element */
-		$paths = explode('\\', $class_path);
-		
+		$paths = explode( '\\', $class_path );
+
 		if ( $paths[0] != PLUGIN_NAME ) {
 			return;
 		}
 
-		/** @var string $class_file The complete path to the class file */
+		/** @var $class_file The complete path to the class file */
 		$class_file = PLUGIN_DIR_PATH . "{$paths[1]}/class-{$paths[2]}.php";
-		
-		if ( file_exists($class_file) ) {
-           	include_once($class_file);
-       	} else {
-			/** @var string $abstract_class_file the complete path to the abstract class */
+
+		if ( file_exists( $class_file ) ) {
+			include_once( $class_file );
+		} else {
+			/** @var $abstract_class_file the complete path to the abstract class */
 			$abstract_class_file = PLUGIN_DIR_PATH . "{$paths[1]}/abstract-class-{$paths[2]}.php";
-			if ( file_exists($abstract_class_file) ) {
-				include_once($abstract_class_file);
+			if ( file_exists( $abstract_class_file ) ) {
+				include_once( $abstract_class_file );
 			}
 		}
 	}
@@ -121,7 +126,7 @@ class Loader {
 	 */
 	private function set_locale() {
 
-		add_action( 'plugins_loaded', [$this->plugin_i18n, 'load_plugin_textdomain'] );
+		add_action( 'plugins_loaded', [ $this->plugin_i18n, 'load_plugin_textdomain' ] );
 	}
 
 	/**
@@ -132,45 +137,31 @@ class Loader {
 	 */
 	private function define_admin_hooks() {
 
-		add_action( 'admin_enqueue_scripts', [$this->admin, 'enqueue_styles'] );
-		add_action( 'admin_enqueue_scripts', [$this->admin, 'enqueue_scripts'], 10 );
-		
+		add_action( 'admin_enqueue_scripts', [ $this->admin, 'enqueue_styles' ] );
+		add_action( 'admin_enqueue_scripts', [ $this->admin, 'enqueue_scripts' ], 10 );
+
 		//creates the tabbed settings page and manages option saving
-		add_action( 'admin_menu', [$this->admin,'add_admin_menu'] );
-		
-		/* Options */
-//		add_action( 'wp_ajax_dapre_submit_options_fields', [$this->admin,'option_fields'] );
-//		add_action( 'wp_ajax_dapre_rename_option', [$this->admin,'rename_option'] );
-//		add_action( 'wp_ajax_dapre_copy_option', [$this->admin,'copy_option'] );
-//
-//		/* User fields */
-//		add_action( 'wp_ajax_dapre_submit_user_fields', [$this->admin,'user_fields'] );
-//		add_action( 'wp_ajax_dapre_rename_user_field', [$this->admin,'rename_user_field'] );
-//		add_action( 'wp_ajax_dapre_copy_user_field', [$this->admin,'copy_user_field'] );
-//
-//		/* Post fields */
-//		add_action( 'wp_ajax_dapre_submit_post_fields', [$this->admin,'post_fields'] );
-//		add_action( 'wp_ajax_dapre_rename_post_field', [$this->admin,'rename_post_field'] );
-//		add_action( 'wp_ajax_dapre_copy_post_field', [$this->admin,'copy_post_field'] );
+		add_action( 'admin_menu', [ $this->admin, 'add_admin_menu' ] );
 
 		/* REST API */
-		add_action( 'rest_api_init', [$this->option_field_controller, 'register_routes']);
-		add_action( 'rest_api_init', [$this->user_field_controller, 'register_routes']);
+		add_action( 'rest_api_init', [ $this->option_field_controller, 'register_routes' ] );
+		add_action( 'rest_api_init', [ $this->user_field_controller, 'register_routes' ] );
+		add_action( 'rest_api_init', [ $this->post_field_controller, 'register_routes' ] );
 	}
-	
+
 	/**
 	 * Checks if the PHP version installed on the server is compatible with the plugin
-	 * 
+	 *
 	 * @return   boolean   True if the version is good
 	 */
 	public function is_php_version_ok() {
-		if ( version_compare( PHP_VERSION, '7.0.0', '<' ) ) {
+		if ( version_compare( PHP_VERSION, '7.3.0', '<' ) ) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Prints the notice in case the PHP version doesn't meet the minimum requirements
 	 */

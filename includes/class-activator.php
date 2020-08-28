@@ -33,15 +33,15 @@ class Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-		
+
 		$previous_options = initialize_previous_options();
-		add_option('dapre_cft_previous_options', $previous_options);
-		
+		add_option( 'dapre_cft_previous_options', $previous_options );
+
 		$previous_user_fields = initialize_previous_user_fields();
-		add_option('dapre_cft_previous_user_fields', $previous_user_fields);
-		
+		add_option( 'dapre_cft_previous_user_fields', $previous_user_fields );
+
 		$previous_post_fields = initialize_previous_post_fields();
-		add_option('dapre_cft_previous_post_fields', $previous_post_fields);
-		
+		add_option( 'dapre_cft_previous_post_fields', $previous_post_fields );
+
 	}
 }

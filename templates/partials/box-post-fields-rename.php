@@ -13,7 +13,7 @@
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>
-						<input class="js-postFieldRenameFieldName regular-text" type="text" name="old_post_field_name" />
+						<input class="js-oldPostFieldName regular-text" type="text" name="old_post_field_name" />
 					</label>
 				</div>
 			</div>

@@ -26,7 +26,7 @@ foreach ( $previous_post_fields as $non_esc_key=>$post_field ) {
 // escape the key for safe use in html attributes
 $key = esc_attr($non_esc_key);
 ?>
-<div class="js-postFieldsFieldDataRow c-metaField <?php echo esc_attr($post_field->get_row_error_class()) ?>" data-index="<?php echo $key ?>">
+<div class="js-postFieldsDataRow c-metaField <?php echo esc_attr($post_field->get_row_error_class()) ?>" data-index="<?php echo $key ?>">
 	<div class="c-metaField__fieldID">
 		<input class="c-metaField__fieldIDInput" type="number" step="1" min="0" name="post_id[<?php echo $key ?>]" value="<?php echo esc_attr($post_field->get_post_id()) ?>">
 	</div>

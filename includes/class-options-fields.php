@@ -18,7 +18,7 @@ class Options_Fields extends Custom_Fields {
 	 *
 	 * @param string $option_name The option field name.
 	 */
-	function __construct($option_name) {
+	function __construct( $option_name ) {
 		$this->field_name = $option_name;
 		$this->start();
 	}
@@ -26,44 +26,45 @@ class Options_Fields extends Custom_Fields {
 	/**
 	 * Set the error property that tells if the field doesn't exist.
 	 *
-	 * @since 4.0.0
-	 *
 	 * @param string $error The error string.
 	 *
 	 * @return void
+	 * @since 4.0.0
+	 *
 	 */
 	protected function set_error( $error = '' ) {
-		
+
 		if ( $error ) {
 			$this->error = $error;
 		} else {
-			if ( empty($this->field_name) || $this->option_exists() ) {
+			if ( empty( $this->field_name ) || $this->option_exists() ) {
 				$this->error = '';
 			} else {
 				$this->error = 'This field does not exist.';
 			}
 		}
 	}
-	
+
 	/**
 	 * Set the previous value of this option
 	 *
-	 * @since 4.0.0
-	 * 
 	 * @param string $from From where this method was called
 	 *
 	 * @return void
+	 * @since 4.0.0
+	 *
 	 */
-	protected function set_previous_value($from = 'start') {
-		
-		if ( empty($this->field_name) || !$this->option_exists() || 'start' == $from ) {
+	protected function set_previous_value( $from = 'start' ) {
+
+		if ( empty( $this->field_name ) || ! $this->option_exists() || 'start' == $from ) {
 			$this->previous_value = '';
+
 			return;
 		}
-		
+
 		// get the new value that is going to be written
-		$new_value = get_option($this->field_name);
-		
+		$new_value = get_option( $this->field_name );
+
 		if ( 'refresh' == $from ) {
 			if ( $this->current_value != $new_value ) {
 				$this->previous_value = $this->current_value;
@@ -76,99 +77,102 @@ class Options_Fields extends Custom_Fields {
 	/**
 	 * Delete the option.
 	 *
+	 * @return void
 	 * @since 4.0.0
 	 *
-	 * @return void
 	 */
 	public function delete() {
-		delete_option($this->field_name);
+		delete_option( $this->field_name );
 		$this->start();
 	}
 
 	/**
 	 * Read the option value and set the corresponding property object.
 	 *
+	 * @return void
 	 * @since 4.0.0
 	 *
-	 * @return void
 	 */
 	protected function set_current_value() {
-		if ( $this->option_exists()) {
-			$this->current_value = get_option($this->field_name);
+		if ( $this->option_exists() ) {
+			$this->current_value = get_option( $this->field_name );
 		} else {
 			$this->current_value = '';
 		}
 	}
-	
+
 	/**
 	 * Update the option in the database and updates the object properties.
 	 *
-	 * @since 4.0.0
-	 * 
 	 * @param mixed $field_value The new value for the option
+	 *
+	 * @since 4.0.0
+	 *
 	 */
-	public function write($field_value) {
-		
+	public function write( $field_value ) {
+
 		$this->write_error = false;
-		
-		$written = update_option($this->field_name, $field_value);
-		
+
+		$written = update_option( $this->field_name, $field_value );
+
 		if ( ! $written ) {
 			$this->set_error( 'There was an error. The meta field could not be written.' );
 			$this->write_error = true;
+
 			return;
 		}
-		
-		$this->refresh('write');
+
+		$this->refresh( 'write' );
 	}
-	
+
 	/**
 	 * Determines what must be the state of the write action
 	 *
-	 * @since 4.0.0
-	 * 
 	 * @return string The state of the write action
+	 * @since 4.0.0
+	 *
 	 */
 	public function get_disable_write() {
 		if ( ! $this->field_name ) {
 			return 'disabled';
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
 	 * Determines what must be the state of the delete action.
 	 *
-	 * @since 4.0.0
-	 * 
 	 * @return string The state of the delete action
+	 * @since 4.0.0
+	 *
 	 */
 	public function get_disable_delete() {
 		if ( ! $this->field_name || ! $this->option_exists() ) {
 			return 'disabled';
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
-	 * Return true if an option exists, false if it doesn't.  
-     * This function solves the problem arising from using the standard WP functions to check if an option exists. 
+	 * Return true if an option exists, false if it doesn't.
+	 * This function solves the problem arising from using the standard WP functions to check if an option exists.
 	 * Source: https://wordpress.stackexchange.com/questions/8936/how-to-find-out-if-option-exists-but-is-empty/185416#185416
 	 *
-	 * @since 4.0.0
-	 * 
+	 * @return bool         True if the option exists
 	 * @global object $wpdb The database object
 	 *
-	 * @return bool 		 True if the option exists
+	 * @since 4.0.0
+	 *
 	 */
 	public function option_exists() {
 		global $wpdb;
-		$row = $wpdb->get_row($wpdb->prepare("SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", $this->field_name));
-		if (is_object($row)) {
+		$row = $wpdb->get_row( $wpdb->prepare( "SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", $this->field_name ) );
+		if ( is_object( $row ) ) {
 			return true;
 		}
+
 		return false;
 	}
 }
