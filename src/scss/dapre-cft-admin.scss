@@ -253,6 +253,7 @@ $orange: rgb(255, 213, 151);
 .c-metaField__fieldPrevValue {
 	display: flex;
 	align-items: center;
+	overflow-y: auto;
 }
 
 .c-optionField__fieldCurValueOption,
@@ -266,6 +267,7 @@ $orange: rgb(255, 213, 151);
 .c-metaField__fieldCurValue {
 	display: flex;
 	align-items: center;
+	overflow-y: auto;
 }
 
 .c-metaField__title {
@@ -309,9 +311,9 @@ $orange: rgb(255, 213, 151);
 .c-copyToOption,
 .c-copyToUserField,
 .c-copyToPostField {
-	&.is-hidden {
-		display: none;
-	}
+	height: 0px;
+	overflow: hidden;
+	transition: height 500ms linear;
 }
 
 .c-copyContainer {
@@ -341,8 +343,19 @@ $orange: rgb(255, 213, 151);
 
 .c-copyToUserField {
 	display: grid;
-	grid-template-columns: 200px 1fr;
+	grid-template-columns: 1fr;
 	align-items: center;
+}
+
+.c-copyToOption.is-open {
+	height: 176.783px;
+}
+
+.c-copyToUserField,
+.c-copyToPostField {
+	&.is-open {
+		height: 180.783px;
+	}
 }
 
 /***********************/
@@ -353,6 +366,10 @@ $orange: rgb(255, 213, 151);
 .c-metaField {
 	display: grid;
 	grid-template-columns: 8% 18% 6% 28% 18% 10% 14%;
+}
+
+.c-metaSubmitButton {
+	margin-top: 15px;
 }
 
 /****************************/
