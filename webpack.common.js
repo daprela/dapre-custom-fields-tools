@@ -1,7 +1,6 @@
 module.exports = {
   entry: {
-    './assets/js/dapre-cft-admin.min': './src/js/dapre-cft-admin.js',
-    // './assets/js/frontend.min' : './src/js/frontend.js',
+    './assets/js/custom-fields-tools.min': './src/js/controller.js',
   },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.

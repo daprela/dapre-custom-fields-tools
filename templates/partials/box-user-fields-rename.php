@@ -9,11 +9,11 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("User ID","dapre-cft") ?>
-						<input class="js-userFieldRenameUserID small-text" type="number" name="old_user_field_id" />
+						<input class="js-userFieldRenameUserID small-text" type="number" step="1" min="0" name="old_user_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>
-						<input class="js-userFieldRenameFieldName regular-text" type="text" name="old_user_field_name" />
+						<input class="js-oldUserFieldName regular-text" type="text" name="old_user_field_name" />
 					</label>
 				</div>
 			</div>

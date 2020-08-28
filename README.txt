@@ -28,6 +28,10 @@ In the following months I realized how useful the plugin was and couldn't work a
 
 == Changelog ==
 
+= 5.0.0 =
+* Moved from AJAX to REST API
+* Moved from JQuery to vanilla JavaScript
+
 = 4.6.1 =
 * Updated npm packages versions
 * Built distributable file

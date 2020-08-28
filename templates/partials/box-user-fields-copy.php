@@ -13,7 +13,7 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("User ID","dapre-cft") ?>
-						<input class="js-userFieldCopyUserID small-text" type="number" name="current_user_field_id" />
+						<input class="js-userFieldCopyUserID small-text" type="number" step="1" min="0" name="current_user_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>
@@ -24,25 +24,25 @@
 		</div>
 		<div class="c-copyContainer__currentNameOptions">
 			<div class="c-copyContainer__space"></div>
-			<div>
+			<div class="js-copyUserFieldTo">
 				<label>
 					<?php esc_html_e('...to option', 'dapre-cft') ?>
-					<input class="js-copyUserFieldTo" type="radio" name="copy_user_field_to" value="user field to option" />
+					<input class="js-inputCopyUserFieldToOption" type="radio" name="copy_user_field_to" value="option" />
 				</label>
 
 				<label>
 					<?php esc_html_e('...to user field','dapre-cft') ?>
-					<input class="js-copyUserFieldTo" type="radio" name="copy_user_field_to" value="user field to user field" />
+					<input class="js-inputCopyUserFieldToUserField" type="radio" name="copy_user_field_to" value="user field" />
 				</label>
 
 				<label>
 					<?php esc_html_e('...to post field','dapre-cft') ?>
-					<input class="js-copyUserFieldTo" type="radio" name="copy_user_field_to" value="user field to post field" />
+					<input class="js-inputCopyUserFieldToPostField" type="radio" name="copy_user_field_to" value="post field" />
 				</label>
 			</div>
 		</div>
 	</div>
-	<div class='js-copyUserFieldToUserField c-copyToOption is-hidden'>
+	<div class='js-userFieldToUserField c-copyToUserField'>
 		<h4 class="c-copyToUserTitle"><?php esc_html_e("...to user field","dapre-cft") ?></h4>
 		<div class="c-metaFieldIdName" <?php echo $row_error_class ?>>
 			<div class="c-metaFieldIdName__header">
@@ -55,7 +55,7 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("User ID","dapre-cft") ?>
-						<input class="js-userFieldToUserFieldID c-copyToUserID small-text" type="number" name="userfield_to_user_field_id" />
+						<input class="js-userFieldToUserFieldID c-copyToUserID small-text" type="number" step="1" min="0" name="userfield_to_user_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>
@@ -71,7 +71,7 @@
 			</div>
 		</div>
 	</div>
-	<div class='js-copyUserFieldToOption c-copyToUserField is-hidden'>
+	<div class='js-userFieldToOption c-copyToOption'>
 		<h4 class="c-copyToTitle"><?php esc_html_e('...to option','dapre-cft') ?></h4>
 		<div class="c-metaFieldName <?php echo $row_error_class ?>">
 			<div class="c-metaFieldName__header">
@@ -88,7 +88,7 @@
 			</div>
 		</div>
 	</div>
-	<div class='js-copyOptionToPostField c-copyToPostField is-hidden'>
+	<div class='js-userFieldToPostField c-copyToPostField'>
 		<h4 class="c-copyToPostTitle"><?php esc_html_e("...to post field","dapre-cft") ?></h4>
 		<div class="c-metaFieldIdName" <?php echo $row_error_class ?>>
 			<div class="c-metaFieldIdName__header">
@@ -101,7 +101,7 @@
 				<div class="c-metaFieldIdName_fieldContainer">
 					<label class="c-metaFieldFieldID">
 						<?php esc_html_e("Post ID","dapre-cft") ?>
-						<input class="js-userFieldToPostFieldID c-copyToPostID small-text" type="number" name="userfield_to_post_field_id" />
+						<input class="js-userFieldToPostFieldID c-copyToPostID small-text" type="number" step="1" min="0" name="userfield_to_post_field_id" />
 					</label>
 					<label class="c-metaFieldFieldName">
 						<?php esc_html_e("Field Name","dapre-cft") ?>

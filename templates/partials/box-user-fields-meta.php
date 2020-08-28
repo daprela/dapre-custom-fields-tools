@@ -27,47 +27,47 @@ foreach ( $previous_user_fields as $non_esc_key=>$user_field ) {
 // escape the key for safe use in html attributes
 $key = esc_attr($non_esc_key);
 ?>
-<div class="js-userFieldsFieldDataRow_<?php echo $key ?> c-metaField <?php echo esc_attr($user_field->get_row_error_class()) ?>">
+<div class="js-userFieldsDataRow c-metaField <?php echo esc_attr($user_field->get_row_error_class()) ?>" data-index="<?php echo $key ?>">
 	<div class="c-metaField__fieldID">
 		<input class="c-metaField__fieldIDInput" type="number" step="1" min="0" name="user_id[<?php echo $key ?>]" value="<?php echo esc_attr($user_field->get_user_id()) ?>" />
 	</div>
 	<div class="c-metaField__fieldName">
 		<div class="c-metaField__fieldErrorContainer">
-			<p class="c-metaField__fieldErrorMessage <?php echo esc_attr($user_field->get_field_error_class()) ?>"><?php echo esc_html_e($user_field->get_error(), "dapre-cft") ?></p>
+			<p class="js-fieldErrorMessage c-metaField__fieldErrorMessage <?php echo esc_attr($user_field->get_field_error_class()) ?>"><?php echo esc_html_e($user_field->get_error(), "dapre-cft") ?></p>
 		</div>
 		<input class="c-metaField__fieldNameInput" type="text" name="field_name[<?php echo $key ?>]" value="<?php echo esc_attr($user_field->get_name()) ?>" />
 	</div>
 	<div class="c-metaField__fieldActions">
 		<label>
-			<input type="radio" name="field_action[<?php echo $key ?>]" value="read" data-index="<?php echo $key ?>" checked />
+			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="read" data-index="<?php echo $key ?>" checked />
 			<?php esc_html_e("Read","dapre-cft") ?>
 		</label>
 		<label >
-			<input type="radio" name="field_action[<?php echo $key ?>]" value="write" data-index="<?php echo $key ?>" <?php echo esc_attr($user_field->get_disable_write()) ?> />
+			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="write" data-index="<?php echo $key ?>" <?php echo esc_attr($user_field->get_disable_write()) ?> />
 			<?php esc_html_e("Write","dapre-cft") ?>
 		</label>
 		<label>
-			<input type="radio" name="field_action[<?php echo $key ?>]" value="delete" data-index="<?php echo $key ?>" <?php echo esc_attr($user_field->get_disable_delete()) ?> />
+			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="delete" data-index="<?php echo $key ?>" <?php echo esc_attr($user_field->get_disable_delete()) ?> />
 			<?php esc_html_e("Delete","dapre-cft") ?>
 		</label>
 	</div>
 	<div class="c-metaField__fieldValueToAdd">
 		<div class="c-metaField__fieldValueOptions">
 			<label class="c-metaField__fieldValueOptionLabel">
-				<input class="js-userEmptyArray_<?php echo $key ?>" type="checkbox" name="empty_array[<?php echo $key ?>]" value="1" data-index="<?php echo $key ?>" disabled="" />
+				<input class="js-fieldValueToAdd js-emptyArray" type="checkbox" name="empty_array[<?php echo $key ?>]" value="empty_array" data-index="<?php echo $key ?>" disabled="" />
 				<p><?php esc_html_e("Add empty array","dapre-cft") ?></p>
 			</label>
 			<label class="c-metaField__fieldValueOptionLabel">
-				<input class="js-userDateString_<?php echo $key ?>" type="checkbox" name="date_string[<?php echo $key ?>]" value="1" data-index="<?php echo $key ?>" disabled="" />
+				<input class="js-fieldValueToAdd js-dateString" type="checkbox" name="date_string[<?php echo $key ?>]" value="date_string" data-index="<?php echo $key ?>" disabled="" />
 				<p><?php esc_html_e("Toggle date string/timestamp","dapre-cft") ?></p>
 			</label>
 		</div>
-		<textarea class="js-userFieldInputValue_<?php echo $key ?> c-metaField__fieldValueToAddTextarea" name="field_value[<?php echo $key ?>]" rows="2" disabled="" ></textarea>
-		<input class="js-userFieldInputTimestampBackup_<?php echo $key ?>" type="hidden" name="input-timestamp-backup-<?php echo $key ?>" value="" />
-		<input class="js-userFieldInputStringBackup_<?php echo $key ?>" type="hidden" name="input-string-backup-<?php echo $key ?>" value="" />
+		<textarea class="js-metaFieldInputValue c-metaField__fieldValueToAddTextarea" name="field_value[<?php echo $key ?>]" rows="2" disabled="" ></textarea>
+		<input class="js-metaFieldInputTimestampBackup" type="hidden" name="input-timestamp-backup-<?php echo $key ?>" value="" />
+		<input class="js-metaFieldInputStringBackup" type="hidden" name="input-string-backup-<?php echo $key ?>" value="" />
 	</div>
 	<div class="c-metaField__fieldCurValue">
-		<p class="js-userFieldValue_<?php echo $key ?>">
+		<p class="js-fieldCurrentValue">
 			<?php
 			if ( is_array($user_field->get_current_value()) ) {
 				print_r($user_field->get_current_value());
@@ -76,16 +76,16 @@ $key = esc_attr($non_esc_key);
 			}
 			?>
 		</p>
-		<input class="js-userFieldValueTimestampBackup_<?php echo $key ?>" type="hidden" name="value-timestamp-backup-<?php echo $key ?>" value="" />
-		<input class="js-userFieldValueStringBackup_<?php echo $key ?>" type="hidden" name="value-string-backup-<?php echo $key ?>" value="" />
+		<input class="js-fieldValueTimestampBackup" type="hidden" name="value-timestamp-backup-<?php echo $key ?>" value="" />
+		<input class="js-fieldValueStringBackup" type="hidden" name="value-string-backup-<?php echo $key ?>" value="" />
 	</div>
 	<div class="c-metaField__fieldCurValueOptions">
-		<label class="c-metaField__fieldCurValueOption <?php echo esc_attr($user_field->get_date_toggle()) ?>">
+		<label class="js-curValueDateToggle c-metaField__fieldCurValueOption <?php echo esc_attr($user_field->get_date_toggle()) ?>">
 			<p><?php esc_html_e("Toggle date string/timestamp","dapre-cft") ?></p>
-			<input class="js-userDateStringCurValue_<?php echo $key ?>" type="checkbox" name="date_string_show[<?php echo $key ?>]" value="" data-index="<?php echo $key ?>" />
+			<input class="js-fieldDateStringCurValue" type="checkbox" name="date_string_show[<?php echo $key ?>]" value="" data-index="<?php echo $key ?>" />
 		</label>
 	</div>
-	<div class="c-metaField__fieldPrevValue">
+	<div class="js-fieldPreviousValue c-metaField__fieldPrevValue">
 		<?php
 		if ( is_array($user_field->get_previous_value()) ) {
 			print_r($user_field->get_previous_value());

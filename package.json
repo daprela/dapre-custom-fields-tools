@@ -59,6 +59,9 @@
   },
   "dependencies": {
     "@babel/preset-react": "^7.10.1",
+    "@wordpress/api-fetch": "^3.18.0",
+    "@wordpress/data-controls": "^1.16.2",
+    "@wordpress/i18n": "^3.14.0",
     "autoprefixer": "^9.8.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browser-sync": "^2.26.7",
