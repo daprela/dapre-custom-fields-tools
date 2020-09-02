@@ -28,6 +28,9 @@ In the following months I realized how useful the plugin was and couldn't work a
 
 == Changelog ==
 
+= 5.1.1 =
+* Fixed visualization bug in first row of meta fields
+
 = 5.1.0 =
 * Improved UI
 

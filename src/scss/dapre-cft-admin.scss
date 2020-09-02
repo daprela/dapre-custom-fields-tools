@@ -125,7 +125,6 @@ $orange: rgb(255, 213, 151);
 
 .o-meta {
 	display:grid;
-	grid-template-rows: 122px 122px;
 	grid-auto-rows: minmax(122px, auto);
 }
 
@@ -262,6 +261,7 @@ $orange: rgb(255, 213, 151);
 	align-items: start;
 	margin: 1em 0;
 	background-color: lightgoldenrodyellow;
+	overflow-wrap: anywhere;
 }
 
 .c-optionField__fieldCurValueOption,
@@ -278,6 +278,7 @@ $orange: rgb(255, 213, 151);
 	align-items: start;
 	margin: 1em 0;
 	background-color: lightgoldenrodyellow;
+	overflow-wrap: anywhere;
 }
 
 .c-metaField__title {
