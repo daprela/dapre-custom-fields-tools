@@ -61,24 +61,22 @@ $key = esc_attr($non_esc_key);
 		<input class="js-metaFieldInputTimestampBackup" type="hidden" name="input-timestamp-backup-<?php echo $key ?>" value="" />
 		<input class="js-metaFieldInputStringBackup" type="hidden" name="input-string-backup-<?php echo $key ?>" value="" />
 	</div>
-	<div class="c-optionField__fieldCurValue">
-		<p class="js-fieldCurrentValue">
-			<?php
-			if ( is_array($option->get_current_value()) ) {
-				print_r($option->get_current_value());
-			} else {
-				echo esc_html($option->get_current_value());
-			}
-			?>
-		</p>
-		<input class="js-fieldValueTimestampBackup" type="hidden" name="value-timestamp-backup-<?php echo $key ?>" value="" />
-		<input class="js-fieldValueStringBackup" type="hidden" name="value-string-backup-<?php echo $key ?>" value="" />
+	<div class="js-fieldCurrentValue c-optionField__fieldCurValue">
+		<?php
+		if ( is_array($option->get_current_value()) ) {
+			print_r($option->get_current_value());
+		} else {
+			echo esc_html($option->get_current_value());
+		}
+		?>
 	</div>
 	<div class="c-optionField__fieldCurValueOptions">
 		<label class="js-curValueDateToggle c-optionField__fieldCurValueOption <?php echo esc_attr($option->get_date_toggle()) ?>">
 			<p><?php esc_html_e("Toggle date string/timestamp","dapre-cft") ?></p>
 			<input class="js-fieldDateStringCurValue" type="checkbox" name="date_string_show[<?php echo $key ?>]" value="" data-index="<?php echo $key ?>" />
 		</label>
+		<input class="js-fieldValueTimestampBackup" type="hidden" name="value-timestamp-backup-<?php echo $key ?>" value="" />
+		<input class="js-fieldValueStringBackup" type="hidden" name="value-string-backup-<?php echo $key ?>" value="" />
 	</div>
 	<div class="js-fieldPreviousValue c-optionField__fieldPrevValue">
 		<?php

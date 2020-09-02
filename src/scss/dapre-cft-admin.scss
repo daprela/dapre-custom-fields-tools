@@ -125,8 +125,8 @@ $orange: rgb(255, 213, 151);
 
 .o-meta {
 	display:grid;
-	grid-template-rows: 100px 100px;
-	grid-auto-rows: 100px;
+	grid-template-rows: 122px 122px;
+	grid-auto-rows: minmax(122px, auto);
 }
 
 .c-optionField {
@@ -165,9 +165,14 @@ $orange: rgb(255, 213, 151);
 }
 
 .c-optionField__fieldName,
-.c-metaField__fieldID,
 .c-metaField__fieldName {
-	padding: 0 5px
+	padding: 0 5px;
+	height: 100px;
+}
+
+.c-metaField__fieldID {
+	padding: 0 5px;
+	height: 122px;
 }
 
 .c-optionsMetaHeaders > *,
@@ -225,6 +230,7 @@ $orange: rgb(255, 213, 151);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
+	height: 122px;
 }
 
 .c-optionField__fieldValueOptions,
@@ -247,27 +253,31 @@ $orange: rgb(255, 213, 151);
 .c-metaField__fieldValueToAdd {
 	display:grid;
 	align-items: center;
-}
-
-.c-optionField__fieldPrevValue,
-.c-metaField__fieldPrevValue {
-	display: flex;
-	align-items: center;
-	overflow-y: auto;
-}
-
-.c-optionField__fieldCurValueOption,
-.c-metaField__fieldCurValueOption {
-	&.is-hidden {
-		display: none;
-	}
+	height: 122px;
 }
 
 .c-optionField__fieldCurValue,
 .c-metaField__fieldCurValue {
 	display: flex;
-	align-items: center;
-	overflow-y: auto;
+	align-items: start;
+	margin: 1em 0;
+	background-color: lightgoldenrodyellow;
+}
+
+.c-optionField__fieldCurValueOption,
+.c-metaField__fieldCurValueOption {
+	height: 122px;
+	&.is-hidden {
+		display: none;
+	}
+}
+
+.c-optionField__fieldPrevValue,
+.c-metaField__fieldPrevValue {
+	display: flex;
+	align-items: start;
+	margin: 1em 0;
+	background-color: lightgoldenrodyellow;
 }
 
 .c-metaField__title {
@@ -365,7 +375,7 @@ $orange: rgb(255, 213, 151);
 .c-metaFieldsHeaders,
 .c-metaField {
 	display: grid;
-	grid-template-columns: 8% 18% 6% 28% 18% 10% 14%;
+	grid-template-columns: 8% 18% 6% 28% 18% 10% 12%;
 }
 
 .c-metaSubmitButton {

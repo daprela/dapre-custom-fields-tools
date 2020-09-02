@@ -65,16 +65,14 @@ $key = esc_attr($non_esc_key);
 		<input class="js-metaFieldInputTimestampBackup" type="hidden" name="input-timestamp-backup-<?php echo $key ?>" value="" />
 		<input class="js-metaFieldInputStringBackup" type="hidden" name="input-string-backup-<?php echo $key ?>" value="" />
 	</div>
-	<div class="c-metaField__fieldCurValue">
-		<p class="js-fieldCurrentValue">
-			<?php
-			if ( is_array($post_field->get_current_value()) ) {
-				print_r($post_field->get_current_value());
-			} else {
-				echo esc_html($post_field->get_current_value());
-			}
-			?>
-		</p>
+	<div class="js-fieldCurrentValue c-metaField__fieldCurValue">
+		<?php
+		if ( is_array($post_field->get_current_value()) ) {
+			print_r($post_field->get_current_value());
+		} else {
+			echo esc_html($post_field->get_current_value());
+		}
+		?>
 		<input class="js-fieldValueTimestampBackup" type="hidden" name="value-timestamp-backup-<?php echo $key ?>" value="" />
 		<input class="js-fieldValueStringBackup" type="hidden" name="value-string-backup-<?php echo $key ?>" value="" />
 	</div>
