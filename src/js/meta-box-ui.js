@@ -65,22 +65,22 @@ const newValueOptions = function (element) {
 
     // if it is a number interpret as a timestamp
     if (isNumber(content.value)) {
-      if (content.value === dateTimestampBackup.getAttribute('value')) {
+      if (content.value === dateTimestampBackup.value) {
         // if the value hasn't changed use the date string saved
-        content.value = dateStringBackup.getAttribute('value');
+        content.value = dateStringBackup.value;
       } else {
         // if the value has changed re-generate the date string
         const timestamp = content.value;
-        dateTimestampBackup.setAttribute('value', timestamp);
+        dateTimestampBackup.value = timestamp;
         const dateInt = parseInt(timestamp, 10);
         const myDate = new Date(dateInt);
         content.value = myDate.toUTCString();
-        dateStringBackup.setAttribute('value', content.value);
+        dateStringBackup.value = content.value;
       }
     } else if (content.value !== null) {
-      if (content.value === dateStringBackup.getAttribute('value')) {
+      if (content.value === dateStringBackup.value) {
         // if the date string hasn't changed use the timestamp saved
-        content.value = dateTimestampBackup.getAttribute('value');
+        content.value = dateTimestampBackup.value;
       } else {
         // if the date string has changed re-generate the timestamp
         const myDate = new Date(content.value);
@@ -90,9 +90,9 @@ const newValueOptions = function (element) {
           toggleDateCheckbox.checked = false;
         } else {
           const dateString = content.value;
-          dateStringBackup.setAttribute('value', dateString);
+          dateStringBackup.value = dateString;
           content.value = myDate.valueOf();
-          dateTimestampBackup.setAttribute('value', content.value);
+          dateTimestampBackup.value = content.value;
         }
       }
     }
@@ -108,25 +108,26 @@ const curValueDateString = function (element) {
   // get the elements used to backup the values
   const dateTimestampBackup = row.querySelector('.js-fieldValueTimestampBackup');
   const dateStringBackup = row.querySelector('.js-fieldValueStringBackup');
+  console.log(row);
 
   // if it is a number interpret as a timestamp
   if (isNumber(fieldContent.innerText)) {
-    if (dateStringBackup.getAttribute('value')) {
+    if (dateStringBackup.value) {
       // if there is a backup use it
-      fieldContent.innerText = dateStringBackup.getAttribute('value');
+      fieldContent.innerText = dateStringBackup.value;
     } else {
       const timestamp = fieldContent.innerText;
 
       // save the timestamp. Since the string is an approximation and loses the milliseconds
       // the backup guarantees that we get back the original timestamp
-      dateTimestampBackup.setAttribute('value', timestamp);
+      dateTimestampBackup.value = timestamp;
       const dateInt = parseInt(fieldContent.innerText, 10);
       const myDate = new Date(dateInt);
       fieldContent.innerText = myDate.toUTCString();
-      dateStringBackup.setAttribute('value', fieldContent.innerText);
+      dateStringBackup.value = fieldContent.innerText;
     }
-  } else if (dateTimestampBackup.getAttribute('value')) {
-    fieldContent.innerText = dateTimestampBackup.getAttribute('value');
+  } else if (dateTimestampBackup.value != null) {
+    fieldContent.innerText = dateTimestampBackup.value;
   } else {
     const myDate = new Date(fieldContent.innerText);
     // eslint-disable-next-line no-restricted-globals
@@ -134,10 +135,10 @@ const curValueDateString = function (element) {
       alert('Please use a valid string date');
       toggleDateCheckbox.checked = false;
     } else {
-      const dateString = content.innerText;
-      dateStringBackup.setAttribute('value', dateString);
+      const dateString = fieldContent.innerText;
+      dateStringBackup.value = dateString;
       fieldContent.innerText = myDate.valueOf();
-      dateTimestampBackup.setAttribute('value', fieldContent.innerText);
+      dateTimestampBackup.value = fieldContent.innerText;
     }
   }
 };
