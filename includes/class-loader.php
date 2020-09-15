@@ -74,7 +74,7 @@ class Loader {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function load_dependencies() {
+	private function load_dependencies(): void {
 
 		/**
 		 * General utility functions
@@ -89,7 +89,7 @@ class Loader {
 	 *
 	 * @return   void
 	 */
-	private function autoload( $class ) {
+	private function autoload( $class ): void {
 
 		/** @var string $class_path The path to the class */
 		$class_path = strtolower( str_replace( "_", "-", $class ) );
@@ -124,8 +124,7 @@ class Loader {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function set_locale() {
-
+	private function set_locale(): void {
 		add_action( 'plugins_loaded', [ $this->plugin_i18n, 'load_plugin_textdomain' ] );
 	}
 
@@ -135,7 +134,7 @@ class Loader {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_hooks() {
+	private function define_admin_hooks(): void {
 
 		add_action( 'admin_enqueue_scripts', [ $this->admin, 'enqueue_styles' ] );
 		add_action( 'admin_enqueue_scripts', [ $this->admin, 'enqueue_scripts' ], 10 );
@@ -154,7 +153,7 @@ class Loader {
 	 *
 	 * @return   boolean   True if the version is good
 	 */
-	public function is_php_version_ok() {
+	public function is_php_version_ok(): bool {
 		if ( version_compare( PHP_VERSION, '7.3.0', '<' ) ) {
 			return false;
 		}
@@ -165,10 +164,10 @@ class Loader {
 	/**
 	 * Prints the notice in case the PHP version doesn't meet the minimum requirements
 	 */
-	public function required_php_version_print_notice() {
+	public function required_php_version_print_notice(): void {
 		?>
 		<div class="notice notice-error is-dismissible">
-			<p>The plugin Dapre Custom Fields Tools requires PHP Version 7.0.0 or greater.</p>
+			<p>The plugin Dapre Custom Fields Tools requires PHP Version 7.3.0 or greater.</p>
 		</div>
 		<?php
 	}

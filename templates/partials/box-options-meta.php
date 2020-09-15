@@ -26,6 +26,7 @@ foreach ( $previous_options as $non_esc_key=>$option ) {
 $key = esc_attr($non_esc_key);
 ?>
 <div class="js-optionFieldDataRow c-optionField <?php echo esc_attr($option->get_row_error_class()) ?>" data-index="<?php echo $key ?>" >
+	<div class="js-addRemoveOptionRow c-addRemoveFieldRow c-addRemoveFieldRow__add">+</div>
 	<div class="c-optionField__fieldName">
 		<div class="c-optionField__fieldErrorContainer">
 			<p class="js-fieldErrorMessage c-optionField__fieldErrorMessage <?php echo esc_attr($option->get_field_error_class()) ?>"><?php echo esc_html_e($option->get_error(), "dapre-cft") ?></p>

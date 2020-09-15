@@ -1,6 +1,8 @@
 /* eslint-disable function-paren-newline */
-// eslint-disable import/extensions
+// eslint-disable-next-line import/extensions
 import { spinnerOn, spinnerOff, nameSpace } from './functions.js';
+// eslint-disable-next-line import/extensions
+import { addUserArrows } from './add-remove-meta-row.js';
 
 // eslint-disable-next-line no-undef
 const { apiFetch } = wp;
@@ -134,6 +136,8 @@ function refreshPage(fields) {
   if (finishedWrite && finishedRead && finishedDel) {
     submitUserFieldsButton.disabled = false;
     submitUserFieldsButton.blur();
+
+    addUserArrows();
 
     spinnerOff();
     finishedWrite = false;
