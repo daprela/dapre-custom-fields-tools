@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/extensions
 import { spinnerOn, spinnerOff, nameSpace } from './functions.js';
 // eslint-disable-next-line import/extensions
-import { addPostArrows } from './add-remove-meta-row.js';
+import { refreshPostArrows } from './add-remove-meta-row.js';
 
 // eslint-disable-next-line no-undef
 const { apiFetch } = wp;
@@ -136,7 +136,7 @@ function refreshPage(fields) {
     submitPostFieldsButton.disabled = false;
     submitPostFieldsButton.blur();
 
-    addPostArrows();
+    refreshPostArrows();
 
     spinnerOff();
     finishedWrite = false;

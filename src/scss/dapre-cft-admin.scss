@@ -107,19 +107,14 @@ $orange: rgb(255, 213, 151);
 	&.-color-white {
 		background-color: $white;
 	}
-}
-
-.c-optionField,
-.c-metaField {
 	&.-color-blue {
 		background-color: $blue;
 	}
-}
-
-.c-optionField,
-.c-metaField {
 	&.-color-orange {
 		background-color: $orange;
+	}
+	&.is-hidden {
+		display: none;
 	}
 }
 
@@ -502,9 +497,6 @@ $orange: rgb(255, 213, 151);
   display: flex;
   justify-content: center;
   cursor: pointer;
-  &.is-hidden {
-    display: none;
-  }
 }
 
 .c-addRemoveFieldRow:after {

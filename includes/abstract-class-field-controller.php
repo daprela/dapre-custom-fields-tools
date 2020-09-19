@@ -2,6 +2,7 @@
 
 namespace dapre_cft\includes;
 
+use phpDocumentor\Reflection\Types\Mixed_;
 use WP_Error;
 use WP_REST_Controller, WP_REST_Server;
 use WP_REST_Request;
@@ -109,18 +110,40 @@ abstract class Field_Controller extends WP_REST_Controller {
 				],
 			]
 		);
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/update',
+			[
+				[
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => [ $this, 'append_row' ],
+					'permission_callback' => [ $this, 'items_permissions_check' ],
+				],
+			]
+		);
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/update',
+			[
+				[
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => [ $this, 'delete_row' ],
+					'permission_callback' => [ $this, 'items_permissions_check' ],
+				],
+			]
+		);
 	}
 
 	/**
 	 * Returns whether the user has the permission to execute the request.
 	 *
-	 * @param WP_REST_Request $request
-	 *
-	 * @return bool True if the user can execute the request.
+	 * @return bool|WP_Error True if the user can execute the request, error otherwise.
 	 * @since 5.0.0
 	 *
 	 */
-	public function items_permissions_check( $request ): bool {
+	public function items_permissions_check() {
 		if ( current_user_can( 'manage_options' ) ) {
 			return true;
 		}

@@ -613,4 +613,49 @@ class Option_Field_Controller extends Field_Controller {
 			],
 		];
 	}
+
+	/**
+	 * Delete one row from the meta rows that are shown in the admin page.
+	 *
+	 * @param WP_REST_Request $request The list of meta rows.
+	 *
+	 * @return mixed|WP_Error|WP_HTTP_Response|WP_REST_Response
+	 * @since 5.1.0
+	 *
+	 */
+	public function delete_row( $request ) {
+		$rows = $request->get_json_params();
+
+		$new_previous_options = [];
+		foreach ( $rows as $row ) {
+			$new_previous_options[$row['index']] = $this->previous_options[$row['index']];
+		}
+
+		$this->previous_options = $new_previous_options;
+
+		$this->set_previous_options($this->previous_options);
+
+		return rest_ensure_response( $rows );
+	}
+
+	/**
+	 * Append one row to the meta rows that are shown in the admin page.
+	 *
+	 * @param WP_REST_Request $request The list of meta rows.
+	 *
+	 * @return mixed|WP_Error|WP_HTTP_Response|WP_REST_Response
+	 * @since 5.1.0
+	 *
+	 */
+	public function append_row( $request ) {
+		$new_row_index = $request->get_json_params();
+
+		$new_option = new Options_Fields('');
+
+		$this->previous_options[$new_row_index] = $new_option;
+
+		$this->set_previous_options($this->previous_options);
+
+		return rest_ensure_response( $new_row_index );
+	}
 }

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import { addOptionArrows, addUserArrows, addPostArrows } from './add-remove-meta-row.js';
+import { refreshOptionArrows, refreshUserArrows, refreshPostArrows } from './add-remove-meta-row.js';
 
 const tab1 = document.querySelector('.js-tab_1');
 const tab2 = document.querySelector('.js-tab_2');
@@ -30,7 +30,7 @@ const switchToOptionsTab = function (e) {
   tab1.classList.add('nav-tab-active');
   optionsForm.classList.remove('is-hidden');
   tab1.blur();
-  addOptionArrows();
+  refreshOptionArrows();
 
   /* deactivate other tabs and hides sections */
   hideUsersTab();
@@ -44,7 +44,7 @@ const switchToUsersTab = function (e) {
   tab2.classList.add('nav-tab-active');
   userFieldsForm.classList.remove('is-hidden');
   tab2.blur();
-  addUserArrows();
+  refreshUserArrows();
 
   /* deactivate other tabs and hides sections */
   hideOptionsTab();
@@ -58,7 +58,7 @@ const switchToPostsTab = function (e) {
   tab3.classList.add('nav-tab-active');
   postFieldsForm.classList.remove('is-hidden');
   tab3.blur();
-  addPostArrows();
+  refreshPostArrows();
 
   /* deactivate other tabs and hides sections */
   hideOptionsTab();

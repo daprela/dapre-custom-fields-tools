@@ -15,10 +15,6 @@ function initialize_previous_options(): array {
 
 	return [
 		'0' => new Options_Fields( '' ),
-		'1' => new Options_Fields( '' ),
-		'2' => new Options_Fields( '' ),
-		'3' => new Options_Fields( '' ),
-		'4' => new Options_Fields( '' ),
 	];
 }
 

@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/extensions
 import { spinnerOn, spinnerOff, nameSpace } from './functions.js';
 // eslint-disable-next-line import/extensions
-import { addOptionArrows } from './add-remove-meta-row.js';
+import { refreshOptionArrows } from './add-remove-meta-row.js';
 
 // eslint-disable-next-line no-undef
 const { apiFetch } = wp;
@@ -48,7 +48,7 @@ function getDeleteFields(row) {
 }
 
 /* Get the fields whose action is selected to 'read' */
-function readFields(row) {
+function getReadFields(row) {
   const { index } = row.dataset;
   const optionName = row.querySelector(`input[name="field_name[${index}]"]`).value;
 
@@ -131,7 +131,7 @@ function refreshPage(fields) {
     submitOptionsButton.disabled = false;
     submitOptionsButton.blur();
 
-    addOptionArrows();
+    refreshOptionArrows();
 
     spinnerOff();
     finishedWrite = false;
@@ -243,7 +243,7 @@ function getMetaForm(e) {
     }
 
     if (fieldAction === 'read') {
-      readFields(row);
+      getReadFields(row);
     }
   }
 

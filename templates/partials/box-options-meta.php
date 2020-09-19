@@ -31,7 +31,7 @@ $key = esc_attr($non_esc_key);
 		<div class="c-optionField__fieldErrorContainer">
 			<p class="js-fieldErrorMessage c-optionField__fieldErrorMessage <?php echo esc_attr($option->get_field_error_class()) ?>"><?php echo esc_html_e($option->get_error(), "dapre-cft") ?></p>
 		</div>
-		<input class="c-optionField__fieldInput" type="text" name="field_name[<?php echo $key ?>]" value="<?php echo esc_attr($option->get_name()) ?>" />
+		<input class="js-optionFieldName c-optionField__fieldInput" type="text" name="field_name[<?php echo $key ?>]" value="<?php echo esc_attr($option->get_name()) ?>" />
 	</div>
 	<div class="c-optionField__fieldActions">
 		<label>
