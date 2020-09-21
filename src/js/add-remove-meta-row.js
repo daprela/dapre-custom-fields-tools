@@ -5,10 +5,6 @@ import { spinnerOn, spinnerOff, nameSpace } from './functions.js';
 // eslint-disable-next-line no-undef
 const { apiFetch } = wp;
 
-const restBase = 'options';
-const updateBase = `${restBase}/update`;
-const path = `${nameSpace}/${updateBase}`;
-
 const optionSection = document.querySelector('.js-optionsMetaSection');
 const userMetaSection = document.querySelector('.js-userFieldsSection');
 const postMetaSection = document.querySelector('.js-postFieldsSection');
@@ -67,7 +63,7 @@ function addArrows() {
   refreshPostArrows();
 }
 
-function removeOptionRow(elementRow) {
+function removeOptionRow(elementRow, path) {
   const submitOptionsButton = document.querySelector('.js-submitOptions');
   const elementToRemove = elementRow.nextElementSibling;
 
@@ -108,7 +104,7 @@ function removeOptionRow(elementRow) {
     });
 }
 
-function addOptionRow(elementRow) {
+function addOptionRow(elementRow, path) {
   const table = elementRow.parentElement;
   const oldRow = document.querySelector('.js-optionFieldDataRow[data-index="0"]');
   const newRow = oldRow.cloneNode(true);
@@ -187,8 +183,258 @@ function addOptionRow(elementRow) {
     });
 }
 
+function removeUserRow(elementRow, path) {
+  const submitUserButton = document.querySelector('.js-submitUserFields');
+  const elementToRemove = elementRow.nextElementSibling;
+
+  elementToRemove.remove();
+  refreshUserArrows();
+
+  const rows = document.querySelectorAll('.js-userFieldsDataRow');
+
+  const metaFields = [];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const row of rows) {
+    const { index } = row.dataset;
+    metaFields.push(index);
+  }
+  const removeJSON = JSON.stringify(metaFields);
+  spinnerOn();
+  submitUserButton.disabled = true;
+
+  /* Launches the Rest request to write fields */
+  apiFetch({
+    path,
+    method: 'DELETE',
+    body: removeJSON,
+    parse: false,
+    headers: {
+      'Content-type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((fields) => {
+      submitUserButton.disabled = false;
+      submitUserButton.blur();
+      spinnerOff();
+      if (fields.error) {
+
+      }
+    });
+}
+
+function addUserRow(elementRow, path) {
+  const table = elementRow.parentElement;
+  const oldRow = document.querySelector('.js-userFieldsDataRow[data-index="0"]');
+  const newRow = oldRow.cloneNode(true);
+
+  newRow.dataset.index = Number(elementRow.dataset.index) + 1;
+
+  const fieldID = newRow.querySelector('.js-userFieldID');
+  fieldID.value = '';
+
+  const fieldName = newRow.querySelector('.js-userFieldName');
+  fieldName.value = '';
+
+  // start removing the content of the previous row
+  newRow.classList.remove('is-error');
+  newRow.querySelector('.js-fieldAction[value="read"]').disabled = false;
+  newRow.querySelector('.js-fieldAction[value="write"]').disabled = true;
+  newRow.querySelector('.js-fieldAction[value="delete"]').disabled = true;
+
+  // manages the error message
+  const fieldErrorMessage = newRow.querySelector('.js-fieldErrorMessage');
+  fieldErrorMessage.innerHTML = '';
+  fieldErrorMessage.classList.add('is-hidden');
+
+  // manages the empty array checkbox
+  const emptyArrayCheckbox = newRow.querySelector('.js-emptyArray');
+  emptyArrayCheckbox.checked = false;
+  emptyArrayCheckbox.disabled = true;
+
+  // manages the date string checkbox
+  const dateStringCheckbox = newRow.querySelector('.js-dateString');
+  dateStringCheckbox.checked = false;
+  dateStringCheckbox.disabled = true;
+
+  // input value box
+  const metaFieldInputValue = newRow.querySelector('.js-metaFieldInputValue');
+  metaFieldInputValue.value = '';
+  metaFieldInputValue.disabled = true;
+
+  // Current value
+  const fieldCurrentValue = newRow.querySelector('.js-fieldCurrentValue');
+  fieldCurrentValue.innerHTML = '';
+
+  // Current value date-string option
+  const currentValueDateToggle = newRow.querySelector('.js-curValueDateToggle');
+  currentValueDateToggle.classList.remove('is-visible');
+  currentValueDateToggle.classList.add('is-hidden');
+
+  // Previous value
+  const fieldPreviousValue = newRow.querySelector('.js-fieldPreviousValue');
+  fieldPreviousValue.innerHTML = '';
+
+  table.appendChild(newRow);
+  refreshUserArrows();
+
+  const submitUserButton = document.querySelector('.js-submitUserFields');
+
+  const addJSON = JSON.stringify(newRow.dataset.index);
+  spinnerOn();
+  submitUserButton.disabled = true;
+
+  /* Launches the Rest request to write fields */
+  apiFetch({
+    path,
+    method: 'POST',
+    body: addJSON,
+    parse: false,
+    headers: {
+      'Content-type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((fields) => {
+      submitUserButton.disabled = false;
+      submitUserButton.blur();
+      spinnerOff();
+      if (fields.error) {
+
+      }
+    });
+}
+
+function removePostRow(elementRow, path) {
+  const submitPostButton = document.querySelector('.js-submitPostFields');
+  const elementToRemove = elementRow.nextElementSibling;
+
+  elementToRemove.remove();
+  refreshPostArrows();
+
+  const rows = document.querySelectorAll('.js-postFieldsDataRow');
+
+  const metaFields = [];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const row of rows) {
+    const { index } = row.dataset;
+    metaFields.push(index);
+  }
+  const removeJSON = JSON.stringify(metaFields);
+  spinnerOn();
+  submitPostButton.disabled = true;
+
+  /* Launches the Rest request to write fields */
+  apiFetch({
+    path,
+    method: 'DELETE',
+    body: removeJSON,
+    parse: false,
+    headers: {
+      'Content-type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((fields) => {
+      submitPostButton.disabled = false;
+      submitPostButton.blur();
+      spinnerOff();
+      if (fields.error) {
+
+      }
+    });
+}
+
+function addPostRow(elementRow, path) {
+  const table = elementRow.parentElement;
+  const oldRow = document.querySelector('.js-postFieldsDataRow[data-index="0"]');
+  const newRow = oldRow.cloneNode(true);
+
+  newRow.dataset.index = Number(elementRow.dataset.index) + 1;
+
+  const fieldID = newRow.querySelector('.js-postFieldID');
+  fieldID.value = '';
+
+  const fieldName = newRow.querySelector('.js-postFieldName');
+  fieldName.value = '';
+
+  // start removing the content of the previous row
+  newRow.classList.remove('is-error');
+  newRow.querySelector('.js-fieldAction[value="read"]').disabled = false;
+  newRow.querySelector('.js-fieldAction[value="write"]').disabled = true;
+  newRow.querySelector('.js-fieldAction[value="delete"]').disabled = true;
+
+  // manages the error message
+  const fieldErrorMessage = newRow.querySelector('.js-fieldErrorMessage');
+  fieldErrorMessage.innerHTML = '';
+  fieldErrorMessage.classList.add('is-hidden');
+
+  // manages the empty array checkbox
+  const emptyArrayCheckbox = newRow.querySelector('.js-emptyArray');
+  emptyArrayCheckbox.checked = false;
+  emptyArrayCheckbox.disabled = true;
+
+  // manages the date string checkbox
+  const dateStringCheckbox = newRow.querySelector('.js-dateString');
+  dateStringCheckbox.checked = false;
+  dateStringCheckbox.disabled = true;
+
+  // input value box
+  const metaFieldInputValue = newRow.querySelector('.js-metaFieldInputValue');
+  metaFieldInputValue.value = '';
+  metaFieldInputValue.disabled = true;
+
+  // Current value
+  const fieldCurrentValue = newRow.querySelector('.js-fieldCurrentValue');
+  fieldCurrentValue.innerHTML = '';
+
+  // Current value date-string option
+  const currentValueDateToggle = newRow.querySelector('.js-curValueDateToggle');
+  currentValueDateToggle.classList.remove('is-visible');
+  currentValueDateToggle.classList.add('is-hidden');
+
+  // Previous value
+  const fieldPreviousValue = newRow.querySelector('.js-fieldPreviousValue');
+  fieldPreviousValue.innerHTML = '';
+
+  table.appendChild(newRow);
+  refreshPostArrows();
+
+  const submitPostButton = document.querySelector('.js-submitPostFields');
+
+  const addJSON = JSON.stringify(newRow.dataset.index);
+  spinnerOn();
+  submitPostButton.disabled = true;
+
+  /* Launches the Rest request to write fields */
+  apiFetch({
+    path,
+    method: 'POST',
+    body: addJSON,
+    parse: false,
+    headers: {
+      'Content-type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((fields) => {
+      submitPostButton.disabled = false;
+      submitPostButton.blur();
+      spinnerOff();
+      if (fields.error) {
+
+      }
+    });
+}
+
 function checkOptionEvent(e) {
   const element = e.target;
+
+  const restBase = 'options';
+  const updateBase = `${restBase}/update`;
+  const path = `${nameSpace}/${updateBase}`;
 
   if (!element.classList.contains('js-addRemoveOptionRow')) {
     return;
@@ -197,13 +443,53 @@ function checkOptionEvent(e) {
   const elementRow = element.parentElement;
 
   if (element.innerText === '-') {
-    removeOptionRow(elementRow);
+    removeOptionRow(elementRow, path);
   } else {
-    addOptionRow(elementRow);
+    addOptionRow(elementRow, path);
+  }
+}
+
+function checkUserEvent(e) {
+  const element = e.target;
+
+  const restBase = 'user_fields';
+  const updateBase = `${restBase}/update`;
+  const path = `${nameSpace}/${updateBase}`;
+
+  if (!element.classList.contains('js-addRemoveUserRow')) {
+    return;
+  }
+
+  const elementRow = element.parentElement;
+
+  if (element.innerText === '-') {
+    removeUserRow(elementRow, path);
+  } else {
+    addUserRow(elementRow, path);
+  }
+}
+
+function checkPostEvent(e) {
+  const element = e.target;
+
+  const restBase = 'post_fields';
+  const updateBase = `${restBase}/update`;
+  const path = `${nameSpace}/${updateBase}`;
+
+  if (!element.classList.contains('js-addRemovePostRow')) {
+    return;
+  }
+
+  const elementRow = element.parentElement;
+
+  if (element.innerText === '-') {
+    removePostRow(elementRow, path);
+  } else {
+    addPostRow(elementRow, path);
   }
 }
 
 window.addEventListener('load', addArrows, false);
 optionSection.addEventListener('click', checkOptionEvent, false);
-// userMetaSection.addEventListener('click', checkEvent, false);
-// postMetaSection.addEventListener('click', checkEvent, false);
+userMetaSection.addEventListener('click', checkUserEvent, false);
+postMetaSection.addEventListener('click', checkPostEvent, false);

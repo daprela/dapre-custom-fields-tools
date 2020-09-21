@@ -30,13 +30,13 @@ $key = esc_attr($non_esc_key);
 <div class="js-userFieldsDataRow c-metaField <?php echo esc_attr($user_field->get_row_error_class()) ?>" data-index="<?php echo $key ?>">
 	<div class="js-addRemoveUserRow c-addRemoveFieldRow c-addRemoveFieldRow__add">+</div>
 	<div class="c-metaField__fieldID">
-		<input class="c-metaField__fieldIDInput" type="number" step="1" min="0" name="user_id[<?php echo $key ?>]" value="<?php echo esc_attr($user_field->get_user_id()) ?>" />
+		<input class="js-userFieldID c-metaField__fieldIDInput" type="number" step="1" min="0" name="user_id[<?php echo $key ?>]" value="<?php echo esc_attr($user_field->get_user_id()) ?>" />
 	</div>
 	<div class="c-metaField__fieldName">
 		<div class="c-metaField__fieldErrorContainer">
 			<p class="js-fieldErrorMessage c-metaField__fieldErrorMessage <?php echo esc_attr($user_field->get_field_error_class()) ?>"><?php echo esc_html_e($user_field->get_error(), "dapre-cft") ?></p>
 		</div>
-		<input class="c-metaField__fieldNameInput" type="text" name="field_name[<?php echo $key ?>]" value="<?php echo esc_attr($user_field->get_name()) ?>" />
+		<input class="js-userFieldName c-metaField__fieldNameInput" type="text" name="field_name[<?php echo $key ?>]" value="<?php echo esc_attr($user_field->get_name()) ?>" />
 	</div>
 	<div class="c-metaField__fieldActions">
 		<label>

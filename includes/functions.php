@@ -29,10 +29,6 @@ function initialize_previous_user_fields(): array {
 
 	return [
 		'0' => new User_Fields( '', '' ),
-		'1' => new User_Fields( '', '' ),
-		'2' => new User_Fields( '', '' ),
-		'3' => new User_Fields( '', '' ),
-		'4' => new User_Fields( '', '' ),
 	];
 }
 
@@ -47,9 +43,5 @@ function initialize_previous_post_fields(): array {
 
 	return [
 		'0' => new Post_Fields( '', '' ),
-		'1' => new Post_Fields( '', '' ),
-		'2' => new Post_Fields( '', '' ),
-		'3' => new Post_Fields( '', '' ),
-		'4' => new Post_Fields( '', '' ),
 	];
 }
