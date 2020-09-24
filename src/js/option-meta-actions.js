@@ -232,7 +232,9 @@ function getMetaForm(e) {
   /* Reads all the rows and fill in the request objects */
   // eslint-disable-next-line no-restricted-syntax
   for (const row of rows) {
+    console.log(row);
     const fieldAction = row.querySelector('.js-fieldAction:checked').value;
+    console.log(fieldAction);
 
     if (fieldAction === 'write') {
       getWriteFields(row);

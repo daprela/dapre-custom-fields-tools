@@ -17,8 +17,10 @@ export function refreshOptionArrows() {
     arrow.style.top = `${optionRow.offsetTop + optionRow.offsetHeight - 10}px`;
     if (index < optionRows.length - 1) {
       arrow.innerHTML = '-';
+      arrow.title = 'Remove the next row';
     } else {
       arrow.innerHTML = '+';
+      arrow.title = 'Add another row';
     }
   }
 
@@ -33,8 +35,10 @@ export function refreshUserArrows() {
     arrow.style.top = `${userRow.offsetTop + userRow.offsetHeight - 10}px`;
     if (index < userRows.length - 1) {
       arrow.innerHTML = '-';
+      arrow.title = 'Remove the next row';
     } else {
       arrow.innerHTML = '+';
+      arrow.title = 'Add another row';
     }
   }
 
@@ -49,8 +53,10 @@ export function refreshPostArrows() {
     arrow.style.top = `${postRow.offsetTop + postRow.offsetHeight - 10}px`;
     if (index < postRows.length - 1) {
       arrow.innerHTML = '-';
+      arrow.title = 'Remove the next row';
     } else {
       arrow.innerHTML = '+';
+      arrow.title = 'Add another row';
     }
   }
 
@@ -113,12 +119,17 @@ function addOptionRow(elementRow, path) {
 
   const optionName = newRow.querySelector('.js-optionFieldName');
   optionName.value = '';
+  optionName.name = `field_name[${newRow.dataset.index}]`;
 
   // start removing the content of the previous row
   newRow.classList.remove('is-error');
   newRow.querySelector('.js-fieldAction[value="read"]').disabled = false;
   newRow.querySelector('.js-fieldAction[value="write"]').disabled = true;
   newRow.querySelector('.js-fieldAction[value="delete"]').disabled = true;
+
+  newRow.querySelector('.js-fieldAction[value="read"]').name = `field_action[${newRow.dataset.index}]`;
+  newRow.querySelector('.js-fieldAction[value="write"]').name = `field_action[${newRow.dataset.index}]`;
+  newRow.querySelector('.js-fieldAction[value="delete"]').name = `field_action[${newRow.dataset.index}]`;
 
   // manages the error message
   const fieldErrorMessage = newRow.querySelector('.js-fieldErrorMessage');
@@ -129,16 +140,19 @@ function addOptionRow(elementRow, path) {
   const emptyArrayCheckbox = newRow.querySelector('.js-emptyArray');
   emptyArrayCheckbox.checked = false;
   emptyArrayCheckbox.disabled = true;
+  emptyArrayCheckbox.name = `empty_array[${newRow.dataset.index}]`;
 
   // manages the date string checkbox
   const dateStringCheckbox = newRow.querySelector('.js-dateString');
   dateStringCheckbox.checked = false;
   dateStringCheckbox.disabled = true;
+  dateStringCheckbox.name = `date_string[${newRow.dataset.index}]`;
 
   // input value box
   const metaFieldInputValue = newRow.querySelector('.js-metaFieldInputValue');
   metaFieldInputValue.value = '';
   metaFieldInputValue.disabled = true;
+  metaFieldInputValue.name = `field_value[${newRow.dataset.index}]`;
 
   // Current value
   const fieldCurrentValue = newRow.querySelector('.js-fieldCurrentValue');
@@ -148,6 +162,9 @@ function addOptionRow(elementRow, path) {
   const currentValueDateToggle = newRow.querySelector('.js-curValueDateToggle');
   currentValueDateToggle.classList.remove('is-visible');
   currentValueDateToggle.classList.add('is-hidden');
+
+  const currentValueDateToggleCheckbox = newRow.querySelector('.js-fieldDateStringCurValue');
+  currentValueDateToggleCheckbox.name = `date_string_show[${newRow.dataset.index}]`;
 
   // Previous value
   const fieldPreviousValue = newRow.querySelector('.js-fieldPreviousValue');
@@ -233,15 +250,21 @@ function addUserRow(elementRow, path) {
 
   const fieldID = newRow.querySelector('.js-userFieldID');
   fieldID.value = '';
+  fieldID.name = `user_id[${newRow.dataset.index}]`;
 
   const fieldName = newRow.querySelector('.js-userFieldName');
   fieldName.value = '';
+  fieldName.name = `field_name[${newRow.dataset.index}]`;
 
   // start removing the content of the previous row
   newRow.classList.remove('is-error');
   newRow.querySelector('.js-fieldAction[value="read"]').disabled = false;
   newRow.querySelector('.js-fieldAction[value="write"]').disabled = true;
   newRow.querySelector('.js-fieldAction[value="delete"]').disabled = true;
+
+  newRow.querySelector('.js-fieldAction[value="read"]').name = `field_action[${newRow.dataset.index}]`;
+  newRow.querySelector('.js-fieldAction[value="write"]').name = `field_action[${newRow.dataset.index}]`;
+  newRow.querySelector('.js-fieldAction[value="delete"]').name = `field_action[${newRow.dataset.index}]`;
 
   // manages the error message
   const fieldErrorMessage = newRow.querySelector('.js-fieldErrorMessage');
@@ -252,16 +275,19 @@ function addUserRow(elementRow, path) {
   const emptyArrayCheckbox = newRow.querySelector('.js-emptyArray');
   emptyArrayCheckbox.checked = false;
   emptyArrayCheckbox.disabled = true;
+  emptyArrayCheckbox.name = `empty_array[${newRow.dataset.index}]`;
 
   // manages the date string checkbox
   const dateStringCheckbox = newRow.querySelector('.js-dateString');
   dateStringCheckbox.checked = false;
   dateStringCheckbox.disabled = true;
+  dateStringCheckbox.name = `date_string[${newRow.dataset.index}]`;
 
   // input value box
   const metaFieldInputValue = newRow.querySelector('.js-metaFieldInputValue');
   metaFieldInputValue.value = '';
   metaFieldInputValue.disabled = true;
+  metaFieldInputValue.name = `field_value[${newRow.dataset.index}]`;
 
   // Current value
   const fieldCurrentValue = newRow.querySelector('.js-fieldCurrentValue');
@@ -271,6 +297,9 @@ function addUserRow(elementRow, path) {
   const currentValueDateToggle = newRow.querySelector('.js-curValueDateToggle');
   currentValueDateToggle.classList.remove('is-visible');
   currentValueDateToggle.classList.add('is-hidden');
+
+  const currentValueDateToggleCheckbox = newRow.querySelector('.js-fieldDateStringCurValue');
+  currentValueDateToggleCheckbox.name = `date_string_show[${newRow.dataset.index}]`;
 
   // Previous value
   const fieldPreviousValue = newRow.querySelector('.js-fieldPreviousValue');
@@ -356,15 +385,21 @@ function addPostRow(elementRow, path) {
 
   const fieldID = newRow.querySelector('.js-postFieldID');
   fieldID.value = '';
+  fieldID.name = `post_id[${newRow.dataset.index}]`;
 
   const fieldName = newRow.querySelector('.js-postFieldName');
   fieldName.value = '';
+  fieldName.name = `field_name[${newRow.dataset.index}]`;
 
   // start removing the content of the previous row
   newRow.classList.remove('is-error');
   newRow.querySelector('.js-fieldAction[value="read"]').disabled = false;
   newRow.querySelector('.js-fieldAction[value="write"]').disabled = true;
   newRow.querySelector('.js-fieldAction[value="delete"]').disabled = true;
+
+  newRow.querySelector('.js-fieldAction[value="read"]').name = `field_action[${newRow.dataset.index}]`;
+  newRow.querySelector('.js-fieldAction[value="write"]').name = `field_action[${newRow.dataset.index}]`;
+  newRow.querySelector('.js-fieldAction[value="delete"]').name = `field_action[${newRow.dataset.index}]`;
 
   // manages the error message
   const fieldErrorMessage = newRow.querySelector('.js-fieldErrorMessage');
@@ -375,16 +410,19 @@ function addPostRow(elementRow, path) {
   const emptyArrayCheckbox = newRow.querySelector('.js-emptyArray');
   emptyArrayCheckbox.checked = false;
   emptyArrayCheckbox.disabled = true;
+  emptyArrayCheckbox.name = `empty_array[${newRow.dataset.index}]`;
 
   // manages the date string checkbox
   const dateStringCheckbox = newRow.querySelector('.js-dateString');
   dateStringCheckbox.checked = false;
   dateStringCheckbox.disabled = true;
+  dateStringCheckbox.name = `date_string[${newRow.dataset.index}]`;
 
   // input value box
   const metaFieldInputValue = newRow.querySelector('.js-metaFieldInputValue');
   metaFieldInputValue.value = '';
   metaFieldInputValue.disabled = true;
+  metaFieldInputValue.name = `field_value[${newRow.dataset.index}]`;
 
   // Current value
   const fieldCurrentValue = newRow.querySelector('.js-fieldCurrentValue');
@@ -394,6 +432,9 @@ function addPostRow(elementRow, path) {
   const currentValueDateToggle = newRow.querySelector('.js-curValueDateToggle');
   currentValueDateToggle.classList.remove('is-visible');
   currentValueDateToggle.classList.add('is-hidden');
+
+  const currentValueDateToggleCheckbox = newRow.querySelector('.js-fieldDateStringCurValue');
+  currentValueDateToggleCheckbox.name = `date_string_show[${newRow.dataset.index}]`;
 
   // Previous value
   const fieldPreviousValue = newRow.querySelector('.js-fieldPreviousValue');

@@ -26,7 +26,9 @@ foreach ( $previous_options as $non_esc_key=>$option ) {
 $key = esc_attr($non_esc_key);
 ?>
 <div class="js-optionFieldDataRow c-optionField <?php echo esc_attr($option->get_row_error_class()) ?>" data-index="<?php echo $key ?>" >
-	<div class="js-addRemoveOptionRow c-addRemoveFieldRow c-addRemoveFieldRow__add">+</div>
+	<div class="js-addRemoveOptionRow c-addRemoveFieldRow c-addRemoveFieldRow__add">
+		+
+	</div>
 	<div class="c-optionField__fieldName">
 		<div class="c-optionField__fieldErrorContainer">
 			<p class="js-fieldErrorMessage c-optionField__fieldErrorMessage <?php echo esc_attr($option->get_field_error_class()) ?>"><?php echo esc_html_e($option->get_error(), "dapre-cft") ?></p>
@@ -50,11 +52,11 @@ $key = esc_attr($non_esc_key);
 	<div class="c-optionField__fieldValueToAdd">
 		<div class="c-optionField__fieldValueOptions">
 			<label class="c-optionField__fieldValueOptionLabel">
-				<input class="js-fieldValueToAdd js-emptyArray" type="checkbox" name="empty_array[<?php echo $key ?>]" value="empty_array" data-index="<?php echo $key ?>" disabled="" />
-				<p><?php esc_html_e("Add empty array","dapre-cft") ?></p>
+				<input class="js-fieldValueToAdd js-emptyArray" type="checkbox" name="empty_array[<?php echo $key ?>]" value="empty_array" disabled="" />
+				<p title="Replace the field content with an empty array"><?php esc_html_e("Add empty array","dapre-cft") ?></p>
 			</label>
 			<label class="c-optionField__fieldValueOptionLabel">
-				<input class="js-fieldValueToAdd js-dateString" type="checkbox" name="date_string[<?php echo $key ?>]" value="date_string" data-index="<?php echo $key ?>" disabled="" />
+				<input class="js-fieldValueToAdd js-dateString" type="checkbox" name="date_string[<?php echo $key ?>]" value="date_string" disabled="" />
 				<p><?php esc_html_e("Toggle date string/timestamp","dapre-cft") ?></p>
 			</label>
 		</div>
@@ -74,7 +76,7 @@ $key = esc_attr($non_esc_key);
 	<div class="c-optionField__fieldCurValueOptions">
 		<label class="js-curValueDateToggle c-optionField__fieldCurValueOption <?php echo esc_attr($option->get_date_toggle()) ?>">
 			<p><?php esc_html_e("Toggle date string/timestamp","dapre-cft") ?></p>
-			<input class="js-fieldDateStringCurValue" type="checkbox" name="date_string_show[<?php echo $key ?>]" value="" data-index="<?php echo $key ?>" />
+			<input class="js-fieldDateStringCurValue" type="checkbox" name="date_string_show[<?php echo $key ?>]" value="" />
 		</label>
 		<input class="js-fieldValueTimestampBackup" type="hidden" name="value-timestamp-backup-<?php echo $key ?>" value="" />
 		<input class="js-fieldValueStringBackup" type="hidden" name="value-string-backup-<?php echo $key ?>" value="" />
