@@ -62,7 +62,7 @@ class User_Field_Controller extends Field_Controller {
 				continue;
 			}
 
-			// if the option name changes then we can't keep the previous object
+			// if the field name changes then we can't keep the previous object
 			if ( $user_field['userID'] != $this->previous_user_fields[ $index ]->get_user_id() || $user_field['fieldName'] != $this->previous_user_fields[ $index ]->get_name() ) {
 				$user_field_obj                       = new User_Fields( $user_field['userID'], $user_field['fieldName'] );
 				$this->previous_user_fields[ $index ] = $user_field_obj;

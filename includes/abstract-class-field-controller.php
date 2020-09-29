@@ -164,14 +164,16 @@ abstract class Field_Controller extends WP_REST_Controller {
 	 */
 	public function set_fields_content( array $fields, int $index, object $meta_field ): array {
 
-		$fields[ $index ]['index']              = $index;
-		$fields[ $index ]['currentValue']       = json_encode( print_r( $meta_field->get_current_value(), true ) );
-		$fields[ $index ]['previousValue']      = json_encode( print_r( $meta_field->get_previous_value(), true ) );
-		$fields[ $index ]['error']              = $meta_field->get_error();
-		$fields[ $index ]['fieldErrorClass']    = $meta_field->get_field_error_class();
-		$fields[ $index ]['curValueDateToggle'] = $meta_field->get_date_toggle();
-		$fields[ $index ]['disableWrite']       = $meta_field->get_disable_write();
-		$fields[ $index ]['disableDelete']      = $meta_field->get_disable_delete();
+		$new_value['index']              = $index;
+		$new_value['currentValue']       = json_encode( print_r( $meta_field->get_current_value(), true ) );
+		$new_value['previousValue']      = json_encode( print_r( $meta_field->get_previous_value(), true ) );
+		$new_value['error']              = $meta_field->get_error();
+		$new_value['fieldErrorClass']    = $meta_field->get_field_error_class();
+		$new_value['curValueDateToggle'] = $meta_field->get_date_toggle();
+		$new_value['disableWrite']       = $meta_field->get_disable_write();
+		$new_value['disableDelete']      = $meta_field->get_disable_delete();
+
+		$fields[] = $new_value;
 
 		return $fields;
 	}

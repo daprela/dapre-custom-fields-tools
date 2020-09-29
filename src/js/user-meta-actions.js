@@ -10,9 +10,9 @@ const { apiFetch } = wp;
 const submitUserFieldsButton = document.querySelector('.js-submitUserFields');
 const renameUserFieldsButton = document.querySelector('.js-submitRenameUserField');
 const copyUserFieldsButton = document.querySelector('.js-submitCopyUserField');
-let read = {};
-let write = {};
-let del = {};
+let read = [];
+let write = [];
+let del = [];
 let finishedWrite = false;
 let finishedRead = false;
 let finishedDel = false;
@@ -29,13 +29,15 @@ function getWriteFields(row) {
   const emptyArray = row.querySelector('.js-emptyArray').checked;
   const valueToWrite = row.querySelector('.js-metaFieldInputValue').value;
 
-  write[index] = {
+  const newValue = {
     index,
     userID,
     fieldName,
     emptyArray,
     valueToWrite,
   };
+
+  write.push(newValue);
 }
 
 /* Get the fields whose action is selected to 'delete' */
@@ -44,11 +46,13 @@ function getDeleteFields(row) {
   const userID = row.querySelector(`input[name="user_id[${index}]"]`).value;
   const fieldName = row.querySelector(`input[name="field_name[${index}]"]`).value;
 
-  del[index] = {
+  const newValue = {
     index,
     userID,
     fieldName,
   };
+
+  del.push(newValue);
 }
 
 /* Get the fields whose action is selected to 'read' */
@@ -57,19 +61,20 @@ function readFields(row) {
   const userID = row.querySelector(`input[name="user_id[${index}]"]`).value;
   const fieldName = row.querySelector(`input[name="field_name[${index}]"]`).value;
 
-  read[index] = {
+  const newValue = {
     index,
     userID,
     fieldName,
   };
+
+  read.push(newValue);
 }
 
 /* Refresh the page of the meta fields with the data received */
 function refreshPage(fields) {
   // eslint-disable-next-line no-restricted-syntax
-  for (const index of Object.keys(fields)) {
-    const field = fields[index];
-    // console.log(field);
+  for (const field of fields) {
+    const { index } = field;
     const row = document.querySelector(`.js-userFieldsDataRow[data-index="${index}"]`);
     // add/remove the red-dotted border
     if (field.error === '') {
@@ -148,7 +153,7 @@ function refreshPage(fields) {
 
 /* Makes the API request for the 'read' action */
 function readData() {
-  if (Object.keys(read).length === 0) {
+  if (read.length === 0) {
     finishedRead = true;
     return;
   }
@@ -171,7 +176,7 @@ function readData() {
 
 /* Makes the API request for the 'write' action */
 function writeData() {
-  if (Object.keys(write).length === 0) {
+  if (write.length === 0) {
     finishedWrite = true;
     return;
   }
@@ -198,7 +203,7 @@ function writeData() {
 
 /* Makes the API request for the 'delete' action */
 function deleteData() {
-  if (Object.keys(del).length === 0) {
+  if (del.length === 0) {
     finishedDel = true;
     return;
   }
@@ -229,9 +234,9 @@ function getMetaForm(e) {
   spinnerOn();
   submitUserFieldsButton.disabled = true;
 
-  write = {};
-  read = {};
-  del = {};
+  write = [];
+  read = [];
+  del = [];
 
   const rows = document.querySelectorAll('.js-userFieldsDataRow');
 

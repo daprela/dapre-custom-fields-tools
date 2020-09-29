@@ -108,7 +108,6 @@ const curValueDateString = function (element) {
   // get the elements used to backup the values
   const dateTimestampBackup = row.querySelector('.js-fieldValueTimestampBackup');
   const dateStringBackup = row.querySelector('.js-fieldValueStringBackup');
-  console.log(row);
 
   // if it is a number interpret as a timestamp
   if (isNumber(fieldContent.innerText)) {
@@ -126,7 +125,7 @@ const curValueDateString = function (element) {
       fieldContent.innerText = myDate.toUTCString();
       dateStringBackup.value = fieldContent.innerText;
     }
-  } else if (dateTimestampBackup.value != null) {
+  } else if (dateTimestampBackup.value) {
     fieldContent.innerText = dateTimestampBackup.value;
   } else {
     const myDate = new Date(fieldContent.innerText);
