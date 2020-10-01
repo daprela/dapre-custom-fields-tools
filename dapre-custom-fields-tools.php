@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name:       Dapre Custom Fields Tools
  * Description:       Provides a series of developers tools aimed at facilitating the custom fields management during the development and debugging phase
- * Version:           5.1.1
+ * Version:           5.2.0
  * Author:            Giulio Daprela
  * Author URI:        http://giuliodaprela.com/
  * License:           GPL-2.0+
