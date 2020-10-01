@@ -32,7 +32,7 @@ class Activator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function activate() {
+	public static function activate(): void {
 
 		$previous_options = initialize_previous_options();
 		add_option( 'dapre_cft_previous_options', $previous_options );

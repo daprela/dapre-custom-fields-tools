@@ -2,6 +2,7 @@
 
 namespace dapre_cft\includes;
 
+use phpDocumentor\Reflection\Types\Mixed_;
 use WP_Error;
 use WP_REST_Controller, WP_REST_Server;
 use WP_REST_Request;
@@ -109,18 +110,40 @@ abstract class Field_Controller extends WP_REST_Controller {
 				],
 			]
 		);
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/update',
+			[
+				[
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => [ $this, 'append_row' ],
+					'permission_callback' => [ $this, 'items_permissions_check' ],
+				],
+			]
+		);
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/update',
+			[
+				[
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => [ $this, 'delete_row' ],
+					'permission_callback' => [ $this, 'items_permissions_check' ],
+				],
+			]
+		);
 	}
 
 	/**
 	 * Returns whether the user has the permission to execute the request.
 	 *
-	 * @param WP_REST_Request $request
-	 *
-	 * @return bool True if the user can execute the request.
+	 * @return bool|WP_Error True if the user can execute the request, error otherwise.
 	 * @since 5.0.0
 	 *
 	 */
-	public function items_permissions_check( $request ): bool {
+	public function items_permissions_check() {
 		if ( current_user_can( 'manage_options' ) ) {
 			return true;
 		}
@@ -141,14 +164,16 @@ abstract class Field_Controller extends WP_REST_Controller {
 	 */
 	public function set_fields_content( array $fields, int $index, object $meta_field ): array {
 
-		$fields[ $index ]['index']              = $index;
-		$fields[ $index ]['currentValue']       = json_encode( print_r( $meta_field->get_current_value(), true ) );
-		$fields[ $index ]['previousValue']      = json_encode( print_r( $meta_field->get_previous_value(), true ) );
-		$fields[ $index ]['error']              = $meta_field->get_error();
-		$fields[ $index ]['fieldErrorClass']    = $meta_field->get_field_error_class();
-		$fields[ $index ]['curValueDateToggle'] = $meta_field->get_date_toggle();
-		$fields[ $index ]['disableWrite']       = $meta_field->get_disable_write();
-		$fields[ $index ]['disableDelete']      = $meta_field->get_disable_delete();
+		$new_value['index']              = $index;
+		$new_value['currentValue']       = json_encode( print_r( $meta_field->get_current_value(), true ) );
+		$new_value['previousValue']      = json_encode( print_r( $meta_field->get_previous_value(), true ) );
+		$new_value['error']              = $meta_field->get_error();
+		$new_value['fieldErrorClass']    = $meta_field->get_field_error_class();
+		$new_value['curValueDateToggle'] = $meta_field->get_date_toggle();
+		$new_value['disableWrite']       = $meta_field->get_disable_write();
+		$new_value['disableDelete']      = $meta_field->get_disable_delete();
+
+		$fields[] = $new_value;
 
 		return $fields;
 	}

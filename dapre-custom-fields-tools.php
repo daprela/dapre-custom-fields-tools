@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name:       Dapre Custom Fields Tools
  * Description:       Provides a series of developers tools aimed at facilitating the custom fields management during the development and debugging phase
- * Version:           5.1.1
+ * Version:           5.2.0
  * Author:            Giulio Daprela
  * Author URI:        http://giuliodaprela.com/
  * License:           GPL-2.0+
@@ -27,7 +27,7 @@ setup_constants();
 /**
  * Setup all constants
  */
-function setup_constants() {
+function setup_constants(): void {
 
 	// get_file_data should always be available. We leave this check just in case
 	if ( ! function_exists( 'get_file_data' ) ) {
@@ -54,7 +54,7 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\activate_plugin' );
  * The code that runs during plugin activation.
  * This action is documented in includes/class-dapre-cft-activator.php
  */
-function activate_plugin() {
+function activate_plugin(): void {
 	require_once PLUGIN_DIR_PATH . 'includes/class-activator.php';
 	includes\Activator::activate();
 }
@@ -65,33 +65,14 @@ function activate_plugin() {
  */
 require PLUGIN_DIR_PATH . 'includes/class-loader.php';
 
-add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\initialize_ajax', 11 );
-/**
- * Initialize AJAX
- */
-function initialize_ajax() {
-
-	/* @var $protocol detect the protocol used by the website */
-	$protocol = is_ssl() ? 'https' : 'http';
-
-	wp_localize_script(
-		PLUGIN_NAME,
-		'DapreCftAjax',
-		[
-			'ajax_url' => admin_url( 'admin-ajax.php', $protocol ),
-			'nonce'    => wp_create_nonce( 'custom_fields_tools' ),
-		]
-	);
-}
-
 /**
  * Provides the asset timestamp as version number if we are in debug mode or the plugin version if we are in production mode
  *
  * @param string $asset_file Complete path to the asset file (not to confuse with the URL)
  *
- * @return string                    The asset version
+ * @return string The asset version
  */
-function get_asset_version( string $asset_file ) {
+function get_asset_version( string $asset_file ): string {
 
 	$asset_version = filemtime( $asset_file );
 
@@ -108,7 +89,7 @@ function get_asset_version( string $asset_file ) {
  *
  * @return boolean True if the site is in debug mode
  */
-function plugin_is_in_debug_mode() {
+function plugin_is_in_debug_mode(): bool {
 	return ( (bool) WP_DEBUG === true );
 }
 

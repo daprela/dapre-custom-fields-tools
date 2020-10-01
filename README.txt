@@ -28,51 +28,55 @@ In the following months I realized how useful the plugin was and couldn't work a
 
 == Changelog ==
 
+= 5.2.0 =
+* Meta fields rows can now be added and removed dynamically.
+* Bug fixing.
+
 = 5.1.1 =
-* Fixed visualization bug in first row of meta fields
+* Fixed visualization bug in first row of meta fields.
 
 = 5.1.0 =
 * Improved UI
 
 = 5.0.0 =
-* Moved from AJAX to REST API
-* Moved from JQuery to vanilla JavaScript
+* Moved from AJAX to REST API.
+* Moved from JQuery to vanilla JavaScript.
 
 = 4.6.1 =
-* Updated npm packages versions
-* Built distributable file
+* Updated npm packages versions.
+* Built distributable file.
 
 = 4.6.0 =
-* Refactored CSS to use grid and flexbox instead of tables
-* Refactored CSS to use BEVM coding principles
-* Refactored templates to comply with changes in CSS
+* Refactored CSS to use grid and flexbox instead of tables.
+* Refactored CSS to use BEVM coding principles.
+* Refactored templates to comply with changes in CSS.
 
 = 4.5.0 =
-* Added Gulp workflow
-* Refactored code and created new plugin structure to meet the new workflow needs
-* Refactored JavaScript and removed all inline events left
+* Added Gulp workflow.
+* Refactored code and created new plugin structure to meet the new workflow needs.
+* Refactored JavaScript and removed all inline events left.
 
 = 4.4.0 =
-* refactored JavaScript to remove all inline events
-* bugfix: plugin left the delete option enabled with non existing meta fields
+* refactored JavaScript to remove all inline events.
+* bugfix: plugin left the delete option enabled with non existing meta fields.
 
 = 4.3.0 =
-* made all strings translatable and escaped output
+* made all strings translatable and escaped output.
 
 = 4.2.3 =
-* added filter input to avoid accessing $_POST directly
+* added filter input to avoid accessing $_POST directly.
 
 = 4.2.2 =
-* Initialized variables containing CSS classes to remove warnings
+* Initialized variables containing CSS classes to remove warnings.
 
 = 4.2.1 =
-* Renamed constant PLUGIN_PATH with PLUGIN_DIRPATH for better clarity
+* Renamed constant PLUGIN_PATH with PLUGIN_DIRPATH for better clarity.
 
 = 4.2.0 =
 * Minor code refactoring. Abstracted some common methods.
 
 = 4.1.1 =
-* Moved conditionals from templates to classes
+* Moved conditionals from templates to classes.
 
 = 4.1.0 =
 * Added PHP version check. Minimum version required is PHP 7.x
