@@ -1,6 +1,8 @@
 /* eslint-disable function-paren-newline */
-// eslint-disable import/extensions
+// eslint-disable-next-line import/extensions
 import { spinnerOn, spinnerOff, nameSpace } from './functions.js';
+// eslint-disable-next-line import/extensions
+import { refreshOptionArrows } from './add-remove-meta-row.js';
 
 // eslint-disable-next-line no-undef
 const { apiFetch } = wp;
@@ -8,9 +10,9 @@ const { apiFetch } = wp;
 const submitOptionsButton = document.querySelector('.js-submitOptions');
 const renameOptionsButton = document.querySelector('.js-submitRenameOption');
 const copyOptionsButton = document.querySelector('.js-submitCopyOption');
-let read = {};
-let write = {};
-let del = {};
+let read = [];
+let write = [];
+let del = [];
 let finishedWrite = false;
 let finishedRead = false;
 let finishedDel = false;
@@ -26,12 +28,14 @@ function getWriteFields(row) {
   const emptyArray = row.querySelector('.js-emptyArray').checked;
   const valueToWrite = row.querySelector('.js-metaFieldInputValue').value;
 
-  write[index] = {
+  const newValue = {
     index,
     optionName,
     emptyArray,
     valueToWrite,
   };
+
+  write.push(newValue);
 }
 
 /* Get the fields whose action is selected to 'delete' */
@@ -39,29 +43,32 @@ function getDeleteFields(row) {
   const { index } = row.dataset;
   const optionName = row.querySelector(`input[name="field_name[${index}]"]`).value;
 
-  del[index] = {
+  const newValue = {
     index,
     optionName,
   };
+
+  del.push(newValue);
 }
 
 /* Get the fields whose action is selected to 'read' */
-function readFields(row) {
+function getReadFields(row) {
   const { index } = row.dataset;
   const optionName = row.querySelector(`input[name="field_name[${index}]"]`).value;
 
-  read[index] = {
+  const newValue = {
     index,
     optionName,
   };
+
+  read.push(newValue);
 }
 
 /* Refresh the page of the meta fields with the data received */
 function refreshPage(fields) {
   // eslint-disable-next-line no-restricted-syntax
-  for (const index of Object.keys(fields)) {
-    const field = fields[index];
-    // console.log(field);
+  for (const field of fields) {
+    const { index } = field;
     const row = document.querySelector(`.js-optionFieldDataRow[data-index="${index}"]`);
     // add/remove the red-dotted border
     if (field.error === '') {
@@ -129,6 +136,8 @@ function refreshPage(fields) {
     submitOptionsButton.disabled = false;
     submitOptionsButton.blur();
 
+    refreshOptionArrows();
+
     spinnerOff();
     finishedWrite = false;
     finishedRead = false;
@@ -138,7 +147,7 @@ function refreshPage(fields) {
 
 /* Makes the API request for the 'read' action */
 function readData() {
-  if (Object.keys(read).length === 0) {
+  if (read.length === 0) {
     finishedRead = true;
     return;
   }
@@ -161,7 +170,7 @@ function readData() {
 
 /* Makes the API request for the 'write' action */
 function writeData() {
-  if (Object.keys(write).length === 0) {
+  if (write.length === 0) {
     finishedWrite = true;
     return;
   }
@@ -188,7 +197,7 @@ function writeData() {
 
 /* Makes the API request for the 'delete' action */
 function deleteData() {
-  if (Object.keys(del).length === 0) {
+  if (del.length === 0) {
     finishedDel = true;
     return;
   }
@@ -219,9 +228,9 @@ function getMetaForm(e) {
   spinnerOn();
   submitOptionsButton.disabled = true;
 
-  write = {};
-  read = {};
-  del = {};
+  write = [];
+  read = [];
+  del = [];
 
   const rows = document.querySelectorAll('.js-optionFieldDataRow');
 
@@ -239,7 +248,7 @@ function getMetaForm(e) {
     }
 
     if (fieldAction === 'read') {
-      readFields(row);
+      getReadFields(row);
     }
   }
 
@@ -446,7 +455,6 @@ function getCopyForm(e) {
   })
     .then((response) => response.json())
     .then((fields) => {
-      console.log(fields);
       refreshCopyPage(fields, copySelection);
     });
 }

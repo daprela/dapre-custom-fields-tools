@@ -103,16 +103,12 @@ class Plugin_Admin {
 		if ( array_key_exists( 'reset_fields', $form_data ) ) {
 
 			if ( ! check_admin_referer( 'dapre_cft_options', 'dapre_cft_options_verify' ) ) {
-				die();
+				die;
 			}
 
 			$previous_options     = initialize_previous_options();
 			$previous_user_fields = initialize_previous_user_fields();
 			$previous_post_fields = initialize_previous_post_fields();
-
-			$this->set_previous_options( $previous_options );
-			$this->set_previous_user_fields( $previous_user_fields );
-			$this->set_previous_post_fields( $previous_post_fields );
 
 			$form_data['user_id']     = [];
 			$form_data['field_name']  = [];
@@ -156,7 +152,7 @@ class Plugin_Admin {
 		$field_error_class = 'is-hidden';
 		$row_error_class   = '';
 
-		require_once \dapre_cft\PLUGIN_DIR_PATH . 'templates/tabbed-admin.php';
+		require_once PLUGIN_DIR_PATH . 'templates/tabbed-admin.php';
 	}
 
 	/**
@@ -171,9 +167,9 @@ class Plugin_Admin {
 	public function admin_tabs( $current = 'options' ) {
 
 		$tabs = [
-			'options'     => esc_html( "Options", "dapre-cft" ),
-			'user_fields' => esc_html( "User Fields", "dapre-cft" ),
-			'post_fields' => esc_html( "Post Fields", "dapre-cft" ),
+			'options'     => esc_html( "Options" ),
+			'user_fields' => esc_html( "User Fields" ),
+			'post_fields' => esc_html( "Post Fields" ),
 		];
 		echo '<h1 class="nav-tab-wrapper">';
 
@@ -185,35 +181,5 @@ class Plugin_Admin {
 
 		}
 		echo '</h1>';
-	}
-
-	/**
-	 * Returns true if the user has permission to respond; otherwise, it dies.
-	 *
-	 * @return bool True if the user has permission to respond.
-	 * @since 3.0.0
-	 *
-	 */
-	private function can_respond() {
-		check_ajax_referer( 'custom_fields_tools', 'dapre_cft_nonce' );
-
-		return true;
-	}
-
-	/**
-	 * Returns the content of the form submitted.
-	 *
-	 * @return array $form_data The submitted form.
-	 * @since 3.0.0
-	 *
-	 */
-	private function get_form_data() {
-		$form_data = [];
-
-		$data = filter_input( INPUT_POST, "data" );
-
-		parse_str( $data, $form_data );
-
-		return $form_data;
 	}
 }

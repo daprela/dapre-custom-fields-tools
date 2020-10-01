@@ -107,19 +107,14 @@ $orange: rgb(255, 213, 151);
 	&.-color-white {
 		background-color: $white;
 	}
-}
-
-.c-optionField,
-.c-metaField {
 	&.-color-blue {
 		background-color: $blue;
 	}
-}
-
-.c-optionField,
-.c-metaField {
 	&.-color-orange {
 		background-color: $orange;
+	}
+	&.is-hidden {
+		display: none;
 	}
 }
 
@@ -184,7 +179,6 @@ $orange: rgb(255, 213, 151);
 
 .c-optionField,
 .c-metaField {
-	border-top: 1px solid lightgrey;
 	> * {
 		padding: 0 5px;
 	}
@@ -219,7 +213,7 @@ $orange: rgb(255, 213, 151);
 }
 
 .c-optionField__fieldInput,
-.c-metaField__fieldInput
+.c-metaField__fieldInput,
 .c-metaField__fieldIDInput {
 	width: 100%;
 }
@@ -322,7 +316,7 @@ $orange: rgb(255, 213, 151);
 .c-copyToOption,
 .c-copyToUserField,
 .c-copyToPostField {
-	height: 0px;
+	height: 0;
 	overflow: hidden;
 	transition: height 500ms linear;
 }
@@ -380,7 +374,7 @@ $orange: rgb(255, 213, 151);
 }
 
 .c-metaSubmitButton {
-	margin-top: 15px;
+	margin-top: 30px !important;
 }
 
 /****************************/
@@ -483,3 +477,35 @@ $orange: rgb(255, 213, 151);
 /**********************************/
 /* END BLOCK META FIELD ONLY NAME */
 /**********************************/
+
+.c-optionsMetaHeaders,
+.c-metaFieldsHeaders,
+.c-optionField,
+.c-metaField {
+  border-bottom: 1px solid lightgrey;
+}
+
+.c-addRemoveFieldRow {
+  position: absolute;
+  //margin-top: 110px;
+  left: 30px;
+  background: #d0d0d0;
+  color: #444444;
+  font-weight: 800;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.c-addRemoveFieldRow:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 12px solid #d0d0d0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  margin: 22px 0 0 0;
+}

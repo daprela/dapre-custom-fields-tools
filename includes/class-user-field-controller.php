@@ -62,7 +62,7 @@ class User_Field_Controller extends Field_Controller {
 				continue;
 			}
 
-			// if the option name changes then we can't keep the previous object
+			// if the field name changes then we can't keep the previous object
 			if ( $user_field['userID'] != $this->previous_user_fields[ $index ]->get_user_id() || $user_field['fieldName'] != $this->previous_user_fields[ $index ]->get_name() ) {
 				$user_field_obj                       = new User_Fields( $user_field['userID'], $user_field['fieldName'] );
 				$this->previous_user_fields[ $index ] = $user_field_obj;
@@ -655,5 +655,50 @@ class User_Field_Controller extends Field_Controller {
 				'required'    => false,
 			],
 		];
+	}
+
+	/**
+	 * Delete one row from the meta rows that are shown in the admin page.
+	 *
+	 * @param WP_REST_Request $request The list of meta rows.
+	 *
+	 * @return mixed|WP_Error|WP_HTTP_Response|WP_REST_Response
+	 * @since 5.1.0
+	 *
+	 */
+	public function delete_row( $request ) {
+		$rows = $request->get_json_params();
+
+		$new_previous_fields = [];
+		foreach ( $rows as $row ) {
+			$new_previous_fields[$row['index']] = $this->previous_user_fields[$row['index']];
+		}
+
+		$this->previous_user_fields = $new_previous_fields;
+
+		$this->set_previous_user_fields($this->previous_user_fields);
+
+		return rest_ensure_response( $rows );
+	}
+
+	/**
+	 * Append one row to the meta rows that are shown in the admin page.
+	 *
+	 * @param WP_REST_Request $request The list of meta rows.
+	 *
+	 * @return mixed|WP_Error|WP_HTTP_Response|WP_REST_Response
+	 * @since 5.1.0
+	 *
+	 */
+	public function append_row( $request ) {
+		$new_row_index = $request->get_json_params();
+
+		$new_user_field = new User_Fields('','');
+
+		$this->previous_user_fields[$new_row_index] = $new_user_field;
+
+		$this->set_previous_user_fields($this->previous_user_fields);
+
+		return rest_ensure_response( $new_row_index );
 	}
 }

@@ -656,4 +656,49 @@ class Post_Field_Controller extends Field_Controller {
 			],
 		];
 	}
+
+	/**
+	 * Delete one row from the meta rows that are shown in the admin page.
+	 *
+	 * @param WP_REST_Request $request The list of meta rows.
+	 *
+	 * @return mixed|WP_Error|WP_HTTP_Response|WP_REST_Response
+	 * @since 5.1.0
+	 *
+	 */
+	public function delete_row( $request ) {
+		$rows = $request->get_json_params();
+
+		$new_previous_fields = [];
+		foreach ( $rows as $row ) {
+			$new_previous_fields[$row['index']] = $this->previous_post_fields[$row['index']];
+		}
+
+		$this->previous_post_fields = $new_previous_fields;
+
+		$this->set_previous_post_fields($this->previous_post_fields);
+
+		return rest_ensure_response( $rows );
+	}
+
+	/**
+	 * Append one row to the meta rows that are shown in the admin page.
+	 *
+	 * @param WP_REST_Request $request The list of meta rows.
+	 *
+	 * @return mixed|WP_Error|WP_HTTP_Response|WP_REST_Response
+	 * @since 5.1.0
+	 *
+	 */
+	public function append_row( $request ) {
+		$new_row_index = $request->get_json_params();
+
+		$new_post_field = new Post_Fields('','');
+
+		$this->previous_post_fields[$new_row_index] = $new_post_field;
+
+		$this->set_previous_post_fields($this->previous_post_fields);
+
+		return rest_ensure_response( $new_row_index );
+	}
 }

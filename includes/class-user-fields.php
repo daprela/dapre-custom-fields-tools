@@ -2,6 +2,8 @@
 
 namespace dapre_cft\includes;
 
+use WP_Error;
+
 defined( 'ABSPATH' ) or die;
 
 /**
@@ -213,12 +215,10 @@ class User_Fields extends Custom_Fields {
 
 			$error = wp_update_user( $userarr );
 
-			if ( $error ) {
-				$errors = $error->errors;
+			if ( $error instanceof WP_Error ) {
+				$error_string = $error->get_error_message();
 
-				foreach ( $errors as $thiserror ) {
-					$this->set_error( $thiserror[0] );
-				}
+				$this->set_error( $error_string );
 
 				$this->write_error = true;
 
@@ -233,7 +233,7 @@ class User_Fields extends Custom_Fields {
 		$written = update_user_meta( $this->user_id, $this->field_name, $field_value );
 
 		if ( ! $written ) {
-			$this->set_error( "There was an error. The meta field could not be written." );
+			$this->set_error( "There was an error. The user field could not be written." );
 			$this->write_error = true;
 
 			return;
