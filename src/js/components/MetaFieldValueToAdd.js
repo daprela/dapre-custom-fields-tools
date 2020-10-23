@@ -7,6 +7,8 @@ function MetaFieldValueToAdd(props) {
   const emptyArrayRef = createRef();
   const toggleDateRef = createRef();
   const textAreaRef = createRef();
+  const timeStampBackupRef = createRef();
+  const inputStringBackupRef = createRef();
 
   const {
     className, valueOptionsClass, valueOptionsLabelClass, textAreaClass, dataIndex, action,
@@ -17,6 +19,33 @@ function MetaFieldValueToAdd(props) {
       textAreaRef.current.disabled = true;
     } else {
       textAreaRef.current.disabled = false;
+    }
+  }
+
+  function toggleDate() {
+    if (isInteger(textAreaRef.current.value)) {
+      if (textAreaRef.current.value === timeStampBackupRef.current.value) {
+        // if the value hasn't changed use the date string saved
+        textAreaRef.current.value = inputStringBackupRef.current.value;
+      } else {
+        // if the value has changed re-generate the date string
+        const timestamp = textAreaRef.current.value;
+        timeStampBackupRef.current.value = timestamp;
+        const dateInt = parseInt(timestamp, 10);
+        const myDate = new Date(dateInt);
+        textAreaRef.current.value = myDate.toUTCString();
+        inputStringBackupRef.current.value = textAreaRef.current.value;
+      }
+    } else if (textAreaRef.current.value === inputStringBackupRef.current.value) {
+      // if the date string hasn't changed use the timestamp saved
+      textAreaRef.current.value = timeStampBackupRef.current.value;
+    } else {
+      // if the date string has changed re-generate the timestamp
+      const myDate = new Date(textAreaRef.current.value);
+      const dateString = textAreaRef.current.value;
+      inputStringBackupRef.current.value = dateString;
+      textAreaRef.current.value = myDate.valueOf();
+      timeStampBackupRef.current.value = textAreaRef.current.value;
     }
   }
 
@@ -72,6 +101,7 @@ function MetaFieldValueToAdd(props) {
               name={`date_string[${dataIndex}]`}
               value="date_string"
               ref={toggleDateRef}
+              onChange={toggleDate}
             />
             <p>Toggle date string/timestamp</p>
           </label>
@@ -89,12 +119,14 @@ function MetaFieldValueToAdd(props) {
           type="hidden"
           name="input-timestamp-backup"
           value=""
+          ref={timeStampBackupRef}
         />
         <input
           className="js-metaFieldInputStringBackup"
           type="hidden"
           name="input-string-backup"
           value=""
+          ref={inputStringBackupRef}
         />
       </div>
   );
