@@ -10,6 +10,7 @@ const userMetaSection = document.querySelector('.js-userFieldsSection');
 const postMetaSection = document.querySelector('.js-postFieldsSection');
 
 export function refreshOptionArrows() {
+  return;
   const optionRows = Array.from(document.querySelectorAll('.js-optionFieldDataRow'));
 
   function positionRow(optionRow, index) {

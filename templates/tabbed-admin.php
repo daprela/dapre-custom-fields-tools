@@ -18,9 +18,9 @@
 	<form method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<?php wp_nonce_field( 'dapre_cft_options', 'dapre_cft_options_verify' ); ?>
 		
-		<div class ="postbox">
+		<div class="postbox">
 			<h3 class="hndle" style="padding-left: 5px"><?php esc_html_e("Reset page","dapre-cft") ?></h3>
-			<div class ="inside">
+			<div class="inside">
 				<p><?php esc_html_e("If the page gets stuck and doesn't load anymore reset it here","dapre-cft") ?></p>
 				<input class="button button-primary" type="submit" name="reset_fields" value="Reset">
 			</div>
@@ -29,16 +29,16 @@
 	
 	<form class="js-optionsForm c-optionsForm" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<div class="c-options">
-			<div class ="postbox">
+			<div class="postbox">
 				<h3 class="c-metaField__title hndle"><?php esc_html_e("Options","dapre-cft") ?></h3>
-				<div class ="inside">
-					<div class="js-optionsMetaSection o-meta">
+				<div class="inside">
+					<div id="optionsMetaSection" class="js-optionsMetaSection o-meta">
 				<?php
 
 				/**
 				 * Calls the box options meta
 				 */
-				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-options-meta.php');
+//				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-options-meta.php');
 
 				?>
 					</div>
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 
-			<div class ="postbox">
+			<div class="postbox">
 				<?php
 
 				/**
@@ -57,7 +57,7 @@
 				?>
 			</div>
 
-			<div class ="postbox">
+			<div class="postbox">
 				<?php
 
 				/**
@@ -72,9 +72,9 @@
 	
 	<form class="js-userFieldsForm c-metaFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<div class="c-metaFields">
-			<div class ="postbox">
+			<div class="postbox">
 				<h3 class="c-metaField__title hndle"><?php esc_html_e("User Fields","dapre-cft") ?></h3>
-				<div class ="inside">
+				<div class="inside">
 					<div class="js-userFieldsSection o-meta">
 				<?php
 
@@ -82,10 +82,10 @@
 
 				?>
 					</div>
-				<input class="js-submitUserFields c-metaSubmitButton button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
+					<input class="js-submitUserFields c-metaSubmitButton button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
 				</div>
 			</div>
-			<div class ="postbox">
+			<div class="postbox">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-user-fields-rename.php');
@@ -93,7 +93,7 @@
 				?>
 			</div>
 
-			<div class ="postbox">
+			<div class="postbox">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-user-fields-copy.php');
@@ -105,9 +105,9 @@
 	
 	<form class="js-postFieldsForm c-metaFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<div class="c-metaFields">
-			<div class ="postbox">
+			<div class="postbox">
 				<h3 class="c-metaField__title hndle"><?php esc_html_e("Post Fields","dapre-cft") ?></h3>
-				<div class ="inside">
+				<div class="inside">
 					<div class="js-postFieldsSection o-meta">
 				<?php
 
@@ -115,10 +115,10 @@
 
 				?>
 					</div>
-				<input class="js-submitPostFields c-metaSubmitButton button button-primary" type="submit" name="submit_post_fields" value="Read/Write Values">
+					<input class="js-submitPostFields c-metaSubmitButton button button-primary" type="submit" name="submit_post_fields" value="Read/Write Values">
 				</div>
 			</div>
-			<div class ="postbox">
+			<div class="postbox">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-post-fields-rename.php');
@@ -126,7 +126,7 @@
 				?>
 			</div>
 
-			<div class ="postbox">
+			<div class="postbox">
 				<?php
 
 				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-post-fields-copy.php');

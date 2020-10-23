@@ -162,7 +162,7 @@ export const compress = () => src([
 export const watchForChanges = () => {
   watch('src/scss/*.scss', styles);
   watch('src/images/*.{jpg,jpeg,png,svg,gif}', series(images, reload));
-  watch(['src/js/*.js'], series(scriptsDev, reload));
+  watch(['src/js/*.js', 'src/js/components/*.js'], series(scriptsDev, reload));
   // watch('**/*.php', reload);
 };
 

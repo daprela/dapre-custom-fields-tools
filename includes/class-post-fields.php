@@ -118,6 +118,17 @@ class Post_Fields extends Custom_Fields {
 	}
 
 	/**
+	 * Wrapper for the function get_post_id().
+	 *
+	 * @return int The post ID.
+	 * @since 4.0.0
+	 *
+	 */
+	public function get_field_id() {
+		return $this->get_post_id();
+	}
+
+	/**
 	 * Returns the post ID the post meta.
 	 *
 	 * @return int The post ID

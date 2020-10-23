@@ -14,6 +14,13 @@ export const isNormalInteger = function (str) {
   return /^([1-9]\d*)$/.test(str);
 };
 
+/*
+ * Checks if the content of a field is an integer positive or negative
+ * Useful to check timestamps */
+export const isInteger = function (value) {
+  return /^-?\d+$/.test(value);
+};
+
 export const spinnerOn = function () {
   const spinner = document.querySelector('.js-halfCircleSpinner');
   spinner.classList.remove('is-hidden');

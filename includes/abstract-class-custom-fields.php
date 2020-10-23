@@ -87,6 +87,17 @@ abstract class Custom_Fields {
 	 * @since 4.0.0
 	 *
 	 */
+	public function get_field_name() {
+		return $this->get_name();
+	}
+
+	/**
+	 * Returns the name of the field
+	 *
+	 * @return string The field name
+	 * @since 4.0.0
+	 *
+	 */
 	public function get_name() {
 		return $this->field_name;
 	}

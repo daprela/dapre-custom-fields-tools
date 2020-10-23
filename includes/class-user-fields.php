@@ -98,9 +98,20 @@ class User_Fields extends Custom_Fields {
 	}
 
 	/**
+	 * Wrapper for the function get_user_id().
+	 *
+	 * @return int The user ID.
+	 * @since 4.0.0
+	 *
+	 */
+	public function get_field_id() {
+		return $this->get_user_id();
+	}
+
+	/**
 	 * Returns the user ID the user meta.
 	 *
-	 * @return int The user ID
+	 * @return int The user ID.
 	 * @since 4.0.0
 	 *
 	 */

@@ -19,6 +19,7 @@ const changeFieldColor = function (element) {
     content.disabled = true;
     toggleDateCheckbox.disabled = true;
     arrayCheckbox.disabled = true;
+    element.checked = true;
   }
 
   if (element.value === 'write') {
@@ -28,6 +29,7 @@ const changeFieldColor = function (element) {
     content.disabled = false;
     toggleDateCheckbox.disabled = false;
     arrayCheckbox.disabled = false;
+    element.checked = true;
   }
 
   if (element.value === 'delete') {
@@ -37,6 +39,7 @@ const changeFieldColor = function (element) {
     content.disabled = true;
     toggleDateCheckbox.disabled = true;
     arrayCheckbox.disabled = true;
+    element.checked = true;
   }
 };
 
@@ -163,6 +166,6 @@ const checkEvent = function (e) {
   }
 };
 
-optionSection.addEventListener('change', checkEvent, false);
+// optionSection.addEventListener('change', checkEvent, false);
 userMetaSection.addEventListener('change', checkEvent, false);
 postMetaSection.addEventListener('change', checkEvent, false);
