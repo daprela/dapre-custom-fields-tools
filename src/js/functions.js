@@ -14,11 +14,30 @@ export const isNormalInteger = function (str) {
   return /^([1-9]\d*)$/.test(str);
 };
 
+export const isPositiveInteger = function (str) {
+  return /^([1-9]\d*)$/.test(str);
+};
+
 /*
  * Checks if the content of a field is an integer positive or negative
  * Useful to check timestamps */
 export const isInteger = function (value) {
   return /^-?\d+$/.test(value);
+};
+
+/* Returns true if value is either a valid timestamp or a valid string date */
+export const isDate = function (value) {
+  if (isInteger(value)) {
+    return true;
+  }
+
+  const date = new Date(value);
+
+  if (isNaN(date.valueOf())) {
+    return false;
+  }
+
+  return true;
 };
 
 export const spinnerOn = function () {

@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
 /* eslint-disable import/extensions */
-import { isInteger } from '../functions.js';
-import React, { useEffect, createRef } from 'react';
+import React, { useEffect, createRef, useState } from 'react';
+import { isInteger, isDate } from '../functions.js';
 
 function MetaFieldValueToAdd(props) {
+  const [timeStampBackup, setTimeStampBackup] = useState(0);
+  const [inputStringBackup, setInputStringBackup] = useState('');
   const emptyArrayRef = createRef();
   const toggleDateRef = createRef();
   const textAreaRef = createRef();
-  const timeStampBackupRef = createRef();
-  const inputStringBackupRef = createRef();
 
   const {
     className, valueOptionsClass, valueOptionsLabelClass, textAreaClass, dataIndex, action,
@@ -22,45 +22,40 @@ function MetaFieldValueToAdd(props) {
     }
   }
 
+  /* Manages the toggle date checkbox */
   function toggleDate() {
+    /* Is the current value an integer (that could be interpreted as a timestamp)? */
     if (isInteger(textAreaRef.current.value)) {
-      if (textAreaRef.current.value === timeStampBackupRef.current.value) {
+      if (textAreaRef.current.value === timeStampBackup) {
         // if the value hasn't changed use the date string saved
-        textAreaRef.current.value = inputStringBackupRef.current.value;
+        textAreaRef.current.value = inputStringBackup;
       } else {
         // if the value has changed re-generate the date string
         const timestamp = textAreaRef.current.value;
-        timeStampBackupRef.current.value = timestamp;
-        const dateInt = parseInt(timestamp, 10);
-        const myDate = new Date(dateInt);
+        setTimeStampBackup(timestamp);
+        const myDate = new Date(parseInt(timestamp, 10));
         textAreaRef.current.value = myDate.toUTCString();
-        inputStringBackupRef.current.value = textAreaRef.current.value;
+        setInputStringBackup(textAreaRef.current.value);
       }
-    } else if (textAreaRef.current.value === inputStringBackupRef.current.value) {
+    /* If the current value is backed up it means that we also have its timestamp stored. Use that. */
+    } else if (textAreaRef.current.value === inputStringBackup) {
       // if the date string hasn't changed use the timestamp saved
-      textAreaRef.current.value = timeStampBackupRef.current.value;
+      textAreaRef.current.value = timeStampBackup;
     } else {
       // if the date string has changed re-generate the timestamp
       const myDate = new Date(textAreaRef.current.value);
       const dateString = textAreaRef.current.value;
-      inputStringBackupRef.current.value = dateString;
+      setInputStringBackup(dateString);
       textAreaRef.current.value = myDate.valueOf();
-      timeStampBackupRef.current.value = textAreaRef.current.value;
+      setTimeStampBackup(textAreaRef.current.value);
     }
   }
 
   function textAreaContent() {
-    let date = new Date(textAreaRef.current.value);
-    /* If the string starts with a number, parseInt extracts the number which is not what we want.
-    * We need to check if the string is an integer first. */
-    if (isInteger(textAreaRef.current.value)) {
-      date = new Date(parseInt(textAreaRef.current.value, 10));
-    }
-
-    if (isNaN(date.valueOf())) {
-      toggleDateRef.current.disabled = true;
-    } else {
+    if (isDate(textAreaRef.current.value)) {
       toggleDateRef.current.disabled = false;
+    } else {
+      toggleDateRef.current.disabled = true;
     }
   }
 
@@ -114,20 +109,6 @@ function MetaFieldValueToAdd(props) {
           onChange={textAreaContent}
         >
         </textarea>
-        <input
-          className="js-metaFieldInputTimestampBackup"
-          type="hidden"
-          name="input-timestamp-backup"
-          value=""
-          ref={timeStampBackupRef}
-        />
-        <input
-          className="js-metaFieldInputStringBackup"
-          type="hidden"
-          name="input-string-backup"
-          value=""
-          ref={inputStringBackupRef}
-        />
       </div>
   );
 }
