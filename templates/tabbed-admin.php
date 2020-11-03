@@ -31,8 +31,8 @@
 		<div class="c-options">
 			<div class="postbox">
 				<h3 class="c-metaField__title hndle"><?php esc_html_e("Options","dapre-cft") ?></h3>
-				<div class="inside">
-					<div id="optionsMetaSection" class="js-optionsMetaSection o-meta">
+				<div id="optionsMetaSection" class="inside">
+
 				<?php
 
 				/**
@@ -41,8 +41,7 @@
 //				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-options-meta.php');
 
 				?>
-					</div>
-					<input class="js-submitOptions c-metaSubmitButton button button-primary" type="submit" name="submit_options" value="Read/Write Values">
+
 				</div>
 			</div>
 

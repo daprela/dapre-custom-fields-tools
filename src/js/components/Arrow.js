@@ -12,7 +12,7 @@ function Arrow(props) {
     const optionRow = arrowRef.current.parentElement;
     arrowRef.current.style.top = `${optionRow.offsetTop + optionRow.offsetHeight - 10}px`;
     // arrowRef.current.style.top = `${offsetTop + offsetHeight - 10}px`;
-  }, []);
+  }, [arrowRef]);
 
   return (
     <div

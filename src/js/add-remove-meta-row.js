@@ -532,6 +532,6 @@ function checkPostEvent(e) {
 }
 
 window.addEventListener('load', addArrows, false);
-optionSection.addEventListener('click', checkOptionEvent, false);
-userMetaSection.addEventListener('click', checkUserEvent, false);
-postMetaSection.addEventListener('click', checkPostEvent, false);
+// optionSection.addEventListener('click', checkOptionEvent, false);
+// userMetaSection.addEventListener('click', checkUserEvent, false);
+// postMetaSection.addEventListener('click', checkPostEvent, false);

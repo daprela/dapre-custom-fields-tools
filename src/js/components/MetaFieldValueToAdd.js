@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
-/* eslint-disable import/extensions */
-import React, { useEffect, createRef, useState } from 'react';
+/* eslint-disable import/extensions,jsx-a11y/label-has-associated-control */
+import React, {
+  useEffect, createRef, useState, useCallback,
+} from 'react';
 import { isInteger, isDate } from '../functions.js';
 
 function MetaFieldValueToAdd(props) {
@@ -11,15 +13,13 @@ function MetaFieldValueToAdd(props) {
   const textAreaRef = createRef();
 
   const {
-    className, valueOptionsClass, valueOptionsLabelClass, textAreaClass, dataIndex, action,
+    className, valueOptionsClass, valueOptionsLabelClass, textAreaClass, dataIndex,
+    action, emptyArray: emptyArrayChange, valueToAdd: updateValueToAdd,
   } = props;
 
   function emptyArrayCheckbox() {
-    if (emptyArrayRef.current.checked === true) {
-      textAreaRef.current.disabled = true;
-    } else {
-      textAreaRef.current.disabled = false;
-    }
+    textAreaRef.current.disabled = emptyArrayRef.current.checked === true;
+    emptyArrayChange(emptyArrayRef.current.checked);
   }
 
   /* Manages the toggle date checkbox */
@@ -49,15 +49,15 @@ function MetaFieldValueToAdd(props) {
       textAreaRef.current.value = myDate.valueOf();
       setTimeStampBackup(textAreaRef.current.value);
     }
+    // Sends upstream the updated value
+    updateValueToAdd(textAreaRef.current.value);
   }
 
-  function textAreaContent() {
-    if (isDate(textAreaRef.current.value)) {
-      toggleDateRef.current.disabled = false;
-    } else {
-      toggleDateRef.current.disabled = true;
-    }
-  }
+  const textAreaContent = useCallback(() => {
+    // Sends upstream the updated value
+    updateValueToAdd(textAreaRef.current.value);
+    toggleDateRef.current.disabled = !isDate(textAreaRef.current.value);
+  }, [textAreaRef, toggleDateRef, updateValueToAdd]);
 
   useEffect(() => {
     if (action === 'read' || action === 'delete') {
@@ -69,47 +69,46 @@ function MetaFieldValueToAdd(props) {
       textAreaRef.current.disabled = false;
       textAreaContent();
     }
-  }, [action]);
+  }, [action, emptyArrayRef, textAreaContent, textAreaRef, toggleDateRef]);
 
   return (
-      <div className={className}>
-        <div className={valueOptionsClass}>
-          <label className={valueOptionsLabelClass}>
-            <input
-              className="js-fieldValueToAdd js-emptyArray"
-              type="checkbox"
-              name={`empty_array[${dataIndex}]`}
-              value="empty_array"
-              ref={emptyArrayRef}
-              onChange={emptyArrayCheckbox}
-            />
-            <p
-              title="Replace the field content with an empty array"
-            >
-              Add empty array
-            </p>
-          </label>
-          <label className={valueOptionsLabelClass}>
-            <input
-              className="js-fieldValueToAdd js-dateString"
-              type="checkbox"
-              name={`date_string[${dataIndex}]`}
-              value="date_string"
-              ref={toggleDateRef}
-              onChange={toggleDate}
-            />
-            <p>Toggle date string/timestamp</p>
-          </label>
-        </div>
-        <textarea
-          className={textAreaClass}
-          name={`field_value[${dataIndex}]`}
-          rows="2"
-          ref={textAreaRef}
-          onChange={textAreaContent}
-        >
-        </textarea>
+    <div className={className}>
+      <div className={valueOptionsClass}>
+        <label className={valueOptionsLabelClass}>
+          <input
+            className="js-fieldValueToAdd js-emptyArray"
+            type="checkbox"
+            name={`empty_array[${dataIndex}]`}
+            value="empty_array"
+            ref={emptyArrayRef}
+            onChange={emptyArrayCheckbox}
+          />
+          <p
+            title="Replace the field content with an empty array"
+          >
+            Add empty array
+          </p>
+        </label>
+        <label className={valueOptionsLabelClass}>
+          <input
+            className="js-fieldValueToAdd js-dateString"
+            type="checkbox"
+            name={`date_string[${dataIndex}]`}
+            value="date_string"
+            ref={toggleDateRef}
+            onChange={toggleDate}
+          />
+          <p>Toggle date string/timestamp</p>
+        </label>
       </div>
+      <textarea
+        className={textAreaClass}
+        name={`field_value[${dataIndex}]`}
+        rows="2"
+        ref={textAreaRef}
+        onChange={textAreaContent}
+      />
+    </div>
   );
 }
 

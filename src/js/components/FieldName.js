@@ -1,25 +1,47 @@
-import React from 'react';
+import React, {
+  useEffect, createRef, useState, useCallback,
+} from 'react';
 /* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
-/* eslint-disable import/extensions */
-import MetaFieldError from './MetaFieldError.js';
-import MetaFieldNameInput from './MetaFieldNameInput.js';
 
-function FieldName(props) {
-  const {
-    className, inputValue, inputName, inputType, inputClass, errorClassName, errorMessageClassName, errorMessage,
-  } = props;
+function FieldName({
+  className, inputValue, fieldNameValue: updateFieldName, inputName, inputType, inputClass, errorClassName, errorMessageClassName, errorMessage, action,
+}) {
+  const [fieldNameValue, setFieldNameValue] = useState('');
+  const actionRef = createRef();
+
+  const updateFieldNameValue = useCallback((e) => {
+    setFieldNameValue(e.target.value);
+    updateFieldName(e.target.value);
+  }, [updateFieldName]);
+
+  useEffect(() => {
+    if (action === 'write' || action === 'delete') {
+      actionRef.current.disabled = true;
+    } else {
+      actionRef.current.disabled = false;
+    }
+  }, [action, actionRef]);
+
+  useEffect(() => {
+    setFieldNameValue(inputValue);
+  }, [inputValue]);
+
   return (
     <div className={className}>
-      <MetaFieldError
-        className={errorClassName}
-        messageClassName={errorMessageClassName}
-        errorMessage={errorMessage}
-      />
-      <MetaFieldNameInput
+      <div className={errorClassName}>
+        <p
+          className={errorMessageClassName}
+        >
+          {errorMessage}
+        </p>
+      </div>
+      <input
         className={inputClass}
         type={inputType}
         name={inputName}
-        value={inputValue}
+        value={fieldNameValue}
+        ref={actionRef}
+        onChange={updateFieldNameValue}
       />
     </div>
   );

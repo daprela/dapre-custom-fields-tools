@@ -1,4 +1,7 @@
-import React, { createRef, useEffect, useState } from 'react'
+import React, {
+  createRef,
+  useCallback, useEffect, useState,
+} from 'react';
 
 /* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
 /* eslint-disable import/extensions */
@@ -13,24 +16,60 @@ import { isInteger } from '../functions';
 
 function OptionsMetaRow(props) {
   const {
-    className, dataIndex, fieldName, errorClass, errorMessage, previousValue, disableWrite,
-    disableDelete, curValueDateToggle, arrowTitle, arrowContent, currentValue,
+    className, rowIndex, dataIndex, fieldName, errorClass, errorMessage, previousValue, disableWrite,
+    disableDelete, arrowTitle, arrowContent, currentValue, rowChange: updateForm,
   } = props;
 
   const [action, setAction] = useState('read');
+  const [addEmptyArray, setAddEmptyArray] = useState(false);
+  const [valueToWrite, setValueToWrite] = useState('');
+  const [fieldNameValue, setFieldNameValue] = useState('');
   const [currentValuePrinted, setCurrentValuePrinted] = useState('');
   const [classColor, setClassColor] = useState('-color-white');
   const [currentValueOptionsTimestampBackup, setCurrentValueOptionsTimestampBackup] = useState(0);
   const [currentValueOptionsDateBackup, setCurrentValueOptionsDateBackup] = useState('');
+  const optionNameRef = createRef();
 
-  function actionChange(e) {
+  /* Updates the form row to send upstream. */
+  useEffect(() => {
+    const row = {
+      rowIndex,
+      optionName: fieldNameValue,
+      valueToWrite,
+      index: dataIndex,
+      emptyArray: addEmptyArray,
+      action,
+    };
+    updateForm(row);
+  }, [action, addEmptyArray, dataIndex, fieldNameValue, rowIndex, updateForm, valueToWrite]);
+
+  /* Updates the field name value when the user changes it */
+  const updateFieldNameValue = useCallback((value) => {
+    setFieldNameValue(value);
+  }, []);
+
+  /* Initializes the field name value on first load */
+  useEffect(() => {
+    setFieldNameValue(fieldName);
+  }, [fieldName]);
+
+  /* Updates the field value to write when the user changes it */
+  const updateValueToWrite = useCallback((textAreaValue) => {
+    setValueToWrite(textAreaValue);
+  }, []);
+
+  const updateEmptyArrayChange = useCallback((checkboxState) => {
+    setAddEmptyArray(checkboxState);
+  }, []);
+
+  const updateAction = useCallback((e) => {
     setAction(e.target.value);
-  }
+  }, []);
 
   /* Toggles between date string and timestamp when the current value is a valid date.
   * It's important to notice that this function can be called only when the current value is a valid date,
   * therefore we don't need to check. */
-  function toggleDateCurrentValue() {
+  const toggleDateCurrentValue = useCallback(() => {
     /* Is the current value an integer (that could be interpreted as a timestamp)? */
     if (isInteger(currentValuePrinted)) {
       if (parseInt(currentValuePrinted, 10) === currentValueOptionsTimestampBackup) {
@@ -55,7 +94,7 @@ function OptionsMetaRow(props) {
       setCurrentValuePrinted(myDate.valueOf());
       setCurrentValueOptionsTimestampBackup(myDate.valueOf());
     }
-  }
+  }, [currentValueOptionsDateBackup, currentValueOptionsTimestampBackup, currentValuePrinted]);
 
   useEffect(() => {
     if (action === 'read') {
@@ -90,13 +129,16 @@ function OptionsMetaRow(props) {
         inputClass="js-optionFieldName c-optionField__fieldInput"
         inputType="text"
         inputName="field_name"
-        inputValue={fieldName}
+        inputValue={fieldNameValue}
+        fieldNameValue={updateFieldNameValue}
         errorMessage={errorMessage}
+        action={action}
+        ref={optionNameRef}
       />
       <MetaFieldActions
         className="c-optionField__fieldActions"
         dataIndex={dataIndex}
-        onChange={actionChange}
+        onChange={updateAction}
       />
       <MetaFieldValueToAdd
         className="c-optionField__fieldValueToAdd"
@@ -107,6 +149,8 @@ function OptionsMetaRow(props) {
         disableDelete={disableDelete}
         dataIndex={dataIndex}
         action={action}
+        emptyArray={updateEmptyArrayChange}
+        valueToAdd={updateValueToWrite}
       />
       <MetaFieldCurrentValue
         className="js-fieldCurrentValue c-optionField__fieldCurValue"
@@ -114,11 +158,8 @@ function OptionsMetaRow(props) {
       />
       <MetaFieldCurrentValueOptions
         className="c-optionField__fieldCurValueOptions"
-        curValueDateToggle={curValueDateToggle}
         currentValue={currentValue}
         dataIndex={dataIndex}
-        currentValueOptionsTimestampBackup={currentValueOptionsTimestampBackup}
-        currentValueOptionsDateBackup={currentValueOptionsDateBackup}
         onChange={toggleDateCurrentValue}
       />
       <MetaFieldPreviousValue
