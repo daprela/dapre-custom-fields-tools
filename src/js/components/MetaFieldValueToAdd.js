@@ -14,11 +14,20 @@ function MetaFieldValueToAdd(props) {
 
   const {
     className, valueOptionsClass, valueOptionsLabelClass, textAreaClass, dataIndex,
-    action, emptyArray: emptyArrayChange, valueToAdd: updateValueToAdd,
+    action, emptyArray: emptyArrayChange, valueToAdd: updateValueToAdd, resetPage,
   } = props;
 
+  useEffect(() => {
+    if (resetPage) {
+      textAreaRef.current.value = '';
+      emptyArrayRef.current.checked = false;
+      toggleDateRef.current.checked = false;
+      emptyArrayChange(false);
+      updateValueToAdd('');
+    }
+  }, [emptyArrayChange, emptyArrayRef, resetPage, textAreaRef, toggleDateRef, updateValueToAdd]);
+
   function emptyArrayCheckbox() {
-    textAreaRef.current.disabled = emptyArrayRef.current.checked === true;
     emptyArrayChange(emptyArrayRef.current.checked);
   }
 
@@ -70,6 +79,12 @@ function MetaFieldValueToAdd(props) {
       textAreaContent();
     }
   }, [action, emptyArrayRef, textAreaContent, textAreaRef, toggleDateRef]);
+
+  /* TODO for some reasons, if I move this line under the function emptyArrayCheckbox (where it logically belongs)
+      it doesn't work anymore. WHY? */
+  useEffect(() => {
+    textAreaRef.current.disabled = emptyArrayRef.current.checked;
+  }, [emptyArrayRef, textAreaRef]);
 
   return (
     <div className={className}>

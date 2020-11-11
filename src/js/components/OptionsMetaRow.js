@@ -17,7 +17,7 @@ import { isInteger } from '../functions';
 function OptionsMetaRow(props) {
   const {
     className, rowIndex, dataIndex, fieldName, errorClass, errorMessage, previousValue, disableWrite,
-    disableDelete, arrowTitle, arrowContent, currentValue, rowChange: updateForm,
+    disableDelete, arrowTitle, arrowContent, currentValue, rowChange: updateForm, resetPage, restoreEvent, arrowClick: arrowClickProp,
   } = props;
 
   const [action, setAction] = useState('read');
@@ -112,6 +112,10 @@ function OptionsMetaRow(props) {
     setCurrentValuePrinted(currentValue);
   }, [currentValue]);
 
+  function handleArrowClick(index, content) {
+    arrowClickProp(index, content);
+  }
+
   return (
     <div
       className={`${className} ${errorClass} ${classColor}`}
@@ -121,6 +125,7 @@ function OptionsMetaRow(props) {
         className="js-addRemoveOptionRow c-addRemoveFieldRow c-addRemoveFieldRow__add"
         title={arrowTitle}
         content={arrowContent}
+        arrowClick={handleArrowClick}
       />
       <FieldName
         className="c-optionField__fieldName"
@@ -139,6 +144,8 @@ function OptionsMetaRow(props) {
         className="c-optionField__fieldActions"
         dataIndex={dataIndex}
         onChange={updateAction}
+        resetPage={resetPage}
+        restoreEvent={restoreEvent}
       />
       <MetaFieldValueToAdd
         className="c-optionField__fieldValueToAdd"
@@ -151,6 +158,7 @@ function OptionsMetaRow(props) {
         action={action}
         emptyArray={updateEmptyArrayChange}
         valueToAdd={updateValueToWrite}
+        resetPage={resetPage}
       />
       <MetaFieldCurrentValue
         className="js-fieldCurrentValue c-optionField__fieldCurValue"
