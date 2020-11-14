@@ -28,7 +28,6 @@ function OptionsMetaRow(props) {
   const [classColor, setClassColor] = useState('-color-white');
   const [currentValueOptionsTimestampBackup, setCurrentValueOptionsTimestampBackup] = useState(0);
   const [currentValueOptionsDateBackup, setCurrentValueOptionsDateBackup] = useState('');
-  const optionNameRef = createRef();
 
   /* Updates the form row to send upstream. */
   useEffect(() => {
@@ -138,7 +137,6 @@ function OptionsMetaRow(props) {
         fieldNameValue={updateFieldNameValue}
         errorMessage={errorMessage}
         action={action}
-        ref={optionNameRef}
       />
       <MetaFieldActions
         className="c-optionField__fieldActions"

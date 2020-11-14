@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
 /* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
 /* eslint-disable import/extensions,react/jsx-no-undef */
+import React, {
+  useState, useEffect, useCallback, createRef,
+} from 'react';
 import OptionsMetaHeaders from './components/OptionsMetaHeaders.js';
 import OptionsMetaRow from './components/OptionsMetaRow.js';
-// import ButtonSubmitMeta from './components/ButtonSubmitMeta.js';
-import { nameSpace } from './functions.js';
+import { nameSpace, spinnerOff, spinnerOn } from './functions.js';
 
 // eslint-disable-next-line no-undef
 const { apiFetch } = wp;
@@ -16,6 +17,7 @@ function TabOptionsMeta() {
   const [rows, setRows] = useState([]);
   const [form, setForm] = useState([]);
   const [resetPage, setResetPage] = useState(false);
+  const submitOptionsButtonRef = createRef();
   let read = [];
   let write = [];
   let del = [];
@@ -23,6 +25,7 @@ function TabOptionsMeta() {
   let finishedWrite = false;
   let finishedDel = false;
 
+  /* Refresh the content of the meta rows after all read/write operations are finished */
   function refreshPage() {
     if (!finishedRead || !finishedWrite || !finishedDel) return;
     const newOptions = read.concat(write).concat(del);
@@ -32,6 +35,7 @@ function TabOptionsMeta() {
     });
     setRows(sortedOptions);
     setResetPage(true);
+    spinnerOff();
   }
 
   /* Makes the API request for the 'read' action */
@@ -67,7 +71,6 @@ function TabOptionsMeta() {
 
     const writeJSON = JSON.stringify(dataToWrite);
     finishedWrite = false;
-    console.log(dataToWrite);
     /* Launches the Rest request to write fields */
     apiFetch({
       path,
@@ -114,6 +117,7 @@ function TabOptionsMeta() {
       });
   }
 
+  /* Called when the submit button is clicked. Launches the read, write and delete operations */
   function submitOptions(options) {
     const readLocal = [];
     const writeLocal = [];
@@ -145,6 +149,8 @@ function TabOptionsMeta() {
         delLocal.push(newDel);
       }
     });
+
+    spinnerOn();
 
     finishedRead = false;
     readData(readLocal);
@@ -209,18 +215,37 @@ function TabOptionsMeta() {
     setForm(formTemp);
   }, [form]);
 
+  /* Regenerates the form array when meta rows are added or removed */
+  function regenerateForm(newRows) {
+    const newForm = new Array(newRows.length);
+    newRows.forEach((row, index) => {
+      newForm[index] = {
+        index: row.index,
+        optionName: row.optionName,
+        emptyArray: row.emptyArray,
+        action: row.action,
+        valueToWrite: row.valueToWrite,
+      };
+    });
+    setForm(newForm);
+  }
+
   /* After a REST request is made to the backend, the state variable 'resetPage' restores */
   function restoreEvent() {
     setResetPage(false);
   }
 
-  const addRemoveMetaRows = useCallback((index, content) => {
+  function addRemoveMetaRows(index, content) {
+    const updateBase = `${restBase}/update`;
+    const newPath = `${nameSpace}/${updateBase}`;
+
     if (content === '+') {
       const lastElement = rows[rows.length - 1];
+      const newIndex = parseInt(lastElement.index, 10) + 1;
       const newRow = {
         fieldID: false,
         fieldName: '',
-        index: parseInt(lastElement.index, 10) + 1,
+        index: newIndex,
         currentValueDateToggle: 'is-hidden',
         currentValue: JSON.stringify(''),
         disableDelete: '',
@@ -229,13 +254,61 @@ function TabOptionsMeta() {
         previousValue: JSON.stringify(''),
         rowErrorClass: '',
       };
-      setRows([...rows, newRow]);
+      const addJSON = JSON.stringify(newIndex);
+      spinnerOn();
+      /* TODO submitOptionsButtonRef is empty: WHY??? */
+      // submitOptionsButtonRef.current.disabled = true;
+
+      /* Launches the Rest request to write fields */
+      apiFetch({
+        path: newPath,
+        method: 'POST',
+        body: addJSON,
+        parse: false,
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((fields) => {
+          // submitOptionsButtonRef.current.disabled = false;
+          // submitOptionsButtonRef.current.blur();
+          spinnerOff();
+          if (!fields.error) {
+            setRows([...rows, newRow]);
+            regenerateForm([...rows, newRow]);
+          }
+        });
     } else {
       const rowIndex = rows.findIndex((row) => row.index === parseInt(index, 10));
       rows.splice(rowIndex, 1);
-      setRows([...rows]);
+
+      const removeJSON = JSON.stringify(rows);
+      spinnerOn();
+      // submitUserButton.disabled = true;
+
+      /* Launches the Rest request to write fields */
+      apiFetch({
+        path: newPath,
+        method: 'DELETE',
+        body: removeJSON,
+        parse: false,
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((fields) => {
+        // submitUserButton.disabled = false;
+        // submitUserButton.blur();
+          spinnerOff();
+          if (!fields.error) {
+            setRows([...rows]);
+            regenerateForm(rows);
+          }
+        });
     }
-  }, [rows]);
+  }
 
   return (
     <>
@@ -275,6 +348,7 @@ function TabOptionsMeta() {
         type="submit"
         name="submit_options"
         value="Read/Write Values"
+        ref={submitOptionsButtonRef}
         onClick={requestSubmit}
       />
     </>
