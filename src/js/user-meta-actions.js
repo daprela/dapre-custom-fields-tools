@@ -476,6 +476,6 @@ function getCopyForm(e) {
     });
 }
 
-submitUserFieldsButton.addEventListener('click', getMetaForm, false);
+// submitUserFieldsButton.addEventListener('click', getMetaForm, false);
 renameUserFieldsButton.addEventListener('click', getRenameForm, false);
 copyUserFieldsButton.addEventListener('click', getCopyForm, true);

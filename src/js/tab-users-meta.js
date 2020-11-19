@@ -3,21 +3,21 @@
 import React, {
   useState, useEffect, useCallback, createRef,
 } from 'react';
-import OptionsMetaHeaders from './components/OptionsMetaHeaders.js';
-import OptionsMetaRow from './components/OptionsMetaRow.js';
+import UsersMetaHeaders from './components/UsersMetaHeaders.js';
+import UsersMetaRow from './components/UsersMetaRow.js';
 import { nameSpace, spinnerOff, spinnerOn } from './functions.js';
 
 // eslint-disable-next-line no-undef
 const { apiFetch } = wp;
 
-const restBase = 'options';
+const restBase = 'user_fields';
 const path = `${nameSpace}/${restBase}`;
 
-function TabOptionsMeta() {
+function TabUsersMeta() {
   const [rows, setRows] = useState([]);
   const [form, setForm] = useState([]);
   const [resetPage, setResetPage] = useState(false);
-  const submitOptionsButtonRef = createRef();
+  const submitUsersButtonRef = createRef();
   let read = [];
   let write = [];
   let del = [];
@@ -28,12 +28,12 @@ function TabOptionsMeta() {
   /* Refresh the content of the meta rows after all read/write operations are finished */
   function refreshPage() {
     if (!finishedRead || !finishedWrite || !finishedDel) return;
-    const newOptions = read.concat(write).concat(del);
-    const sortedOptions = newOptions.sort((a, b) => {
+    const newUsersMeta = read.concat(write).concat(del);
+    const sortedUsers = newUsersMeta.sort((a, b) => {
       if (a.index < b.index) return -1;
       return 1;
     });
-    setRows(sortedOptions);
+    setRows(sortedUsers);
     setResetPage(true);
     spinnerOff();
   }
@@ -118,7 +118,7 @@ function TabOptionsMeta() {
   }
 
   /* Called when the submit button is clicked. Launches the read, write and delete operations */
-  function submitOptions(options) {
+  function submitUsersMeta(users) {
     const readLocal = [];
     const writeLocal = [];
     const delLocal = [];
@@ -126,25 +126,28 @@ function TabOptionsMeta() {
     let newWrite = {};
     let newDel = {};
 
-    options.forEach((option) => {
-      if (option.action === 'read') {
+    users.forEach((user) => {
+      if (user.action === 'read') {
         newRead = {
-          index: option.index,
-          optionName: option.optionName,
+          index: user.index,
+          userID: user.userID,
+          fieldName: user.fieldName,
         };
         readLocal.push(newRead);
-      } else if (option.action === 'write') {
+      } else if (user.action === 'write') {
         newWrite = {
-          index: option.index,
-          optionName: option.optionName,
-          emptyArray: option.emptyArray,
-          valueToWrite: option.valueToWrite,
+          index: user.index,
+          userID: user.userID,
+          fieldName: user.fieldName,
+          emptyArray: user.emptyArray,
+          valueToWrite: user.valueToWrite,
         };
         writeLocal.push(newWrite);
-      } else if (option.action === 'delete') {
+      } else if (user.action === 'delete') {
         newDel = {
-          index: option.index,
-          optionName: option.optionName,
+          index: user.index,
+          userID: user.userID,
+          fieldName: user.fieldName,
         };
         delLocal.push(newDel);
       }
@@ -164,7 +167,7 @@ function TabOptionsMeta() {
 
   function requestSubmit(e) {
     e.preventDefault();
-    submitOptions(form);
+    submitUsersMeta(form);
   }
 
   /* Initializes the form at the first page load.
@@ -174,7 +177,7 @@ function TabOptionsMeta() {
 
     /* Launches the Rest request to read fields */
     apiFetch({
-      path: `${path}?all_options=${readJSON}`,
+      path: `${path}?all_fields=${readJSON}`,
       method: 'GET',
       parse: false,
     })
@@ -186,17 +189,23 @@ function TabOptionsMeta() {
         metaFields.map((row, index) => {
           formTemp[index] = {
             index: row.index,
-            optionName: row.fieldName,
+            userID: row.fieldID,
+            fieldName: row.fieldName,
             emptyArray: '',
             action: 'read',
             valueToWrite: '',
           };
+
+          if (!row.fieldID || !row.fieldName) {
+            row.disableWrite = true;
+            row.disableDelete = true;
+          }
         });
         setForm(formTemp);
         // After we get the previous options from the DB we must refresh them to get their current value.
         // The state variable 'form' is available only at the next refresh so in order to avoid passing an empty parameter
         // now we have to pass the current variable
-        submitOptions(formTemp);
+        submitUsersMeta(formTemp);
       });
   }, []);
 
@@ -205,7 +214,8 @@ function TabOptionsMeta() {
   const updateForm = useCallback((formRow) => {
     const temp = {
       index: formRow.index,
-      optionName: formRow.optionName,
+      userID: formRow.fieldID,
+      fieldName: formRow.fieldName,
       emptyArray: formRow.emptyArray,
       action: formRow.action,
       valueToWrite: formRow.valueToWrite,
@@ -221,7 +231,8 @@ function TabOptionsMeta() {
     newRows.forEach((row, index) => {
       newForm[index] = {
         index: row.index,
-        optionName: row.optionName,
+        userID: row.fieldID,
+        fieldName: row.fieldName,
         emptyArray: row.emptyArray,
         action: row.action,
         valueToWrite: row.valueToWrite,
@@ -243,7 +254,7 @@ function TabOptionsMeta() {
       const lastElement = rows[rows.length - 1];
       const newIndex = parseInt(lastElement.index, 10) + 1;
       const newRow = {
-        fieldID: false,
+        fieldID: 0,
         fieldName: '',
         index: newIndex,
         currentValueDateToggle: 'is-hidden',
@@ -280,6 +291,7 @@ function TabOptionsMeta() {
           }
         });
     } else {
+      // Remove the selected row from the array
       const rowIndex = rows.findIndex((row) => row.index === parseInt(index, 10));
       rows.splice(rowIndex, 1);
 
@@ -312,8 +324,8 @@ function TabOptionsMeta() {
 
   return (
     <>
-      <div className="js-optionsMetaSection o-meta">
-        <OptionsMetaHeaders className="c-optionsMetaHeaders" />
+      <div className="js-userFieldsSection o-meta">
+        <UsersMetaHeaders className="c-metaFieldsHeaders" />
         {rows.map((row, index) => {
           let arrowTitle = 'Add another row';
           let arrowContent = '+';
@@ -322,10 +334,11 @@ function TabOptionsMeta() {
             arrowContent = '-';
           }
           return (
-            <OptionsMetaRow
-              className="js-optionFieldDataRow c-optionField"
+            <UsersMetaRow
+              className="js-userFieldsDataRow c-metaField"
               rowIndex={index}
               dataIndex={row.index}
+              fieldID={row.fieldID}
               fieldName={row.fieldName}
               errorClass={row.rowErrorClass}
               errorMessage={row.error}
@@ -344,15 +357,15 @@ function TabOptionsMeta() {
         })}
       </div>
       <input
-        className="js-submitOptions c-metaSubmitButton button button-primary"
+        className="js-submitUserFields c-metaSubmitButton button button-primary"
         type="submit"
-        name="submit_options"
+        name="submit_user_fields"
         value="Read/Write Values"
-        ref={submitOptionsButtonRef}
+        ref={submitUsersButtonRef}
         onClick={requestSubmit}
       />
     </>
   );
 }
 
-export default TabOptionsMeta;
+export default TabUsersMeta;

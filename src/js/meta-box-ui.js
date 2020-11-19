@@ -167,5 +167,5 @@ const checkEvent = function (e) {
 };
 
 // optionSection.addEventListener('change', checkEvent, false);
-userMetaSection.addEventListener('change', checkEvent, false);
+// userMetaSection.addEventListener('change', checkEvent, false);
 postMetaSection.addEventListener('change', checkEvent, false);

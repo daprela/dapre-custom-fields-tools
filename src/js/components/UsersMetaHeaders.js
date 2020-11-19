@@ -3,10 +3,13 @@ import React from 'react';
 
 const { __ } = wp.i18n;
 
-const OptionsMetaHeaders = ({ className }) => (
+const UsersMetaHeaders = ({ className }) => (
   <div className={className}>
     <div>
-      Option Name
+      User ID
+    </div>
+    <div>
+      Field Name
     </div>
     <div>
       {__('Actions', 'dapre-cft')}
@@ -26,4 +29,4 @@ const OptionsMetaHeaders = ({ className }) => (
   </div>
 );
 
-export default OptionsMetaHeaders;
+export default UsersMetaHeaders;

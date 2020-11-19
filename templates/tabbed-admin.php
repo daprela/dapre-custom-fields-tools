@@ -73,15 +73,12 @@
 		<div class="c-metaFields">
 			<div class="postbox">
 				<h3 class="c-metaField__title hndle"><?php esc_html_e("User Fields","dapre-cft") ?></h3>
-				<div class="inside">
-					<div class="js-userFieldsSection o-meta">
+				<div id="usersMetaSection" class="inside">
 				<?php
 
-				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-user-fields-meta.php');
+//				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-user-fields-meta.php');
 
 				?>
-					</div>
-					<input class="js-submitUserFields c-metaSubmitButton button button-primary" type="submit" name="submit_user_fields" value="Read/Write Values">
 				</div>
 			</div>
 			<div class="postbox">

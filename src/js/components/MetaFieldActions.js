@@ -3,13 +3,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 function MetaFieldActions({
-  className, dataIndex, onChange: onChangeProp, resetPage, restoreEvent,
+  className, dataIndex, onChange: onChangeProp, resetPage, restoreEvent, errorMessage, disableWrite, disableDelete,
 }) {
   const [action, setAction] = useState('read');
   const [readChecked, setReadChecked] = useState(true);
   const [writeChecked, setWriteChecked] = useState(false);
   const [deleteChecked, setDeleteChecked] = useState(false);
   const readRef = useRef();
+  const writeRef = useRef();
+  const delRef = useRef();
 
   function actionSet(e) {
     setAction(e.target.value);
@@ -41,6 +43,28 @@ function MetaFieldActions({
     }
   }, [action]);
 
+  useEffect(() => {
+    if (errorMessage === 'This field does not exist.' || disableDelete) {
+      delRef.current.disabled = true;
+    }
+
+    if (errorMessage === 'This user does not exist.') {
+      writeRef.current.disabled = true;
+      delRef.current.disabled = true;
+    }
+
+    if (disableWrite) {
+      writeRef.current.disabled = true;
+    } else {
+      writeRef.current.disabled = false;
+    }
+    if (disableDelete) {
+      delRef.current.disabled = true;
+    } else {
+      delRef.current.disabled = false;
+    }
+  }, [disableDelete, disableWrite, errorMessage]);
+
   return (
     <div className={className}>
       <label>
@@ -63,6 +87,7 @@ function MetaFieldActions({
           value="write"
           onChange={actionSet}
           checked={writeChecked}
+          ref={writeRef}
         />
         Write
       </label>
@@ -74,6 +99,7 @@ function MetaFieldActions({
           value="delete"
           onChange={actionSet}
           checked={deleteChecked}
+          ref={delRef}
         />
         Delete
       </label>
