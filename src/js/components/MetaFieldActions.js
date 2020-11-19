@@ -44,15 +44,6 @@ function MetaFieldActions({
   }, [action]);
 
   useEffect(() => {
-    if (errorMessage === 'This field does not exist.' || disableDelete) {
-      delRef.current.disabled = true;
-    }
-
-    if (errorMessage === 'This user does not exist.') {
-      writeRef.current.disabled = true;
-      delRef.current.disabled = true;
-    }
-
     if (disableWrite) {
       writeRef.current.disabled = true;
     } else {
@@ -62,6 +53,15 @@ function MetaFieldActions({
       delRef.current.disabled = true;
     } else {
       delRef.current.disabled = false;
+    }
+
+    if (errorMessage === 'This field does not exist.') {
+      delRef.current.disabled = true;
+    }
+
+    if (errorMessage === 'This user does not exist.' || errorMessage === 'This post does not exist.') {
+      writeRef.current.disabled = true;
+      delRef.current.disabled = true;
     }
   }, [disableDelete, disableWrite, errorMessage]);
 

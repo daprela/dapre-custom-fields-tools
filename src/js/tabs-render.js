@@ -4,6 +4,8 @@ import { render } from 'react-dom';
 /* eslint-disable import/extensions */
 import TabOptionsMeta from './tab-options-meta.js';
 import TabUsersMeta from './tab-users-meta.js';
+import TabPostsMeta from './tab-posts-meta.js';
 
 render(<TabOptionsMeta />, document.querySelector('#optionsMetaSection'));
 render(<TabUsersMeta />, document.querySelector('#usersMetaSection'));
+render(<TabPostsMeta />, document.querySelector('#postsMetaSection'));

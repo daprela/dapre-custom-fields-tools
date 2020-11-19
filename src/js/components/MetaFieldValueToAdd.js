@@ -80,10 +80,11 @@ function MetaFieldValueToAdd(props) {
     }
   }, [action, emptyArrayRef, textAreaContent, textAreaRef, toggleDateRef]);
 
-  /* TODO for some reasons, if I move this line under the function emptyArrayCheckbox (where it logically belongs)
-      it doesn't work anymore. WHY? */
+  // disable the textArea when the user checks the empty array option
   useEffect(() => {
-    textAreaRef.current.disabled = emptyArrayRef.current.checked;
+    if (!emptyArrayRef.current.disabled) {
+      textAreaRef.current.disabled = emptyArrayRef.current.checked;
+    }
   }, [emptyArrayRef, textAreaRef]);
 
   return (
