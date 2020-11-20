@@ -1,13 +1,7 @@
 /* eslint-disable function-paren-newline */
-// eslint-disable import/extensions
-import { spinnerOn, spinnerOff, nameSpace } from './functions.js';
 
 // eslint-disable-next-line no-undef
 const { apiFetch } = wp;
-
-const optionSection = document.querySelector('.js-optionsMetaSection');
-const userMetaSection = document.querySelector('.js-userFieldsSection');
-const postMetaSection = document.querySelector('.js-postFieldsSection');
 
 export function refreshOptionArrows() {
   return;
@@ -531,7 +525,7 @@ function checkPostEvent(e) {
   }
 }
 
-window.addEventListener('load', addArrows, false);
+// window.addEventListener('load', addArrows, false);
 // optionSection.addEventListener('click', checkOptionEvent, false);
 // userMetaSection.addEventListener('click', checkUserEvent, false);
 // postMetaSection.addEventListener('click', checkPostEvent, false);
