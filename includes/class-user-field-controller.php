@@ -48,35 +48,40 @@ class User_Field_Controller extends Field_Controller {
 	public function get_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
-		$fields_names = json_decode( $request->get_param( 'user_fields' ), true );
+		if ( null != $request->get_param( 'user_fields' ) ) {
+			$fields_names = json_decode( $request->get_param( 'user_fields' ), true );
 
-		$fields = [];
+			$fields = [];
 
-		foreach ( $fields_names as $user_field ) {
-			$index = $user_field['index'];
+			foreach ( $fields_names as $user_field ) {
+				$index = $user_field['index'];
 
-			if ( empty( $user_field['userID'] ) || empty( $user_field['fieldName'] ) ) {
-				$user_field                           = new User_Fields( '', '' );
-				$this->previous_user_fields[ $index ] = $user_field;
-				$fields                               = $this->set_fields_content( $fields, $index, $this->previous_user_fields[ $index ] );
-				continue;
+				if ( empty( $user_field['userID'] ) || empty( $user_field['fieldName'] ) ) {
+					$user_field                           = new User_Fields( '', '' );
+					$this->previous_user_fields[ $index ] = $user_field;
+					$fields                               = $this->set_fields_content( $fields, $index, $this->previous_user_fields[ $index ] );
+					continue;
+				}
+
+				// if the field name changes then we can't keep the previous object
+				if ( $user_field['userID'] != $this->previous_user_fields[ $index ]->get_user_id() || $user_field['fieldName'] != $this->previous_user_fields[ $index ]->get_name() ) {
+					$user_field_obj                       = new User_Fields( $user_field['userID'], $user_field['fieldName'] );
+					$this->previous_user_fields[ $index ] = $user_field_obj;
+				} else {
+					$this->previous_user_fields[ $index ]->refresh( 'refresh' );
+				}
+
+				$fields = $this->set_fields_content( $fields, $index, $this->previous_user_fields[ $index ] );
 			}
 
-			// if the field name changes then we can't keep the previous object
-			if ( $user_field['userID'] != $this->previous_user_fields[ $index ]->get_user_id() || $user_field['fieldName'] != $this->previous_user_fields[ $index ]->get_name() ) {
-				$user_field_obj                       = new User_Fields( $user_field['userID'], $user_field['fieldName'] );
-				$this->previous_user_fields[ $index ] = $user_field_obj;
-			} else {
-				$this->previous_user_fields[ $index ]->refresh( 'refresh' );
-			}
-
-			$fields = $this->set_fields_content( $fields, $index, $this->previous_user_fields[ $index ] );
+			$this->set_previous_user_fields( $this->previous_user_fields );
+		} else if ( null != $request->get_param( 'all_fields' ) ) {
+			$fields = $this->get_all_fields( $this->previous_user_fields );
+		} else {
+			$fields = [];
 		}
 
 		$this->set_previous_user_fields( $this->previous_user_fields );
-
-//		$response = rest_ensure_response($fields);
-//		$response->header( 'X-WP-Total', 1 );
 
 		return rest_ensure_response( $fields );
 	}

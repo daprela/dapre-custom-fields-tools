@@ -175,4 +175,15 @@ class Options_Fields extends Custom_Fields {
 
 		return false;
 	}
+
+	/**
+	 * Always returns false since options doesn't have an ID.
+	 *
+	 * @return bool The field ID.
+	 * @since 4.0.0
+	 *
+	 */
+	public function get_field_id(): bool {
+		return false;
+	}
 }

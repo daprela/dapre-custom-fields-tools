@@ -49,35 +49,37 @@ class Option_Field_Controller extends Field_Controller {
 	public function get_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
-		$fields_names = json_decode( $request->get_param( 'options' ), true );
+		if ( null != $request->get_param( 'options' ) ) {
+			$fields_names = json_decode( $request->get_param( 'options' ), true );
 
-		$fields = [];
+			$fields = [];
 
-		foreach ( $fields_names as $option ) {
-			$index = $option['index'];
+			foreach ( $fields_names as $option ) {
+				$index = $option['index'];
 
-			if ( empty( $option['optionName'] ) ) {
-				$option                           = new Options_Fields( '' );
-				$this->previous_options[ $index ] = $option;
-				$fields                           = $this->set_fields_content( $fields, $index, $this->previous_options[ $index ] );
-				continue;
+				if ( empty( $option['optionName'] ) ) {
+					$option                           = new Options_Fields( '' );
+					$this->previous_options[ $index ] = $option;
+					$fields                           = $this->set_fields_content( $fields, $index, $this->previous_options[ $index ] );
+					continue;
+				}
+
+				// if the option name changes then we can't keep the previous object
+				if ( $option['optionName'] != $this->previous_options[ $index ]->get_name() ) {
+					$option                           = new Options_Fields( $option['optionName'] );
+					$this->previous_options[ $index ] = $option;
+				} else {
+					$this->previous_options[ $index ]->refresh( 'refresh' );
+				}
+
+				$fields = $this->set_fields_content( $fields, $index, $this->previous_options[ $index ] );
 			}
-
-			// if the option name changes then we can't keep the previous object
-			if ( $option['optionName'] != $this->previous_options[ $index ]->get_name() ) {
-				$option                           = new Options_Fields( $option['optionName'] );
-				$this->previous_options[ $index ] = $option;
-			} else {
-				$this->previous_options[ $index ]->refresh( 'refresh' );
-			}
-
-			$fields = $this->set_fields_content( $fields, $index, $this->previous_options[ $index ] );
+			$this->set_previous_options( $this->previous_options );
+		} else if ( null != $request->get_param( 'all_options' ) ) {
+			$fields = $this->get_all_fields( $this->previous_options );
+		} else {
+			$fields = [];
 		}
-
-		$this->set_previous_options( $this->previous_options );
-
-//		$response = rest_ensure_response($fields);
-//		$response->header( 'X-WP-Total', 1 );
 
 		return rest_ensure_response( $fields );
 	}

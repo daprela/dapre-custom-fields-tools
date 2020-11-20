@@ -20,6 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/register": "^7.11.5",
     "@types/react": "^16.9.49",
@@ -47,18 +48,17 @@
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
-    "terser-webpack-plugin": "^2.3.8",
     "ts-loader": "^6.2.2",
     "typescript": "^3.9.7",
     "vinyl": "^2.2.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "webpack-merge": "^4.2.2",
     "webpack-stream": "^5.2.1",
     "yargs": "^15.4.1"
   },
   "dependencies": {
     "@babel/preset-react": "^7.10.4",
+    "@babel/runtime": "^7.11.2",
     "@wordpress/api-fetch": "^3.19.0",
     "@wordpress/data-controls": "^1.17.0",
     "@wordpress/i18n": "^3.15.0",
@@ -81,8 +81,14 @@
     "gulp-zip": "^5.0.2",
     "mini-css-extract-plugin": "^0.8.2",
     "minimatch": "^3.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-mutation-observer": "^1.1.0",
+    "react-transition-group": "^4.4.1",
+    "terser-webpack-plugin": "^2.3.8",
     "url-loader": "^2.2.0",
     "vinyl-named": "^1.1.0",
+    "webpack-merge": "^4.2.2",
     "wordpress": "^1.4.1"
   },
   "scripts": {
