@@ -68,7 +68,7 @@ abstract class Field_Controller extends WP_REST_Controller {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'get_item' ],
 					'permission_callback' => [ $this, 'items_permissions_check' ],
-					'args'                => $this->get_collection_params(),
+					'args'                => [],
 				],
 				[
 					'methods'             => WP_REST_Server::CREATABLE,
@@ -162,18 +162,42 @@ abstract class Field_Controller extends WP_REST_Controller {
 	 *
 	 * @return array The fields array updated
 	 */
-	public function set_fields_content( array $fields, int $index, object $meta_field ): array {
+	public function set_fields_content( array $fields, int $index, $meta_field ): array {
 
 		$new_value['index']              = $index;
+		$new_value['fieldID']            = $meta_field->get_field_id();
+		$new_value['fieldName']          = $meta_field->get_field_name();
 		$new_value['currentValue']       = json_encode( print_r( $meta_field->get_current_value(), true ) );
 		$new_value['previousValue']      = json_encode( print_r( $meta_field->get_previous_value(), true ) );
 		$new_value['error']              = $meta_field->get_error();
-		$new_value['fieldErrorClass']    = $meta_field->get_field_error_class();
+		$new_value['rowErrorClass']      = $meta_field->get_row_error_class();
 		$new_value['curValueDateToggle'] = $meta_field->get_date_toggle();
 		$new_value['disableWrite']       = $meta_field->get_disable_write();
 		$new_value['disableDelete']      = $meta_field->get_disable_delete();
 
 		$fields[] = $new_value;
+
+		return $fields;
+	}
+
+	public function get_all_fields( $previous_fields ): array {
+
+		$fields = [];
+
+		foreach ( $previous_fields as $index => $field ) {
+			$new_value['index']              = $index;
+			$new_value['fieldID']            = $field->get_field_id();
+			$new_value['fieldName']          = $field->get_field_name();
+			$new_value['currentValue']       = json_encode( print_r( $field->get_current_value(), true ) );
+			$new_value['previousValue']      = json_encode( print_r( $field->get_previous_value(), true ) );
+			$new_value['error']              = $field->get_error();
+			$new_value['rowErrorClass']      = $field->get_row_error_class();
+			$new_value['curValueDateToggle'] = $field->get_date_toggle();
+			$new_value['disableWrite']       = $field->get_disable_write();
+			$new_value['disableDelete']      = $field->get_disable_delete();
+
+			$fields [] = $new_value;
+		}
 
 		return $fields;
 	}

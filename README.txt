@@ -28,6 +28,9 @@ In the following months I realized how useful the plugin was and couldn't work a
 
 == Changelog ==
 
+= 5.3.0 =
+* Switched meta fields tables to REACT.
+
 = 5.2.0 =
 * Meta fields rows can now be added and removed dynamically.
 * Bug fixing.

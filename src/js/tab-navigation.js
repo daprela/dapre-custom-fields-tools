@@ -8,17 +8,17 @@ const optionsForm = document.querySelector('.js-optionsForm');
 const userFieldsForm = document.querySelector('.js-userFieldsForm');
 const postFieldsForm = document.querySelector('.js-postFieldsForm');
 
-const hideOptionsTab = function() {
+const hideOptionsTab = function () {
   tab1.classList.remove('nav-tab-active');
   optionsForm.classList.add('is-hidden');
 };
 
-const hideUsersTab = function() {
+const hideUsersTab = function () {
   tab2.classList.remove('nav-tab-active');
   userFieldsForm.classList.add('is-hidden');
 };
 
-const hidePostsTab = function() {
+const hidePostsTab = function () {
   tab3.classList.remove('nav-tab-active');
   postFieldsForm.classList.add('is-hidden');
 };

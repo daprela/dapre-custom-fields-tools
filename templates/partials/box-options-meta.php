@@ -37,7 +37,7 @@ $key = esc_attr($non_esc_key);
 	</div>
 	<div class="c-optionField__fieldActions">
 		<label>
-			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="read"" checked />
+			<input class="js-fieldAction" type="radio" name="field_action[<?php echo $key ?>]" value="read" checked />
 			<?php esc_html_e("Read","dapre-cft") ?>
 		</label>
 		<label >

@@ -48,35 +48,40 @@ class Post_Field_Controller extends Field_Controller {
 	public function get_item( $request ) {
 		// Sanitizing is not possible because we don't know in advance what type of values we are getting.
 		// This is still acceptable considering that this is a tool for developers.
-		$fields_names = json_decode( $request->get_param( 'post_fields' ), true );
+		if ( null != $request->get_param( 'post_fields' ) ) {
+			$fields_names = json_decode( $request->get_param( 'post_fields' ), true );
 
-		$fields = [];
+			$fields = [];
 
-		foreach ( $fields_names as $post_field ) {
-			$index = $post_field['index'];
+			foreach ( $fields_names as $post_field ) {
+				$index = $post_field['index'];
 
-			if ( empty( $post_field['postID'] ) || empty( $post_field['fieldName'] ) ) {
-				$post_field                           = new Post_Fields( '', '' );
-				$this->previous_post_fields[ $index ] = $post_field;
-				$fields                               = $this->set_fields_content( $fields, $index, $this->previous_post_fields[ $index ] );
-				continue;
+				if ( empty( $post_field['postID'] ) || empty( $post_field['fieldName'] ) ) {
+					$post_field                           = new Post_Fields( '', '' );
+					$this->previous_post_fields[ $index ] = $post_field;
+					$fields                               = $this->set_fields_content( $fields, $index, $this->previous_post_fields[ $index ] );
+					continue;
+				}
+
+				// if the option name changes then we can't keep the previous object
+				if ( $post_field['postID'] != $this->previous_post_fields[ $index ]->get_post_id() || $post_field['fieldName'] != $this->previous_post_fields[ $index ]->get_name() ) {
+					$post_field_obj                       = new Post_Fields( $post_field['postID'], $post_field['fieldName'] );
+					$this->previous_post_fields[ $index ] = $post_field_obj;
+				} else {
+					$this->previous_post_fields[ $index ]->refresh( 'refresh' );
+				}
+
+				$fields = $this->set_fields_content( $fields, $index, $this->previous_post_fields[ $index ] );
 			}
 
-			// if the option name changes then we can't keep the previous object
-			if ( $post_field['postID'] != $this->previous_post_fields[ $index ]->get_post_id() || $post_field['fieldName'] != $this->previous_post_fields[ $index ]->get_name() ) {
-				$post_field_obj                       = new Post_Fields( $post_field['postID'], $post_field['fieldName'] );
-				$this->previous_post_fields[ $index ] = $post_field_obj;
-			} else {
-				$this->previous_post_fields[ $index ]->refresh( 'refresh' );
-			}
-
-			$fields = $this->set_fields_content( $fields, $index, $this->previous_post_fields[ $index ] );
+			$this->set_previous_post_fields( $this->previous_post_fields );
+		} else if ( null != $request->get_param( 'all_fields' ) ) {
+			$fields = $this->get_all_fields( $this->previous_post_fields );
+		} else {
+			$fields = [];
 		}
 
 		$this->set_previous_post_fields( $this->previous_post_fields );
-
-//		$response = rest_ensure_response($fields);
-//		$response->header( 'X-WP-Total', 1 );
 
 		return rest_ensure_response( $fields );
 	}
