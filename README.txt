@@ -23,10 +23,9 @@ You can contribute to the plugin or just study the code on the Github repo https
 
 == Installation ==
 
-1. Download the master github repo.
-2. Install the zip file. No settings needed.
-2a. If you have Gulp you can generate a zip installable file.
-3. Activate the plugin through the 'Plugins' menu in WordPress.
+1. Visit the plugins page within your dashboard and select ‘Add New’;
+2. Search for ‘Dapre Custom Fields Tools’;
+3. Activate the plugin from your Plugins page;
 
 == Changelog ==
 
