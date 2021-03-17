@@ -22,9 +22,6 @@ class Loader {
 	/** @var object $admin */
 	public $admin;
 
-	/** @var object $plugin_public */
-	public $plugin_public;
-
 	/** @var object $plugin_i18n The internationalization class */
 	public $plugin_i18n;
 
