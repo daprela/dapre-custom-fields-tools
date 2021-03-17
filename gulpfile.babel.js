@@ -150,6 +150,7 @@ export const compress = () => src([
   '!composer.json',
   '!composer.lock',
   '!phpunit.xml.dist',
+  '!tsconfig.json',
   '!wp-tests-config.php',
   '!webpackGutenberg.common.js',
   '!webpackGutenberg.dev.js',
