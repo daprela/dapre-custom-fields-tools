@@ -1,10 +1,10 @@
 === Dapre Custom Fields Tools ===
 Contributors: daprela
 Donate link: http://giuliodaprela.com/
-Tags: utility, debug
-Requires at least: 3.0.1
-Tested up to: 4.9.7
-Stable tag: 3.1
+Tags: utility, debug, developer
+Requires at least: 5.0.0
+Tested up to: 5.7.0
+Stable tag: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,23 +13,31 @@ It allows you to manipulate them from the dashboard to make it easy testing and 
 
 == Description ==
 
-This plugin is a 'swiss army knife' of custom fields. It allows you to manipulate them to make it easy the testing and debugging of applications
+This plugin is a 'swiss army knife' of custom fields. It allows you to manipulate them to make it easy the testing and debugging of applications.
 
 This plugin was built in a moment of desperation when I couldn't access phpMyAdmin in a mu website.
 I absolutely needed to manipulate the custom fields for testing and debugging, version 1.0 was up in 4 hours.
 In the following months I realized how useful the plugin was and couldn't work anymore without it. It had become part of my standard toolset.
 
+Features:
+* Read/write/delete options, user fields and post fields.
+* Populate the field with an empty array.
+* Insert a date string and translate it into a timestamp or vice versa to emulate specific dates.
+* Change name to a field.
+* Copy any field's content to any other field (for example, option to user field) even of a different name.
+
+You can contribute to the plugin or just study the code on the Github repo https://github.com/daprela/dapre-custom-fields-tools/
+
 == Installation ==
 
-1. Download the master github repo.
-2. Install the zip file. No settings needed.
-2a. If you have Gulp you can generate a zip installable file.
-3. Activate the plugin through the 'Plugins' menu in WordPress.
+1. Visit the plugins page within your dashboard and select ‘Add New’;
+2. Search for ‘Dapre Custom Fields Tools’;
+3. Activate the plugin from your Plugins page;
 
 == Changelog ==
 
 = 5.3.0 =
-* Switched meta fields tables to REACT.
+* Refactored the UI of the meta fields tables to use REACT.
 
 = 5.2.0 =
 * Meta fields rows can now be added and removed dynamically.
