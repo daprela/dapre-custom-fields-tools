@@ -19,6 +19,8 @@ This plugin was built in a moment of desperation when I couldn't access phpMyAdm
 I absolutely needed to manipulate the custom fields for testing and debugging, version 1.0 was up in 4 hours.
 In the following months I realized how useful the plugin was and couldn't work anymore without it. It had become part of my standard toolset.
 
+You can contribute to the plugin or just study the code on the Github repo https://github.com/daprela/dapre-custom-fields-tools/
+
 == Installation ==
 
 1. Download the master github repo.
