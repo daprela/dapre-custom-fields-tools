@@ -90,8 +90,6 @@ class Plugin_Admin {
 
 		$this->admin_tabs();
 
-		$form_data = $_POST;
-
 		$options_fields = new Option_Field_Controller();
 		$user_fields    = new User_Field_Controller();
 		$post_field     = new Post_Field_Controller();
@@ -100,7 +98,7 @@ class Plugin_Admin {
 		$previous_user_fields = $user_fields->get_previous_user_fields();
 		$previous_post_fields = $post_field->get_previous_post_fields();
 
-		if ( array_key_exists( 'reset_fields', $form_data ) ) {
+		if ( array_key_exists( 'reset_fields', $_POST ) ) {
 
 			if ( ! check_admin_referer( 'dapre_cft_options', 'dapre_cft_options_verify' ) ) {
 				die;
