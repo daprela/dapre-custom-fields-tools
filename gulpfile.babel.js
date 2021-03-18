@@ -184,6 +184,9 @@ export const updateStrings = () => src([
   '!composer.lock',
   '!phpunit.xml.dist',
   '!wp-tests-config.php',
+  '!webpack.common.js',
+  '!webpack.dev.js',
+  '!webpack.prod.js',
   '!tests{,/**}',
   '!*.zip',
 ])
