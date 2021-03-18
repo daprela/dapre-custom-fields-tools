@@ -161,11 +161,11 @@ class User_Field_Controller extends Field_Controller {
 	/**
 	 * Returns the array containing the previous options.
 	 *
-	 * @return array Previous options.
+	 * @return array|bool Previous options.
 	 * @since 3.0.0
 	 *
 	 */
-	public function get_previous_user_fields(): array {
+	public function get_previous_user_fields() {
 
 		/**
 		 * This array contains the previous options
