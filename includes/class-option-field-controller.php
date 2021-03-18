@@ -158,11 +158,11 @@ class Option_Field_Controller extends Field_Controller {
 	/**
 	 * Returns the array containing the previous options.
 	 *
-	 * @return array Previous options.
+	 * @return array|bool Previous options.
 	 * @since 3.0.0
 	 *
 	 */
-	public function get_previous_options(): array {
+	public function get_previous_options() {
 
 		/**
 		 * This array contains the previous options
