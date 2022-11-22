@@ -64,7 +64,7 @@
     "@wordpress/i18n": "^3.18.0",
     "autoprefixer": "^9.8.6",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "browser-sync": "^2.26.14",
+    "browser-sync": "^2.27.10",
     "del": "^5.1.0",
     "file-loader": "^4.2.0",
     "gulp": "^4.0.2",
