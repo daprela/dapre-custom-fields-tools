@@ -1,12 +1,15 @@
 const path = require('path');
-const merge = require('webpack-merge');
-const common = require('./webpack.common');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+// const merge = require('webpack-merge');
+// const common = require('./webpack.common');
 
-module.exports = merge(common, {
+module.exports = {
   mode: 'development',
+  entry: ['./src/js/controller.js', './src/scss/dapre-cft-admin.scss'],
   output: {
-    path: path.resolve(__dirname),
-    filename: '[name].js',
+    path: path.resolve(__dirname, 'assets/js'),
+    filename: 'custom-fields-tools.min.js',
   },
   devtool: 'source-map',
   module: {
@@ -35,6 +38,63 @@ module.exports = merge(common, {
           },
         },
       },
+      {
+        test: /\.(svg|png|jpg|gif)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: '.assets/images',
+          },
+        },
+      },
+      {
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'ts-loader',
+          },
+        ],
+      },
+      {
+        test: /\.scss$/i,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              // Prefer `dart-sass`
+              implementation: require.resolve('sass'),
+              sourceMap: true,
+            },
+          },
+        ],
+      },
     ],
   },
-});
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '../css/dapre-cft-admin.min.css',
+    }),
+  ],
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          output: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+  },
+};

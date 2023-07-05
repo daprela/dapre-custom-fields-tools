@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
   entry: {
     './assets/js/custom-fields-tools.min': './src/js/controller.js',
@@ -23,10 +25,31 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.s[ac]ss$/i,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              // Prefer `dart-sass`
+              implementation: require.resolve('sass'),
+            },
+          },
+        ],
+      },
     ],
   },
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: './assets/css/dapre-cft-admin.min.css',
+    }),
+  ],
 };
