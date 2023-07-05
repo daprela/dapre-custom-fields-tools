@@ -1,46 +1,47 @@
 {
-    "name" 			: "dapre-custom-fields-tools",
-    "description" 	: "Provides a series of developers tools aimed at facilitating the custom fields management during the development and debugging phase.",
-    "type"          : "project",
-    "keywords" 		: ["wordpress", "wp", "plugin"],
-    "homepage" 		: "https://daprela.com",
-    "license" 		: "GPL-2.0+",
-    "authors": [
-        {
-            "name" 	: "Giulio Daprela",
-            "email" : "giulio.daprela@gmail.com"
-        }
-    ],
-	"autoload-dev": {
-		"psr-4": {
-			"Daprela\\Tests\\Unit\\": "tests/phpunit/unit/",
-			"Daprela\\Tests\\Integration\\": "tests/phpunit/integration/"
-		}
-	},
-    "require": {
-        "php" : ">=7.0.0"
-    },
-    "require-dev": {
-	  "kint-php/kint" : "3.2.2",
-	  "filp/whoops"   : "~2.7.3",
-	  "phpunit/phpunit": "~9.3.8",
-      "brain/monkey" : "^2.4.0",
-	  "mikey179/vfsStream": "^1.6",
-      "squizlabs/php_codesniffer": "^3.5.6",
-      "phpmd/phpmd": "^2.9.0",
-      "friendsofphp/php-cs-fixer": "^v2.16.4"
-	},
-	"extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
-	},
-	"config": {
-        "vendor-dir": "vendor"
-    },
-	"minimum-stability": "dev",
-	"scripts": {
-		"test-unit": "\"vendor/bin/phpunit\" --testsuite unit --colors=always",
-		"test-integration": "\"vendor/bin/phpunit\" --testsuite integration --colors=always --configuration tests/phpunit/integration/phpunit.xml.dist"
-	}
+  "name" 			: "daprela/dapre-custom-fields-tools",
+  "description" 	: "Provides a series of developers tools aimed at facilitating the custom fields management during the development and debugging phase.",
+  "type"            : "project",
+  "keywords" 		: ["wordpress", "wp", "plugin"],
+  "homepage" 		: "https://daprela.com",
+  "license" 		: "GPL-2.0+",
+  "authors": [
+    {
+      "name" 	: "Giulio Daprela",
+      "email" : "giulio.daprela@gmail.com"
+    }
+  ],
+  "autoload-dev": {
+    "psr-4": {
+      "Daprela\\Tests\\Unit\\": "tests/phpunit/unit/",
+      "Daprela\\Tests\\Integration\\": "tests/phpunit/integration/"
+    }
+  },
+  "require": {
+    "php" : ">=8.1",
+    "filp/whoops" : "~2.15.2"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "kint-php/kint" : "5.0.7",
+    "phpunit/phpunit": "~9.3.8",
+    "brain/monkey" : "^2.6.1",
+    "mikey179/vfsstream": "^1.6.11",
+    "squizlabs/php_codesniffer": "^3.7.2",
+    "phpmd/phpmd": "^2.13.0",
+    "friendsofphp/php-cs-fixer": "^v3.20.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  },
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "minimum-stability": "dev",
+  "scripts": {
+    "test-unit": "\"vendor/bin/phpunit\" --testsuite unit --colors=always",
+    "test-integration": "\"vendor/bin/phpunit\" --testsuite integration --colors=always --configuration tests/phpunit/integration/phpunit.xml.dist"
+  }
 }
