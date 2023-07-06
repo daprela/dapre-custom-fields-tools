@@ -164,7 +164,7 @@ function PostsMetaRow(props) {
       data-index={dataIndex}
     >
       <Arrow
-        className="js-addRemovePostRow c-addRemoveFieldRow c-addRemoveFieldRow__add"
+        className="js-addRemovePostRow"
         title={arrowTitle}
         content={arrowContent}
         arrowClick={handleArrowClick}

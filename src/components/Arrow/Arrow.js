@@ -1,4 +1,5 @@
 import React, { createRef, useEffect } from "react";
+import styles from "./arrow.module.scss";
 
 function Arrow({ className, title, content, arrowClick: harrowClickProp }) {
   const arrowRef = createRef();
@@ -23,7 +24,7 @@ function Arrow({ className, title, content, arrowClick: harrowClickProp }) {
 
   return (
     <div
-      className={className}
+      className={`${className} ${styles.arrow}`}
       title={title}
       ref={arrowRef}
       onClick={handleArrowClick}

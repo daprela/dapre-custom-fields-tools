@@ -148,7 +148,7 @@ function OptionsMetaRow(props) {
       data-index={dataIndex}
     >
       <Arrow
-        className="js-addRemoveOptionRow c-addRemoveFieldRow c-addRemoveFieldRow__add"
+        className="js-addRemoveOptionRow"
         title={arrowTitle}
         content={arrowContent}
         arrowClick={handleArrowClick}

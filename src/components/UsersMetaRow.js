@@ -163,7 +163,7 @@ function UsersMetaRow(props) {
       data-index={dataIndex}
     >
       <Arrow
-        className="js-addRemoveUserRow c-addRemoveFieldRow c-addRemoveFieldRow__add"
+        className="js-addRemoveUserRow"
         title={arrowTitle}
         content={arrowContent}
         arrowClick={handleArrowClick}
