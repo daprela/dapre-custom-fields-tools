@@ -1,11 +1,26 @@
 /* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope */
-import React from 'react';
-import { render } from 'react-dom';
+import React, { StrictMode } from "react";
+import { render } from "react-dom";
 /* eslint-disable import/extensions */
-import TabOptionsMeta from './tab-options-meta.js';
-import TabUsersMeta from './tab-users-meta.js';
-import TabPostsMeta from './tab-posts-meta.js';
+import TabOptionsMeta from "./tab-options-meta.js";
+import TabUsersMeta from "./tab-users-meta.js";
+import TabPostsMeta from "./tab-posts-meta.js";
 
-render(<TabOptionsMeta />, document.querySelector('#optionsMetaSection'));
-render(<TabUsersMeta />, document.querySelector('#usersMetaSection'));
-render(<TabPostsMeta />, document.querySelector('#postsMetaSection'));
+render(
+  <StrictMode>
+    <TabOptionsMeta />
+  </StrictMode>,
+  document.querySelector("#optionsMetaSection")
+);
+render(
+  <StrictMode>
+    <TabUsersMeta />
+  </StrictMode>,
+  document.querySelector("#usersMetaSection")
+);
+render(
+  <StrictMode>
+    <TabPostsMeta />
+  </StrictMode>,
+  document.querySelector("#postsMetaSection")
+);
