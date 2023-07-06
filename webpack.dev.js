@@ -6,7 +6,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: ['./src/js/controller.js', './src/scss/dapre-cft-admin.scss'],
+  entry: ['./src/index.js', './src/dapre-cft-admin.scss'],
   output: {
     path: path.resolve(__dirname, 'assets/js'),
     filename: 'custom-fields-tools.min.js',
@@ -58,12 +58,16 @@ module.exports = {
         ],
       },
       {
-        test: /\.scss$/i,
+        test: /\.s[ac]ss$/i,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
-          'style-loader',
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
           {
             loader: 'sass-loader',
             options: {

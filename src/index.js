@@ -1,4 +1,5 @@
 /* eslint-disable import/extensions */
+import './dapre-cft-admin.scss';
 import './tab-navigation.js';
 import './copy-meta-ui.js';
 import './option-meta-actions.js';

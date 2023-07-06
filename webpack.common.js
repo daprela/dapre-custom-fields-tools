@@ -2,7 +2,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
-    './assets/js/custom-fields-tools.min': './src/js/controller.js',
+    './assets/js/custom-fields-tools.min': './src/js/index.js',
   },
   module: {
     rules: [
