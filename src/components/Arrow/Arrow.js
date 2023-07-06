@@ -1,22 +1,19 @@
-/* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
-/* eslint-disable import/extensions */
-import { createRef, useEffect } from 'react';
+import React, { createRef, useEffect } from "react";
 
-function Arrow(props) {
-  const {
-    className, title, content, arrowClick: harrowClickProp,
-  } = props;
+function Arrow({ className, title, content, arrowClick: harrowClickProp }) {
   const arrowRef = createRef();
 
   useEffect(() => {
     const optionRow = arrowRef.current.parentElement;
-    arrowRef.current.style.top = `${optionRow.offsetTop + optionRow.offsetHeight - 10}px`;
+    arrowRef.current.style.top = `${
+      optionRow.offsetTop + optionRow.offsetHeight - 10
+    }px`;
   }, [arrowRef]);
 
   function handleArrowClick(e) {
     let index;
 
-    if (content === '-') {
+    if (content === "-") {
       index = e.target.parentElement.nextElementSibling.dataset.index;
     } else {
       index = e.target.parentElement.dataset.index;

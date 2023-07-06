@@ -1,33 +1,50 @@
 /* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
 /* eslint-disable import/extensions */
-import React, {
-  useCallback, useEffect, useState,
-} from 'react';
-import Arrow from './Arrow.js';
-import FieldID from './FieldID.js';
-import FieldName from './FieldName.js';
-import MetaFieldActions from './MetaFieldActions.js';
-import MetaFieldValueToAdd from './MetaFieldValueToAdd.js';
-import MetaFieldCurrentValue from './MetaFieldCurrentValue.js';
-import MetaFieldCurrentValueOptions from './MetaFieldCurrentValueOptions.js';
-import MetaFieldPreviousValue from './MetaFieldPreviousValue.js';
-import { isInteger } from '../functions';
+import React, { useCallback, useEffect, useState } from "react";
+import Arrow from "./Arrow";
+import FieldID from "./FieldID.js";
+import FieldName from "./FieldName.js";
+import MetaFieldActions from "./MetaFieldActions.js";
+import MetaFieldValueToAdd from "./MetaFieldValueToAdd.js";
+import MetaFieldCurrentValue from "./MetaFieldCurrentValue.js";
+import MetaFieldCurrentValueOptions from "./MetaFieldCurrentValueOptions.js";
+import MetaFieldPreviousValue from "./MetaFieldPreviousValue.js";
+import { isInteger } from "../functions";
 
 function UsersMetaRow(props) {
   const {
-    className, rowIndex, dataIndex, fieldID, fieldName, errorClass, errorMessage, previousValue, disableWrite,
-    disableDelete, arrowTitle, arrowContent, currentValue, rowChange: updateForm, resetPage, restoreEvent, arrowClick: arrowClickProp,
+    className,
+    rowIndex,
+    dataIndex,
+    fieldID,
+    fieldName,
+    errorClass,
+    errorMessage,
+    previousValue,
+    disableWrite,
+    disableDelete,
+    arrowTitle,
+    arrowContent,
+    currentValue,
+    rowChange: updateForm,
+    resetPage,
+    restoreEvent,
+    arrowClick: arrowClickProp,
   } = props;
 
-  const [action, setAction] = useState('read');
+  const [action, setAction] = useState("read");
   const [addEmptyArray, setAddEmptyArray] = useState(false);
-  const [valueToWrite, setValueToWrite] = useState('');
-  const [fieldIDValue, setFieldIDValue] = useState('');
-  const [fieldNameValue, setFieldNameValue] = useState('');
-  const [currentValuePrinted, setCurrentValuePrinted] = useState('');
-  const [classColor, setClassColor] = useState('-color-white');
-  const [currentValueUsersTimestampBackup, setCurrentValueUsersTimestampBackup] = useState(0);
-  const [currentValueUsersDateBackup, setCurrentValueUsersDateBackup] = useState('');
+  const [valueToWrite, setValueToWrite] = useState("");
+  const [fieldIDValue, setFieldIDValue] = useState("");
+  const [fieldNameValue, setFieldNameValue] = useState("");
+  const [currentValuePrinted, setCurrentValuePrinted] = useState("");
+  const [classColor, setClassColor] = useState("-color-white");
+  const [
+    currentValueUsersTimestampBackup,
+    setCurrentValueUsersTimestampBackup,
+  ] = useState(0);
+  const [currentValueUsersDateBackup, setCurrentValueUsersDateBackup] =
+    useState("");
 
   /* Updates the form row to send upstream. */
   useEffect(() => {
@@ -41,7 +58,16 @@ function UsersMetaRow(props) {
       action,
     };
     updateForm(row);
-  }, [action, addEmptyArray, dataIndex, fieldIDValue, fieldNameValue, rowIndex, updateForm, valueToWrite]);
+  }, [
+    action,
+    addEmptyArray,
+    dataIndex,
+    fieldIDValue,
+    fieldNameValue,
+    rowIndex,
+    updateForm,
+    valueToWrite,
+  ]);
 
   /* Updates the field name value when the user changes it */
   const updateFieldNameValue = useCallback((value) => {
@@ -76,12 +102,14 @@ function UsersMetaRow(props) {
   }, []);
 
   /* Toggles between date string and timestamp when the current value is a valid date.
-  * It's important to notice that this function can be called only when the current value is a valid date,
-  * therefore we don't need to check. */
+   * It's important to notice that this function can be called only when the current value is a valid date,
+   * therefore we don't need to check. */
   const toggleDateCurrentValue = useCallback(() => {
     /* Is the current value an integer (that could be interpreted as a timestamp)? */
     if (isInteger(currentValuePrinted)) {
-      if (parseInt(currentValuePrinted, 10) === currentValueUsersTimestampBackup) {
+      if (
+        parseInt(currentValuePrinted, 10) === currentValueUsersTimestampBackup
+      ) {
         // if the value hasn't changed use the date string saved
         setCurrentValuePrinted(currentValueUsersDateBackup);
       } else {
@@ -92,7 +120,7 @@ function UsersMetaRow(props) {
         setCurrentValuePrinted(myDate.toUTCString());
         setCurrentValueUsersDateBackup(myDate.toUTCString());
       }
-    /* If the current value is backed up it means that we also have its timestamp stored. Use that. */
+      /* If the current value is backed up it means that we also have its timestamp stored. Use that. */
     } else if (currentValuePrinted === currentValueUsersDateBackup) {
       // if the date string hasn't changed use the timestamp saved
       setCurrentValuePrinted(parseInt(currentValueUsersTimestampBackup, 10));
@@ -103,17 +131,21 @@ function UsersMetaRow(props) {
       setCurrentValuePrinted(myDate.valueOf());
       setCurrentValueUsersTimestampBackup(myDate.valueOf());
     }
-  }, [currentValueUsersDateBackup, currentValueUsersTimestampBackup, currentValuePrinted]);
+  }, [
+    currentValueUsersDateBackup,
+    currentValueUsersTimestampBackup,
+    currentValuePrinted,
+  ]);
 
   useEffect(() => {
-    if (action === 'read') {
-      setClassColor('-color-white');
+    if (action === "read") {
+      setClassColor("-color-white");
     }
-    if (action === 'write') {
-      setClassColor('-color-blue');
+    if (action === "write") {
+      setClassColor("-color-blue");
     }
-    if (action === 'delete') {
-      setClassColor('-color-orange');
+    if (action === "delete") {
+      setClassColor("-color-orange");
     }
   }, [action]);
 
