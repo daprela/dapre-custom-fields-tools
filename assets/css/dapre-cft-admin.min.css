@@ -467,8 +467,10 @@
 .c-metaField {
   border-bottom: 1px solid lightgrey;
 }
-
-.c-addRemoveFieldRow {
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/components/Arrow/arrow.module.scss ***!
+  \*****************************************************************************************************************************************************************************************/
+.RE_7JfAACMb_nKj7P6KY {
   position: absolute;
   left: 30px;
   background: #d0d0d0;
@@ -481,7 +483,7 @@
   cursor: pointer;
 }
 
-.c-addRemoveFieldRow:after {
+.RE_7JfAACMb_nKj7P6KY:after {
   content: "";
   position: absolute;
   width: 0;

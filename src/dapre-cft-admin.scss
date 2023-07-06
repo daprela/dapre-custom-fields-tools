@@ -484,28 +484,3 @@ $orange: rgb(255, 213, 151);
 .c-metaField {
   border-bottom: 1px solid lightgrey;
 }
-
-.c-addRemoveFieldRow {
-  position: absolute;
-  //margin-top: 110px;
-  left: 30px;
-  background: #d0d0d0;
-  color: #444444;
-  font-weight: 800;
-  width: 22px;
-  height: 22px;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.c-addRemoveFieldRow:after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-top: 12px solid #d0d0d0;
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  margin: 22px 0 0 0;
-}
