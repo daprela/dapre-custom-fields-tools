@@ -16,6 +16,10 @@
   "extends": ["airbnb", "airbnb/hooks"],
   "rules": {
     "linebreak-style": "off",
-    "max-len": "off"
+    "max-len": "off",
+    "quotes": "off",
+    "default": "off",
+    "no-restricted-exports": "off",
+    "import/export": "off"
   }
 }
