@@ -22,7 +22,7 @@ function OptionsMetaRow(props) {
     disableWrite,
     disableDelete,
     arrowTitle,
-    arrowContent,
+    arrowType,
     currentValue,
     rowChange: updateForm,
     resetPage,
@@ -139,8 +139,8 @@ function OptionsMetaRow(props) {
     setCurrentValuePrinted(currentValue);
   }, [currentValue]);
 
-  function handleArrowClick(index, content) {
-    arrowClickProp(index, content);
+  function handleArrowClick(index, arrowType) {
+    arrowClickProp(index, arrowType);
   }
 
   return (
@@ -153,7 +153,7 @@ function OptionsMetaRow(props) {
       <Arrow
         className="js-addRemoveOptionRow"
         title={arrowTitle}
-        content={arrowContent}
+        arrowType={arrowType}
         arrowClick={handleArrowClick}
       />
       <FieldName

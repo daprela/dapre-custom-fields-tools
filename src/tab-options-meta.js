@@ -316,10 +316,10 @@ function TabOptionsMeta() {
         <OptionsMetaHeaders className="c-optionsMetaHeaders" />
         {rows.map((row, index) => {
           let arrowTitle = "Add another row";
-          let arrowContent = "+";
+          let arrowType = "+";
           if (index + 1 < rows.length) {
             arrowTitle = "Remove the next row";
-            arrowContent = "-";
+            arrowType = "-";
           }
           return (
             <OptionsMetaRow
@@ -334,7 +334,7 @@ function TabOptionsMeta() {
               disableWrite={row.disableWrite}
               disableDelete={row.disableDelete}
               arrowTitle={arrowTitle}
-              arrowContent={arrowContent}
+              arrowType={arrowType}
               arrowClick={addRemoveMetaRows}
               rowChange={updateForm}
               resetPage={resetPage}
