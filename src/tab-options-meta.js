@@ -1,16 +1,11 @@
-/* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
-/* eslint-disable import/extensions,react/jsx-no-undef */
-import React, {
-  useState, useEffect, useCallback, createRef,
-} from 'react';
-import OptionsMetaHeaders from './components/OptionsMetaHeaders.js';
-import OptionsMetaRow from './components/OptionsMetaRow.js';
-import { nameSpace, spinnerOff, spinnerOn } from './functions.js';
+import React, { useState, useEffect, useCallback, createRef } from "react";
+import OptionsMetaHeaders from "./components/OptionsMetaHeaders.js";
+import OptionsMetaRow from "./components/OptionsMetaRow";
+import { nameSpace, spinnerOff, spinnerOn } from "./functions.js";
 
-// eslint-disable-next-line no-undef
 const { apiFetch } = wp;
 
-const restBase = 'options';
+const restBase = "options";
 const path = `${nameSpace}/${restBase}`;
 
 function TabOptionsMeta() {
@@ -51,7 +46,7 @@ function TabOptionsMeta() {
     /* Launches the Rest request to read fields */
     apiFetch({
       path: `${path}?${restBase}=${readJSON}`,
-      method: 'GET',
+      method: "GET",
       parse: false,
     })
       .then((response) => response.json())
@@ -74,11 +69,11 @@ function TabOptionsMeta() {
     /* Launches the Rest request to write fields */
     apiFetch({
       path,
-      method: 'POST',
+      method: "POST",
       body: writeJSON,
       parse: false,
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -102,11 +97,11 @@ function TabOptionsMeta() {
     /* Launches the Rest request to delete fields */
     apiFetch({
       path,
-      method: 'DELETE',
+      method: "DELETE",
       body: delJSON,
       parse: false,
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -127,13 +122,13 @@ function TabOptionsMeta() {
     let newDel = {};
 
     options.forEach((option) => {
-      if (option.action === 'read') {
+      if (option.action === "read") {
         newRead = {
           index: option.index,
           optionName: option.optionName,
         };
         readLocal.push(newRead);
-      } else if (option.action === 'write') {
+      } else if (option.action === "write") {
         newWrite = {
           index: option.index,
           optionName: option.optionName,
@@ -141,7 +136,7 @@ function TabOptionsMeta() {
           valueToWrite: option.valueToWrite,
         };
         writeLocal.push(newWrite);
-      } else if (option.action === 'delete') {
+      } else if (option.action === "delete") {
         newDel = {
           index: option.index,
           optionName: option.optionName,
@@ -168,14 +163,14 @@ function TabOptionsMeta() {
   }
 
   /* Initializes the form at the first page load.
-  * Gets the array containing the previous options stored in the DB */
+   * Gets the array containing the previous options stored in the DB */
   useEffect(() => {
-    const readJSON = JSON.stringify('all');
+    const readJSON = JSON.stringify("all");
 
     /* Launches the Rest request to read fields */
     apiFetch({
       path: `${path}?all_options=${readJSON}`,
-      method: 'GET',
+      method: "GET",
       parse: false,
     })
       .then((response) => response.json())
@@ -187,9 +182,9 @@ function TabOptionsMeta() {
           formTemp[index] = {
             index: row.index,
             optionName: row.fieldName,
-            emptyArray: '',
-            action: 'read',
-            valueToWrite: '',
+            emptyArray: "",
+            action: "read",
+            valueToWrite: "",
           };
         });
         setForm(formTemp);
@@ -201,19 +196,22 @@ function TabOptionsMeta() {
   }, []);
 
   /* Called from downstream when the user manipulates the form fields.
-  * This form is what is sent to the server when the user clicks the 'read/write values' button */
-  const updateForm = useCallback((formRow) => {
-    const temp = {
-      index: formRow.index,
-      optionName: formRow.optionName,
-      emptyArray: formRow.emptyArray,
-      action: formRow.action,
-      valueToWrite: formRow.valueToWrite,
-    };
-    const formTemp = form;
-    formTemp[formRow.rowIndex] = temp;
-    setForm(formTemp);
-  }, [form]);
+   * This form is what is sent to the server when the user clicks the 'read/write values' button */
+  const updateForm = useCallback(
+    (formRow) => {
+      const temp = {
+        index: formRow.index,
+        optionName: formRow.optionName,
+        emptyArray: formRow.emptyArray,
+        action: formRow.action,
+        valueToWrite: formRow.valueToWrite,
+      };
+      const formTemp = form;
+      formTemp[formRow.rowIndex] = temp;
+      setForm(formTemp);
+    },
+    [form]
+  );
 
   /* Regenerates the form array when meta rows are added or removed */
   function regenerateForm(newRows) {
@@ -239,20 +237,20 @@ function TabOptionsMeta() {
     const updateBase = `${restBase}/update`;
     const newPath = `${nameSpace}/${updateBase}`;
 
-    if (content === '+') {
+    if (content === "+") {
       const lastElement = rows[rows.length - 1];
       const newIndex = parseInt(lastElement.index, 10) + 1;
       const newRow = {
         fieldID: false,
-        fieldName: '',
+        fieldName: "",
         index: newIndex,
-        currentValueDateToggle: 'is-hidden',
-        currentValue: JSON.stringify(''),
+        currentValueDateToggle: "is-hidden",
+        currentValue: JSON.stringify(""),
         disableDelete: true,
         disableWrite: true,
-        error: '',
-        previousValue: JSON.stringify(''),
-        rowErrorClass: '',
+        error: "",
+        previousValue: JSON.stringify(""),
+        rowErrorClass: "",
       };
       const addJSON = JSON.stringify(newIndex);
       spinnerOn();
@@ -262,11 +260,11 @@ function TabOptionsMeta() {
       /* Launches the Rest request to write fields */
       apiFetch({
         path: newPath,
-        method: 'POST',
+        method: "POST",
         body: addJSON,
         parse: false,
         headers: {
-          'Content-type': 'application/json',
+          "Content-type": "application/json",
         },
       })
         .then((response) => response.json())
@@ -280,7 +278,9 @@ function TabOptionsMeta() {
           }
         });
     } else {
-      const rowIndex = rows.findIndex((row) => row.index === parseInt(index, 10));
+      const rowIndex = rows.findIndex(
+        (row) => row.index === parseInt(index, 10)
+      );
       rows.splice(rowIndex, 1);
 
       const removeJSON = JSON.stringify(rows);
@@ -290,17 +290,17 @@ function TabOptionsMeta() {
       /* Launches the Rest request to write fields */
       apiFetch({
         path: newPath,
-        method: 'DELETE',
+        method: "DELETE",
         body: removeJSON,
         parse: false,
         headers: {
-          'Content-type': 'application/json',
+          "Content-type": "application/json",
         },
       })
         .then((response) => response.json())
         .then((fields) => {
-        // submitUserButton.disabled = false;
-        // submitUserButton.blur();
+          // submitUserButton.disabled = false;
+          // submitUserButton.blur();
           spinnerOff();
           if (!fields.error) {
             setRows([...rows]);
@@ -315,15 +315,15 @@ function TabOptionsMeta() {
       <div className="js-optionsMetaSection o-meta">
         <OptionsMetaHeaders className="c-optionsMetaHeaders" />
         {rows.map((row, index) => {
-          let arrowTitle = 'Add another row';
-          let arrowContent = '+';
+          let arrowTitle = "Add another row";
+          let arrowContent = "+";
           if (index + 1 < rows.length) {
-            arrowTitle = 'Remove the next row';
-            arrowContent = '-';
+            arrowTitle = "Remove the next row";
+            arrowContent = "-";
           }
           return (
             <OptionsMetaRow
-              className="js-optionFieldDataRow c-optionField"
+              className="js-optionFieldDataRow"
               rowIndex={index}
               dataIndex={row.index}
               fieldName={row.fieldName}

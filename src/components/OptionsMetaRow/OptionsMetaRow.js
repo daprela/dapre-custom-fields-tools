@@ -145,7 +145,9 @@ function OptionsMetaRow(props) {
 
   return (
     <div
-      className={`${className} ${styles[errorClass]} ${styles[classColor]} ${styles.row_box}`}
+      className={`${className} ${styles[errorClass] || ""} ${
+        styles[classColor]
+      } ${styles.row_box}`}
       data-index={dataIndex}
     >
       <Arrow

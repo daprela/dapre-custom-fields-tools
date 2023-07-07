@@ -1,16 +1,11 @@
-/* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
-/* eslint-disable import/extensions,react/jsx-no-undef */
-import React, {
-  useState, useEffect, useCallback, createRef,
-} from 'react';
-import UsersMetaHeaders from './components/UsersMetaHeaders.js';
-import UsersMetaRow from './components/UsersMetaRow.js';
-import { nameSpace, spinnerOff, spinnerOn } from './functions.js';
+import React, { useState, useEffect, useCallback, createRef } from "react";
+import UsersMetaHeaders from "./components/UsersMetaHeaders.js";
+import UsersMetaRow from "./components/UsersMetaRow";
+import { nameSpace, spinnerOff, spinnerOn } from "./functions.js";
 
-// eslint-disable-next-line no-undef
 const { apiFetch } = wp;
 
-const restBase = 'user_fields';
+const restBase = "user_fields";
 const path = `${nameSpace}/${restBase}`;
 
 function TabUsersMeta() {
@@ -51,7 +46,7 @@ function TabUsersMeta() {
     /* Launches the Rest request to read fields */
     apiFetch({
       path: `${path}?${restBase}=${readJSON}`,
-      method: 'GET',
+      method: "GET",
       parse: false,
     })
       .then((response) => response.json())
@@ -74,11 +69,11 @@ function TabUsersMeta() {
     /* Launches the Rest request to write fields */
     apiFetch({
       path,
-      method: 'POST',
+      method: "POST",
       body: writeJSON,
       parse: false,
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -102,11 +97,11 @@ function TabUsersMeta() {
     /* Launches the Rest request to delete fields */
     apiFetch({
       path,
-      method: 'DELETE',
+      method: "DELETE",
       body: delJSON,
       parse: false,
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
     })
       .then((response) => response.json())
@@ -127,14 +122,14 @@ function TabUsersMeta() {
     let newDel = {};
 
     users.forEach((user) => {
-      if (user.action === 'read') {
+      if (user.action === "read") {
         newRead = {
           index: user.index,
           userID: user.userID,
           fieldName: user.fieldName,
         };
         readLocal.push(newRead);
-      } else if (user.action === 'write') {
+      } else if (user.action === "write") {
         newWrite = {
           index: user.index,
           userID: user.userID,
@@ -143,7 +138,7 @@ function TabUsersMeta() {
           valueToWrite: user.valueToWrite,
         };
         writeLocal.push(newWrite);
-      } else if (user.action === 'delete') {
+      } else if (user.action === "delete") {
         newDel = {
           index: user.index,
           userID: user.userID,
@@ -171,14 +166,14 @@ function TabUsersMeta() {
   }
 
   /* Initializes the form at the first page load.
-  * Gets the array containing the previous options stored in the DB */
+   * Gets the array containing the previous options stored in the DB */
   useEffect(() => {
-    const readJSON = JSON.stringify('all');
+    const readJSON = JSON.stringify("all");
 
     /* Launches the Rest request to read fields */
     apiFetch({
       path: `${path}?all_fields=${readJSON}`,
-      method: 'GET',
+      method: "GET",
       parse: false,
     })
       .then((response) => response.json())
@@ -191,9 +186,9 @@ function TabUsersMeta() {
             index: row.index,
             userID: row.fieldID,
             fieldName: row.fieldName,
-            emptyArray: '',
-            action: 'read',
-            valueToWrite: '',
+            emptyArray: "",
+            action: "read",
+            valueToWrite: "",
           };
 
           if (!row.fieldID || !row.fieldName) {
@@ -210,20 +205,23 @@ function TabUsersMeta() {
   }, []);
 
   /* Called from downstream when the user manipulates the form fields.
-  * This form is what is sent to the server when the user clicks the 'read/write values' button */
-  const updateForm = useCallback((formRow) => {
-    const temp = {
-      index: formRow.index,
-      userID: formRow.fieldID,
-      fieldName: formRow.fieldName,
-      emptyArray: formRow.emptyArray,
-      action: formRow.action,
-      valueToWrite: formRow.valueToWrite,
-    };
-    const formTemp = form;
-    formTemp[formRow.rowIndex] = temp;
-    setForm(formTemp);
-  }, [form]);
+   * This form is what is sent to the server when the user clicks the 'read/write values' button */
+  const updateForm = useCallback(
+    (formRow) => {
+      const temp = {
+        index: formRow.index,
+        userID: formRow.fieldID,
+        fieldName: formRow.fieldName,
+        emptyArray: formRow.emptyArray,
+        action: formRow.action,
+        valueToWrite: formRow.valueToWrite,
+      };
+      const formTemp = form;
+      formTemp[formRow.rowIndex] = temp;
+      setForm(formTemp);
+    },
+    [form]
+  );
 
   /* Regenerates the form array when meta rows are added or removed */
   function regenerateForm(newRows) {
@@ -250,20 +248,20 @@ function TabUsersMeta() {
     const updateBase = `${restBase}/update`;
     const newPath = `${nameSpace}/${updateBase}`;
 
-    if (content === '+') {
+    if (content === "+") {
       const lastElement = rows[rows.length - 1];
       const newIndex = parseInt(lastElement.index, 10) + 1;
       const newRow = {
         fieldID: 0,
-        fieldName: '',
+        fieldName: "",
         index: newIndex,
-        currentValueDateToggle: 'is-hidden',
-        currentValue: JSON.stringify(''),
+        currentValueDateToggle: "is-hidden",
+        currentValue: JSON.stringify(""),
         disableDelete: true,
         disableWrite: true,
-        error: '',
-        previousValue: JSON.stringify(''),
-        rowErrorClass: '',
+        error: "",
+        previousValue: JSON.stringify(""),
+        rowErrorClass: "",
       };
       const addJSON = JSON.stringify(newIndex);
       spinnerOn();
@@ -273,11 +271,11 @@ function TabUsersMeta() {
       /* Launches the Rest request to write fields */
       apiFetch({
         path: newPath,
-        method: 'POST',
+        method: "POST",
         body: addJSON,
         parse: false,
         headers: {
-          'Content-type': 'application/json',
+          "Content-type": "application/json",
         },
       })
         .then((response) => response.json())
@@ -292,7 +290,9 @@ function TabUsersMeta() {
         });
     } else {
       // Remove the selected row from the array
-      const rowIndex = rows.findIndex((row) => row.index === parseInt(index, 10));
+      const rowIndex = rows.findIndex(
+        (row) => row.index === parseInt(index, 10)
+      );
       rows.splice(rowIndex, 1);
 
       const removeJSON = JSON.stringify(rows);
@@ -302,17 +302,17 @@ function TabUsersMeta() {
       /* Launches the Rest request to write fields */
       apiFetch({
         path: newPath,
-        method: 'DELETE',
+        method: "DELETE",
         body: removeJSON,
         parse: false,
         headers: {
-          'Content-type': 'application/json',
+          "Content-type": "application/json",
         },
       })
         .then((response) => response.json())
         .then((fields) => {
-        // submitUserButton.disabled = false;
-        // submitUserButton.blur();
+          // submitUserButton.disabled = false;
+          // submitUserButton.blur();
           spinnerOff();
           if (!fields.error) {
             setRows([...rows]);
@@ -327,15 +327,15 @@ function TabUsersMeta() {
       <div className="js-userFieldsSection o-meta">
         <UsersMetaHeaders className="c-metaFieldsHeaders" />
         {rows.map((row, index) => {
-          let arrowTitle = 'Add another row';
-          let arrowContent = '+';
+          let arrowTitle = "Add another row";
+          let arrowContent = "+";
           if (index + 1 < rows.length) {
-            arrowTitle = 'Remove the next row';
-            arrowContent = '-';
+            arrowTitle = "Remove the next row";
+            arrowContent = "-";
           }
           return (
             <UsersMetaRow
-              className="js-userFieldsDataRow c-metaField"
+              className="js-userFieldsDataRow"
               rowIndex={index}
               dataIndex={row.index}
               fieldID={row.fieldID}

@@ -1,17 +1,17 @@
-/* eslint-disable react/jsx-filename-extension,react/react-in-jsx-scope,react/prop-types,no-undef,react/prefer-stateless-function */
-/* eslint-disable import/extensions */
 import React, { useCallback, useEffect, useState } from "react";
-import Arrow from "./Arrow";
-import FieldID from "./FieldID.js";
-import FieldName from "./FieldName.js";
-import MetaFieldActions from "./MetaFieldActions.js";
-import MetaFieldValueToAdd from "./MetaFieldValueToAdd.js";
-import MetaFieldCurrentValue from "./MetaFieldCurrentValue.js";
-import MetaFieldCurrentValueOptions from "./MetaFieldCurrentValueOptions.js";
-import MetaFieldPreviousValue from "./MetaFieldPreviousValue.js";
-import { isInteger } from "../functions";
+import styles from "./posts-meta-row.module.scss";
 
-function UsersMetaRow(props) {
+import Arrow from "../Arrow";
+import FieldID from "../FieldID.js";
+import FieldName from "../FieldName.js";
+import MetaFieldActions from "../MetaFieldActions.js";
+import MetaFieldValueToAdd from "../MetaFieldValueToAdd.js";
+import MetaFieldCurrentValue from "../MetaFieldCurrentValue.js";
+import MetaFieldCurrentValueOptions from "../MetaFieldCurrentValueOptions.js";
+import MetaFieldPreviousValue from "../MetaFieldPreviousValue.js";
+import { isInteger } from "../../functions";
+
+function PostsMetaRow(props) {
   const {
     className,
     rowIndex,
@@ -40,10 +40,10 @@ function UsersMetaRow(props) {
   const [currentValuePrinted, setCurrentValuePrinted] = useState("");
   const [classColor, setClassColor] = useState("-color-white");
   const [
-    currentValueUsersTimestampBackup,
-    setCurrentValueUsersTimestampBackup,
+    currentValuePostsTimestampBackup,
+    setCurrentValuePostsTimestampBackup,
   ] = useState(0);
-  const [currentValueUsersDateBackup, setCurrentValueUsersDateBackup] =
+  const [currentValuePostsDateBackup, setCurrentValuePostsDateBackup] =
     useState("");
 
   /* Updates the form row to send upstream. */
@@ -108,32 +108,32 @@ function UsersMetaRow(props) {
     /* Is the current value an integer (that could be interpreted as a timestamp)? */
     if (isInteger(currentValuePrinted)) {
       if (
-        parseInt(currentValuePrinted, 10) === currentValueUsersTimestampBackup
+        parseInt(currentValuePrinted, 10) === currentValuePostsTimestampBackup
       ) {
         // if the value hasn't changed use the date string saved
-        setCurrentValuePrinted(currentValueUsersDateBackup);
+        setCurrentValuePrinted(currentValuePostsDateBackup);
       } else {
         // if the value has changed re-generate the date string
         const timestamp = parseInt(currentValuePrinted, 10);
-        setCurrentValueUsersTimestampBackup(timestamp);
+        setCurrentValuePostsTimestampBackup(timestamp);
         const myDate = new Date(timestamp);
         setCurrentValuePrinted(myDate.toUTCString());
-        setCurrentValueUsersDateBackup(myDate.toUTCString());
+        setCurrentValuePostsDateBackup(myDate.toUTCString());
       }
       /* If the current value is backed up it means that we also have its timestamp stored. Use that. */
-    } else if (currentValuePrinted === currentValueUsersDateBackup) {
+    } else if (currentValuePrinted === currentValuePostsDateBackup) {
       // if the date string hasn't changed use the timestamp saved
-      setCurrentValuePrinted(parseInt(currentValueUsersTimestampBackup, 10));
+      setCurrentValuePrinted(parseInt(currentValuePostsTimestampBackup, 10));
     } else {
       // if the date string has changed re-generate the timestamp
       const myDate = new Date(currentValuePrinted);
-      setCurrentValueUsersDateBackup(currentValuePrinted);
+      setCurrentValuePostsDateBackup(currentValuePrinted);
       setCurrentValuePrinted(myDate.valueOf());
-      setCurrentValueUsersTimestampBackup(myDate.valueOf());
+      setCurrentValuePostsTimestampBackup(myDate.valueOf());
     }
   }, [
-    currentValueUsersDateBackup,
-    currentValueUsersTimestampBackup,
+    currentValuePostsDateBackup,
+    currentValuePostsTimestampBackup,
     currentValuePrinted,
   ]);
 
@@ -159,11 +159,11 @@ function UsersMetaRow(props) {
 
   return (
     <div
-      className={`${className} ${errorClass} ${classColor}`}
+      className={`${className} ${styles[errorClass]} ${styles[classColor]} ${styles.row_box}`}
       data-index={dataIndex}
     >
       <Arrow
-        className="js-addRemoveUserRow"
+        className="js-addRemovePostRow"
         title={arrowTitle}
         content={arrowContent}
         arrowClick={handleArrowClick}
@@ -172,9 +172,9 @@ function UsersMetaRow(props) {
         className="c-metaField__fieldName"
         errorClassName="c-metaField__fieldErrorContainer"
         errorMessageClassName="js-fieldErrorMessage c-metaField__fieldErrorMessage"
-        inputClass="js-userFieldName c-metaField__fieldInput"
+        inputClass="js-postFieldName c-metaField__fieldInput"
         inputType="number"
-        inputName="user_id"
+        inputName="post_id"
         inputValue={fieldIDValue}
         fieldIDValue={updateFieldIDValue}
         action={action}
@@ -182,7 +182,7 @@ function UsersMetaRow(props) {
       <FieldName
         className="c-metaField__fieldName"
         errorClassName="c-metaField__fieldErrorContainer"
-        errorMessageClassName="js-userErrorMessage c-metaField__fieldErrorMessage"
+        errorMessageClassName="js-postErrorMessage c-metaField__fieldErrorMessage"
         inputClass="js-metaFieldName c-metaField__fieldInput"
         inputType="text"
         inputName="field_name"
@@ -232,4 +232,4 @@ function UsersMetaRow(props) {
   );
 }
 
-export default UsersMetaRow;
+export default PostsMetaRow;

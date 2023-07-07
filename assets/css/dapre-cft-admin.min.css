@@ -96,30 +96,9 @@
 }
 
 /* NEW BEM CSS */
-.c-optionField.-color-white,
-.c-metaField.-color-white {
-  background-color: rgb(255, 255, 255);
-}
-.c-optionField.-color-blue,
-.c-metaField.-color-blue {
-  background-color: rgb(131, 215, 255);
-}
-.c-optionField.-color-orange,
-.c-metaField.-color-orange {
-  background-color: rgb(255, 213, 151);
-}
-.c-optionField.is-hidden,
-.c-metaField.is-hidden {
-  display: none;
-}
-
 .o-meta {
   display: grid;
   grid-auto-rows: minmax(122px, auto);
-}
-
-.c-optionField {
-  font-size: 14px;
 }
 
 .c-optionsForm.is-hidden,
@@ -130,8 +109,7 @@
 /*************************/
 /* OPTION FIELDS SECTION */
 /*************************/
-.c-optionsMetaHeaders,
-.c-optionField {
+.c-optionsMetaHeaders {
   display: grid;
   grid-template-columns: 20% 6% 30% 20% 10% 14%;
 }
@@ -167,15 +145,6 @@
   font-weight: 600;
   text-align: left;
   padding: 20px 10px 20px 5px;
-}
-
-.c-optionField > *,
-.c-metaField > * {
-  padding: 0 5px;
-}
-.c-optionField.is-error,
-.c-metaField.is-error {
-  border: 2px dashed #e43972;
 }
 
 .c-optionRename__newOption.is-error,
@@ -351,8 +320,7 @@
 /***********************/
 /* META FIELDS SECTION */
 /***********************/
-.c-metaFieldsHeaders,
-.c-metaField {
+.c-metaFieldsHeaders {
   display: grid;
   grid-template-columns: 8% 18% 6% 28% 18% 10% 12%;
 }
@@ -462,10 +430,41 @@
 /* END BLOCK META FIELD ONLY NAME */
 /**********************************/
 .c-optionsMetaHeaders,
-.c-metaFieldsHeaders,
-.c-optionField,
-.c-metaField {
+.c-metaFieldsHeaders {
   border-bottom: 1px solid lightgrey;
+}
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/components/OptionsMetaRow/options-meta-row.module.scss ***!
+  \*************************************************************************************************************************************************************************************************************/
+.tv6u5barteJ12_FektBM {
+  position: relative;
+  border-bottom: 1px solid lightgrey;
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: 20% 6% 30% 20% 10% 14%;
+}
+.tv6u5barteJ12_FektBM > * {
+  padding: 0 5px;
+}
+
+.YSR0veFwYEVJQHBcTAI6 {
+  border: 2px dashed #e43972;
+}
+
+.DB3lOV5XLWHimWX0Cq2Y {
+  display: none;
+}
+
+.PUM4MbFvsWPW2DDh4YcX {
+  background-color: rgb(255, 255, 255);
+}
+
+.TbvkwsCRz_NCJIjq2wJp {
+  background-color: rgb(131, 215, 255);
+}
+
+.ohdBCwVRK8boaHyD62lM {
+  background-color: rgb(255, 213, 151);
 }
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/components/Arrow/arrow.module.scss ***!
@@ -481,17 +480,76 @@
   display: flex;
   justify-content: center;
   cursor: pointer;
+  border: none;
+  bottom: -12px;
+  border-radius: 50%;
+  z-index: 1;
+}
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/components/UsersMetaRow/users-meta-row.module.scss ***!
+  \*********************************************************************************************************************************************************************************************************/
+.yT90N71Vh3gTyUzzJ18P {
+  position: relative;
+  display: grid;
+  font-size: 14px;
+  border-bottom: 1px solid lightgrey;
+  grid-template-columns: 8% 18% 6% 28% 18% 10% 12%;
+}
+.yT90N71Vh3gTyUzzJ18P > * {
+  padding: 0 5px;
 }
 
-.RE_7JfAACMb_nKj7P6KY:after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-top: 12px solid #d0d0d0;
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  margin: 22px 0 0 0;
+.tF2BJRrcizprKVFSkqaZ {
+  border: 2px dashed #e43972;
+}
+
+.ljsPbDMRm87IxhPnesKw {
+  display: none;
+}
+
+.PUIm9aCf91zc2fTv2p0l {
+  background-color: rgb(255, 255, 255);
+}
+
+.OYlhRAfjwKSb1V6lxgWP {
+  background-color: rgb(131, 215, 255);
+}
+
+.P0UJnb4jfqkX4BbVNFi9 {
+  background-color: rgb(255, 213, 151);
+}
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./src/components/PostsMetaRow/posts-meta-row.module.scss ***!
+  \*********************************************************************************************************************************************************************************************************/
+.N5xpgwikMxWU9lKZ0aNc {
+  position: relative;
+  display: grid;
+  font-size: 14px;
+  border-bottom: 1px solid lightgrey;
+  grid-template-columns: 8% 18% 6% 28% 18% 10% 12%;
+}
+.N5xpgwikMxWU9lKZ0aNc > * {
+  padding: 0 5px;
+}
+
+.nGXwzKjhMfrg1GPH5qYe {
+  border: 2px dashed #e43972;
+}
+
+.g5a9XlyEUBE0oS9YtoYU {
+  display: none;
+}
+
+.lvIqfSWN5XUcemRKYCoE {
+  background-color: rgb(255, 255, 255);
+}
+
+.iGatXcZcWcd1v5zMUO4W {
+  background-color: rgb(131, 215, 255);
+}
+
+.Bs7xUK266fK6Qsh985E8 {
+  background-color: rgb(255, 213, 151);
 }
 
 /*# sourceMappingURL=dapre-cft-admin.min.css.map*/

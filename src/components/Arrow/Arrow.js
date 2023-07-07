@@ -1,9 +1,7 @@
-import React, { createRef, useEffect } from "react";
+import React from "react";
 import styles from "./arrow.module.scss";
 
 function Arrow({ className, title, content, arrowClick: harrowClickProp }) {
-  const arrowRef = createRef();
-
   function handleArrowClick(e) {
     let index;
 
@@ -19,7 +17,6 @@ function Arrow({ className, title, content, arrowClick: harrowClickProp }) {
     <button
       className={`${className} ${styles.arrow}`}
       title={title}
-      ref={arrowRef}
       onClick={handleArrowClick}
     >
       {content}
