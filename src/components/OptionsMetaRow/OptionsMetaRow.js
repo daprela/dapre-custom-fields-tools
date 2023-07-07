@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
+import styles from "./options-meta-row.module.scss";
 
-import Arrow from "./Arrow";
-import FieldName from "./FieldName.js";
-import MetaFieldActions from "./MetaFieldActions.js";
-import MetaFieldValueToAdd from "./MetaFieldValueToAdd.js";
-import MetaFieldCurrentValue from "./MetaFieldCurrentValue.js";
-import MetaFieldCurrentValueOptions from "./MetaFieldCurrentValueOptions.js";
-import MetaFieldPreviousValue from "./MetaFieldPreviousValue.js";
-import { isInteger } from "../functions";
+import Arrow from "../Arrow";
+import FieldName from "../FieldName.js";
+import MetaFieldActions from "../MetaFieldActions.js";
+import MetaFieldValueToAdd from "../MetaFieldValueToAdd.js";
+import MetaFieldCurrentValue from "../MetaFieldCurrentValue.js";
+import MetaFieldCurrentValueOptions from "../MetaFieldCurrentValueOptions.js";
+import MetaFieldPreviousValue from "../MetaFieldPreviousValue.js";
+import { isInteger } from "../../functions";
 
 function OptionsMetaRow(props) {
   const {
@@ -144,7 +145,7 @@ function OptionsMetaRow(props) {
 
   return (
     <div
-      className={`${className} ${errorClass} ${classColor}`}
+      className={`${className} ${styles[errorClass]} ${styles[classColor]} ${styles.row_box}`}
       data-index={dataIndex}
     >
       <Arrow

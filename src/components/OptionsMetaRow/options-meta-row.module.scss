@@ -1,0 +1,33 @@
+$white: rgb(255, 255, 255);
+$blue: rgb(131, 215, 255);
+$orange: rgb(255, 213, 151);
+
+.row_box {
+  > * {
+    padding: 0 5px;
+  }
+  position: relative;
+  border-bottom: 1px solid lightgrey;
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: 20% 6% 30% 20% 10% 14%;
+}
+
+.is-error {
+  border: 2px dashed #e43972;
+}
+
+.is-hidden {
+  display: none;
+}
+.-color-white {
+  background-color: $white;
+}
+
+.-color-blue {
+  background-color: $blue;
+}
+
+.-color-orange {
+  background-color: $orange;
+}
