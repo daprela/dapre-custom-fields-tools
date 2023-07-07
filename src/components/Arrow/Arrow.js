@@ -4,13 +4,6 @@ import styles from "./arrow.module.scss";
 function Arrow({ className, title, content, arrowClick: harrowClickProp }) {
   const arrowRef = createRef();
 
-  useEffect(() => {
-    const optionRow = arrowRef.current.parentElement;
-    arrowRef.current.style.top = `${
-      optionRow.offsetTop + optionRow.offsetHeight - 10
-    }px`;
-  }, [arrowRef]);
-
   function handleArrowClick(e) {
     let index;
 
@@ -23,14 +16,14 @@ function Arrow({ className, title, content, arrowClick: harrowClickProp }) {
   }
 
   return (
-    <div
+    <button
       className={`${className} ${styles.arrow}`}
       title={title}
       ref={arrowRef}
       onClick={handleArrowClick}
     >
       {content}
-    </div>
+    </button>
   );
 }
 

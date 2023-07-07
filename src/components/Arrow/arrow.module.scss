@@ -10,15 +10,8 @@
   display: flex;
   justify-content: center;
   cursor: pointer;
-}
-
-.arrow:after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-top: 12px solid #d0d0d0;
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  margin: 22px 0 0 0;
+  border: none;
+  bottom: -12px;
+  border-radius: 50%;
+  z-index: 1;
 }
