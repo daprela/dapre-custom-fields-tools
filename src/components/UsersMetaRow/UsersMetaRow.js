@@ -23,8 +23,7 @@ function UsersMetaRow(props) {
     previousValue,
     disableWrite,
     disableDelete,
-    arrowTitle,
-    arrowContent,
+    arrowType,
     currentValue,
     rowChange: updateForm,
     resetPage,
@@ -153,8 +152,8 @@ function UsersMetaRow(props) {
     setCurrentValuePrinted(currentValue);
   }, [currentValue]);
 
-  function handleArrowClick(index, content) {
-    arrowClickProp(index, content);
+  function handleArrowClick(index, arrowType) {
+    arrowClickProp(index, arrowType);
   }
 
   return (
@@ -162,12 +161,7 @@ function UsersMetaRow(props) {
       className={`${className} ${styles[errorClass]} ${styles[classColor]} ${styles.row_box}`}
       data-index={dataIndex}
     >
-      <Arrow
-        className="js-addRemoveUserRow"
-        title={arrowTitle}
-        content={arrowContent}
-        arrowClick={handleArrowClick}
-      />
+      <Arrow arrowType={arrowType} arrowClick={handleArrowClick} />
       <FieldID
         className="c-metaField__fieldName"
         errorClassName="c-metaField__fieldErrorContainer"

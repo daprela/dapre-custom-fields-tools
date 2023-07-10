@@ -17,7 +17,7 @@
 	<h1><?php esc_html_e("Custom Fields Tools","dapre-cft") ?></h1>
 	<form method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<?php wp_nonce_field( 'dapre_cft_options', 'dapre_cft_options_verify' ); ?>
-		
+
 		<div class="postbox">
 			<h3 class="hndle" style="padding-left: 5px"><?php esc_html_e("Reset page","dapre-cft") ?></h3>
 			<div class="inside">
@@ -26,23 +26,12 @@
 			</div>
 		</div>
 	</form>
-	
+
 	<form class="js-optionsForm c-optionsForm" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<div class="c-options">
 			<div class="postbox">
 				<h3 class="c-metaField__title hndle"><?php esc_html_e("Options","dapre-cft") ?></h3>
-				<div id="optionsMetaSection" class="inside">
-
-				<?php
-
-				/**
-				 * Calls the box options meta
-				 */
-//				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-options-meta.php');
-
-				?>
-
-				</div>
+				<div id="optionsMetaSection" class="inside"></div>
 			</div>
 
 			<div class="postbox">
@@ -68,18 +57,12 @@
 			</div>
 		</div>
 	</form>
-	
+
 	<form class="js-userFieldsForm c-metaFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<div class="c-metaFields">
 			<div class="postbox">
 				<h3 class="c-metaField__title hndle"><?php esc_html_e("User Fields","dapre-cft") ?></h3>
-				<div id="usersMetaSection" class="inside">
-				<?php
-
-//				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-user-fields-meta.php');
-
-				?>
-				</div>
+				<div id="usersMetaSection" class="inside"></div>
 			</div>
 			<div class="postbox">
 				<?php
@@ -98,18 +81,12 @@
 			</div>
 		</div>
 	</form>
-	
+
 	<form class="js-postFieldsForm c-metaFieldsForm is-hidden" method="POST" enctype="multipart/form-data" action="" accept-charset="utf-8">
 		<div class="c-metaFields">
 			<div class="postbox">
 				<h3 class="c-metaField__title hndle"><?php esc_html_e("Post Fields","dapre-cft") ?></h3>
-				<div id="postsMetaSection" class="inside">
-				<?php
-
-//				require_once ( \dapre_cft\PLUGIN_DIR_PATH . 'templates/partials/box-post-fields-meta.php');
-
-				?>
-				</div>
+				<div id="postsMetaSection" class="inside"></div>
 
 			</div>
 			<div class="postbox">

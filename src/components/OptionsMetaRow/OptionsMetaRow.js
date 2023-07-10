@@ -21,7 +21,6 @@ function OptionsMetaRow(props) {
     previousValue,
     disableWrite,
     disableDelete,
-    arrowTitle,
     arrowType,
     currentValue,
     rowChange: updateForm,
@@ -150,12 +149,7 @@ function OptionsMetaRow(props) {
       } ${styles.row_box}`}
       data-index={dataIndex}
     >
-      <Arrow
-        className="js-addRemoveOptionRow"
-        title={arrowTitle}
-        arrowType={arrowType}
-        arrowClick={handleArrowClick}
-      />
+      <Arrow arrowType={arrowType} arrowClick={handleArrowClick} />
       <FieldName
         className="c-optionField__fieldName"
         errorClassName="c-optionField__fieldErrorContainer"

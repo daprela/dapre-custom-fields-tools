@@ -233,11 +233,11 @@ function TabOptionsMeta() {
     setResetPage(false);
   }
 
-  function addRemoveMetaRows(index, content) {
+  function addRemoveMetaRows(index, arrowType) {
     const updateBase = `${restBase}/update`;
     const newPath = `${nameSpace}/${updateBase}`;
 
-    if (content === "+") {
+    if (arrowType === "+") {
       const lastElement = rows[rows.length - 1];
       const newIndex = parseInt(lastElement.index, 10) + 1;
       const newRow = {
@@ -315,10 +315,8 @@ function TabOptionsMeta() {
       <div className="js-optionsMetaSection o-meta">
         <OptionsMetaHeaders className="c-optionsMetaHeaders" />
         {rows.map((row, index) => {
-          let arrowTitle = "Add another row";
           let arrowType = "+";
           if (index + 1 < rows.length) {
-            arrowTitle = "Remove the next row";
             arrowType = "-";
           }
           return (
@@ -333,7 +331,6 @@ function TabOptionsMeta() {
               previousValue={JSON.parse(row.previousValue)}
               disableWrite={row.disableWrite}
               disableDelete={row.disableDelete}
-              arrowTitle={arrowTitle}
               arrowType={arrowType}
               arrowClick={addRemoveMetaRows}
               rowChange={updateForm}
